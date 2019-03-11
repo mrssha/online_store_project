@@ -2,11 +2,12 @@ package dbservice.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import javax.persistence.Entity;
 import java.io.Serializable;
 import java.util.Objects;
 
 @Embeddable
-public class Basket implements Serializable {
+public class BasketId implements Serializable {
 
     @Column(name = "id_order")
     private Long orderId;
@@ -14,14 +15,10 @@ public class Basket implements Serializable {
     @Column(name = "id_product")
     private Long productId;
 
-    @Column(name = "quantity")
-    private int quantity;
-
-    public Basket(){
-
+    public BasketId(){
     }
 
-    public Basket(Long orderId, Long productId) {
+    public BasketId(Long orderId, Long productId) {
         this.orderId = orderId;
         this.productId = productId;
     }
@@ -42,14 +39,6 @@ public class Basket implements Serializable {
         this.productId = productId;
     }
 
-    public int getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
-    }
-
 
     @Override
     public boolean equals(Object obj) {
@@ -58,9 +47,9 @@ public class Basket implements Serializable {
         if (obj == null || getClass() != obj.getClass())
             return false;
 
-        Basket basketObject = (Basket) obj;
-        return Objects.equals(this.getOrderId(), basketObject.getOrderId()) &&
-                Objects.equals(this.getProductId(), basketObject.getProductId());
+        BasketId basketIdObject = (BasketId) obj;
+        return Objects.equals(this.getOrderId(), basketIdObject.getOrderId()) &&
+                Objects.equals(this.getProductId(), basketIdObject.getProductId());
     }
 
     @Override
