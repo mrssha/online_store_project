@@ -37,47 +37,21 @@ public class Order {
     @Column(name = "payment_amount")
     private Double payment_amount;
 
-
     @Enumerated(EnumType.STRING)
-    @Column(name = "payment_method", columnDefinition = "CARD")
+    @Column(name = "payment_method", columnDefinition = "CASH")
     private PaymentMethod paymentMethod;
-
-    public static enum PaymentMethod{
-        CASH,
-        CARD
-    }
 
     @Enumerated(EnumType.STRING)
     @Column(name = "delivery_method", columnDefinition = "SELF_DELIVERY")
     private DeliveryMethod deliveryMethod;
 
-    public static enum DeliveryMethod{
-        COURIER,
-        POSTAMPT,
-        SELF_DELIVERY
-    }
-
     @Enumerated(EnumType.STRING)
     @Column(name = "payment_status", columnDefinition = "WAITING")
     private PaymentStatus paymentStatus;
 
-
-    public static enum PaymentStatus{
-        WAITING,
-        PAID
-    }
-
     @Enumerated(EnumType.STRING)
     @Column(name = "order_status", columnDefinition = "WAIT_PAYMENT")
     private OrderStatus orderStatus;
-
-    public static enum OrderStatus{
-        WAIT_PAYMENT,
-        WAIT_SHIPMENT,
-        SHIPPED,
-        DELIVERED
-    }
-
 
     /*
     @ManyToOne(fetch = FetchType.LAZY)
@@ -97,7 +71,6 @@ public class Order {
     )
     private Set<Product> products;
     */
-
 
 
     @OneToMany(
