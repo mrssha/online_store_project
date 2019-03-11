@@ -18,7 +18,7 @@
         <mapping class="dbservice.entity.Address"/>
         <mapping class="dbservice.entity.Order"/>
         <mapping class="dbservice.entity.Product"/>
-
+        <mapping class="dbservice.entity.Basket"/>
         <!-- DB schema will be updated if needed -->
         <!-- <property name="hbm2ddl.auto">update</property> -->
     </session-factory>
