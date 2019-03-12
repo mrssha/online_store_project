@@ -9,19 +9,21 @@ import java.util.Objects;
 @Embeddable
 public class BasketId implements Serializable {
 
-    @Column(name = "id_order")
+    @Column(name = "id_order", nullable = false)
     private Long orderId;
 
-    @Column(name = "id_product")
+    @Column(name = "id_product", nullable = false)
     private Long productId;
 
     public BasketId(){
     }
 
+
     public BasketId(Long orderId, Long productId) {
         this.orderId = orderId;
         this.productId = productId;
     }
+
 
     public Long getOrderId() {
         return orderId;

@@ -1,21 +1,24 @@
 package dbservice.entity;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Objects;
 
-@Entity(name = "Basket")
+@Entity
 @Table(name = "basket")
-public class Basket {
+public class Basket implements Serializable {
 
     @EmbeddedId
     private BasketId id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @MapsId("orderId")
+    @JoinColumn(name = "id_order")
     private Order order;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @MapsId("productId")
+    @JoinColumn(name = "id_product")
     private Product product;
 
     @Column(name = "quantity")
@@ -25,12 +28,15 @@ public class Basket {
 
     }
 
+
     public Basket(Order order, Product product) {
         this.order = order;
         this.product = product;
         this.id = new BasketId(order.getId(), product.getId());
     }
 
+
+    //@EmbeddedId
     public BasketId getId() {
         return id;
     }
@@ -81,12 +87,4 @@ public class Basket {
     }
 
 
-
-
-
-
-
-
-
 }
-
