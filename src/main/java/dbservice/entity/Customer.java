@@ -29,7 +29,6 @@ public class Customer{
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "customer")
     private List<Address> addresses = new ArrayList<>();
-    // Нужна двусторонняя связь?
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY,
             mappedBy = "customer")
@@ -37,28 +36,6 @@ public class Customer{
 
     public Customer(){
 
-    }
-
-    public void addAddress(Address address){
-        addresses.add(address);
-        address.setCustomer(this);
-    }
-
-    // нужен ли этот метод?
-    public void removeAddress(Address address){
-        addresses.remove(address);
-        address.setCustomer(null); //зачем ставать null?
-    }
-
-    public void addOrder(Order order){
-        orders.add(order);
-        order.setCustomer(this);
-
-    }
-
-    public void  removeOrder(Order order){
-        orders.remove(order);
-        order.setCustomer(null); //???
     }
 
     public void setId(Long id) {
@@ -140,5 +117,19 @@ public class Customer{
         }
         Customer customer =(Customer)obj;
         return customer.getId().equals(this.getId());
+    }
+
+    @Override
+    public String toString() {
+        return "Customer{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", secondName='" + secondName + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", birthDate=" + birthDate +
+                ", addresses=" + addresses +
+                ", orders=" + orders +
+                '}';
     }
 }

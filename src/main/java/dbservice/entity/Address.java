@@ -16,7 +16,6 @@ public class Address {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_customer")
     private Customer customer;
-    //new
 
     @Column(name = "country")
     private String country;
@@ -38,7 +37,6 @@ public class Address {
 
 
     public Address(){
-
     }
 
     public void setId(Long id) {
@@ -122,5 +120,19 @@ public class Address {
         return address.getId().equals(this.getId());
     }
 
+
+    @Override
+    public String toString() {
+        return "AddressEntity{" +
+                "id=" + id +
+                ", id_customer=" + customer.getId() +
+                ", country='" + country + '\'' +
+                ", city='" + city + '\'' +
+                ", postcode=" + postcode +
+                ", street='" + street + '\'' +
+                ", flatNumber=" + flatNumber +
+                ", houseNumber=" + houseNumber +
+                '}';
+    }
 
 }

@@ -41,63 +41,71 @@ public class Main {
         final Session session = getSession();
         try {
 
+            //Создание Order
 
-            //Transaction trx = session.beginTransaction();
-            //Customer cust2 = (Customer)session.load(Customer.class, 8L);
+            Transaction trx = session.beginTransaction();
+            Customer cust3 = (Customer)session.load(Customer.class, 3L);
+
+            Order order = new Order();
+            order.setCustomer(cust3);
+            order.setCustomerAddress(cust3.getAddresses().get(0));
+            Date date = new Date();
+            order.setDateOrder(date);
+
+            session.persist(order);
+            trx.commit();
+
+
+
+            /*
+            // Order находит, но при вызове toString() падает
             Order ord = (Order) session.load(Order.class, 1L);
-            //Product prod = (Product) session.load(Product.class, 7L);
-            //session.delete(cust2);
-            //trx.commit();
-
-            /*
-            Long id = Long.valueOf(5);
-            Address address_1 = (Address) session.load(Address.class, id);
-            System.out.println(address_1.getId());
-            System.out.println(address_1.getCountry());
-            System.out.println(address_1.getCity());
-            System.out.println(address_1.getPostcode());
-            System.out.println(address_1.getStreet());
-            System.out.println(address_1.getFlatNumber());
-            System.out.println(address_1.getHouseNumber());
-            System.out.println(address_1.getCustomer().getFirstName());
+            System.out.println(ord.toString());
             */
 
 
 
+            //Product prod = (Product) session.load(Product.class, 5L);
+            //System.out.println(prod.getName());
+            //System.out.println(prod.toString());
+
 
             /*
-            System.out.println("querying all the managed entities...");
-            Long id = Long.valueOf(2);
-            Customer customer_1 = (Customer)session.load(Customer.class, id);
-            System.out.println(customer_1.getId());
-            System.out.println(customer_1.getFirstName());
-            System.out.println(customer_1.getSecondName());
-            System.out.println(customer_1.getBirthDate());
-            System.out.println(customer_1.getEmail());
-            System.out.println(customer_1.getPassword());
+            Product prod = new Product();
+            prod.setName("Шлем");
+            prod.setPrice(1000.0);
+            prod.setBrand("666");
+            prod.setCategory("Защита");
+            prod.setQuantity(12);
+            System.out.println(prod.toString());
             */
+
 
             /*
             Transaction trx = session.beginTransaction();
             Customer cust2 = new Customer();
-            //cust2.setId(7L);
             cust2.setFirstName("Harry");
             cust2.setSecondName("Potter");
             cust2.setEmail("potter@mail.com");
             cust2.setPassword("alohomora");
 
             Address address2 = new Address();
-            //address2.setId(7L);
+            address2.setId(7L);
             address2.setStreet("Parnas");
-            cust2.addAddress(address2);
+            address2.setCustomer(cust2);
             session.save(cust2);
             trx.commit();
-
-            Set<Address> addresses =  cust2.getAddresses();
-            for (Address address: addresses){
-                System.out.println(address.getStreet());
-            }
             */
+
+
+
+
+
+
+
+
+
+
 
 
             //Transaction trx = session.beginTransaction();
@@ -107,25 +115,19 @@ public class Main {
             //address3.setCity("Paris");
             //address3.setCustomer(cust2);
             //cust2.addAddress(address3);
-            //Address a = (Address) session.load(Address.class, 6L);
+            //Address ad = (Address) session.load(Address.class, 4L);
+            //System.out.println(ad.toString());
+
             //a.setCountry("UK");
             //session.delete(cust2);
             //trx.commit();
 
 
-            /*
-            Transaction trx = session.beginTransaction();
-            Customer cust2 = (Customer)session.load(Customer.class, 8L);
 
-            Order order = new Order();
-            order.setCustomer(cust2);
-            order.setCustomerAddress(cust2.getAddresses().get(0));
-            Date date = new Date();
-            order.setDateOrder(date);
 
-            session.persist(order);
-            trx.commit();
-            */
+
+
+
 
             //Order ord = (Order) session.load(Order.class, 1L);
             //System.out.println(ord.getCustomer().getFirstName());

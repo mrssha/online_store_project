@@ -1,10 +1,11 @@
-/*
+
+
 DROP TABLE public."product" CASCADE;
 DROP TABLE public."address" CASCADE;
 DROP TABLE public."customer" CASCADE;
 DROP TABLE public."order" CASCADE;
 DROP TABLE public."basket" CASCADE;
-*/
+
 
 CREATE TABLE IF NOT EXISTS public."product"
 (
@@ -59,9 +60,9 @@ CREATE TABLE IF NOT EXISTS public."order"
     payment_method character varying(4) CHECK (payment_method in ('CASH', 'CARD')) DEFAULT 'CASH',
     delivery_method character varying(13)
       CHECK (delivery_method in ('COURIER', 'POSTAMPT', 'SELF_DELIVERY')) DEFAULT 'SELF_DELIVERY',
-    payment_status character varying(7) CHECK (payment_status in ('WAITING', 'PAID')) DEFAULT 'WAITING',
+     payment_status character varying(7) CHECK (payment_status in ('WAITING', 'PAID')) DEFAULT 'WAITING',
     order_status character varying(13)
-      CHECK (order_status in ('WAIT_PAYMENT','WAIT_SHIPMENT', 'SHIPPED', 'DELIVERED')) DEFAULT 'WAIT_PAYMENT',
+     CHECK (order_status in ('WAIT_PAYMENT','WAIT_SHIPMENT', 'SHIPPED', 'DELIVERED')) DEFAULT 'WAIT_PAYMENT',
 
     CONSTRAINT "order_pkey" PRIMARY KEY (id_order),
     CONSTRAINT fk_order_address FOREIGN KEY (id_customer_address)

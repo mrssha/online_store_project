@@ -1,4 +1,4 @@
-package dbservice.DAO;
+package dbservice.dao;
 
 import dbservice.entity.Customer;
 import dbservice.entity.Order;

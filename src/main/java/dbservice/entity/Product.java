@@ -1,11 +1,7 @@
 package dbservice.entity;
 
-
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Table(name = "product")
@@ -42,7 +38,6 @@ public class Product {
     @ManyToMany(fetch = FetchType.LAZY, mappedBy = "products")
     private Set<Order> orders;
     */
-    //нужен геттер сеттер?
 
 
     @OneToMany(
@@ -50,14 +45,17 @@ public class Product {
             cascade = CascadeType.ALL,
             orphanRemoval = true
     )
-    private List<Basket> orders = new ArrayList<>();
-    //private List<Basket> orders = new ArrayList<>();
+    private Set<Basket> orders = new HashSet<>();
 
     public Product(){
     }
 
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -116,11 +114,11 @@ public class Product {
         this.quantity = quantity;
     }
 
-    public List<Basket> getOrders() {
+    public Set<Basket> getOrders() {
         return orders;
     }
 
-    public void setOrders(List<Basket> orders) {
+    public void setOrders(Set<Basket> orders) {
         this.orders = orders;
     }
 
@@ -140,4 +138,20 @@ public class Product {
         Product product = (Product) obj;
         return product.getId().equals(this.getId());
     }
+
+    @Override
+    public String toString() {
+        return "ProductEntity{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", price=" + price +
+                ", category='" + category + '\'' +
+                ", brand='" + brand + '\'' +
+                ", weight=" + weight +
+                ", sex='" + sex + '\'' +
+                ", quantity=" + quantity +
+                ", orders=" + orders.toString() +
+                '}';
+    }
+
 }

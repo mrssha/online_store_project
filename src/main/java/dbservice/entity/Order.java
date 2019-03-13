@@ -13,20 +13,14 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_customer", referencedColumnName = "id_customer")
     private Customer customer;
-
-
-    //@Column(name = "id_customer_address")
-    //private Long idCustomerAddress;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_customer_address")
     private Address customerAddress;
     // Связь односторонняя
-    // Нужно ли вообще делать эту связь?
 
     @Column(name = "date_order", nullable = false)
     private Date dateOrder;
@@ -78,40 +72,19 @@ public class Order {
             cascade = CascadeType.ALL,
             orphanRemoval = true
     )
-    private List<Basket> products = new ArrayList<>();
-    //private List<Basket> products = new ArrayList<>();
-    // Нужно инициализировать?
+    private Set<Basket> products = new HashSet<>();
+
 
 
     public Order(){
     }
 
-
-    public void addProduct(Product product) {
-        Basket orderProduct = new Basket(this, product);
-        products.add(orderProduct);
-        product.getOrders().add(orderProduct);
-    }
-
-    public void removeProduct(Product product) {
-        Iterator<Basket> iterator = products.iterator();
-        while (iterator.hasNext()) {
-            Basket orderProduct = iterator.next();
-
-            if (orderProduct.getOrder().equals(this) &&
-                    orderProduct.getProduct().equals(product)) {
-                iterator.remove();
-                orderProduct.getProduct().getOrders().remove(orderProduct);
-                orderProduct.setOrder(null);
-                orderProduct.setProduct(null);
-            }
-        }
-    }
-
-
-
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public Customer getCustomer() {
@@ -187,11 +160,11 @@ public class Order {
     }
 
 
-    public List<Basket> getProducts() {
+    public Set<Basket> getProducts() {
         return products;
     }
 
-    public void setProducts(List<Basket> products) {
+    public void setProducts(Set<Basket> products) {
         this.products = products;
     }
 
@@ -214,5 +187,20 @@ public class Order {
     }
 
 
-
+    @Override
+    public String toString() {
+        return "Order{" +
+                "id=" + id +
+                ", customer=" + customer +
+                ", customerAddress=" + customerAddress +
+                ", dateOrder=" + dateOrder +
+                ", quantityProducts=" + quantityProducts +
+                ", payment_amount=" + payment_amount +
+                ", paymentMethod=" + paymentMethod +
+                ", deliveryMethod=" + deliveryMethod +
+                ", paymentStatus=" + paymentStatus +
+                ", orderStatus=" + orderStatus +
+                ", products=" + products +
+                '}';
+    }
 }

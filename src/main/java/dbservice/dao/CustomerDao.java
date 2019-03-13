@@ -1,17 +1,15 @@
-package dbservice.DAO;
+package dbservice.dao;
 
-import dbservice.entity.Address;
 import dbservice.entity.Customer;
-import dbservice.entity.Order;
 
 import java.sql.SQLException;
 import java.util.List;
 
 public interface CustomerDao {
 
-    Customer getById(long id) throws SQLException;
+    Customer getById(long id);
 
-    Customer getByEmail(String email) throws SQLException;
+    Customer getByEmail(String email);
 
     List<Customer> getAll();
 
@@ -19,11 +17,11 @@ public interface CustomerDao {
 
     //List<Address> getAddresses(Customer customer);
 
-    void add(Customer customer) throws SQLException;
+    void add(Customer customer);
 
-    void deleteById(long id) throws SQLException;
+    void deleteById(long id);
 
-    void update(Customer customer) throws SQLException;
+    void update(Customer customer);
 }
 
 

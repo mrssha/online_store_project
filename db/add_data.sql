@@ -6,6 +6,7 @@ values ('Sofia', 'Ivanova', 'mail_2@mail.ru', '123ddd', '1999-01-08');
 insert into "customer" (first_name, second_name, email, password, birth_date)
 values ('Ivan', 'Ivanov', 'ivan@mail.ru', '10004', '2007-01-01');
 
+
 insert into "address" (id_customer, country, city, postcode, street, flat_number, house_number)
 values (2, 'Russia', 'NN', 123456, 'street', 1, 2);
 insert into "address" (id_customer, country, city, postcode, street, flat_number, house_number)
@@ -29,6 +30,10 @@ values ('Snowboard coat', 5000,'clothes', '666', 300, 'female', 5);
 insert into "order" (id_customer, id_customer_address, date_order) values (2, 1, '2018-02-01');
 insert into "order" (id_customer, id_customer_address, date_order) values (1, 3, '2018-01-21');
 insert into "order" (id_customer, id_customer_address, date_order) values (2, 4, '2018-02-02');
+
+--insert into "order" (id_customer, date_order) values (2, '2018-02-01' );
+--insert into "order" (id_customer, date_order ) values (1,'2018-02-01');
+--insert into "order" (id_customer, date_order ) values (2,'2018-02-01' );
 
 insert into "basket"  (id_order, id_product, quantity) VALUES (1, 2, 1);
 insert into "basket"  (id_order, id_product, quantity) VALUES (1, 5, 1);

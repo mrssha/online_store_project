@@ -1,9 +1,8 @@
-package dbservice.DAO;
+package dbservice.dao;
 
 import dbservice.entity.Address;
 import dbservice.entity.Customer;
 
-import java.sql.SQLException;
 import java.util.List;
 
 public interface AddressDao {
