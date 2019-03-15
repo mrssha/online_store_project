@@ -72,7 +72,7 @@ public class Order {
             cascade = CascadeType.ALL,
             orphanRemoval = true
     )
-    private Set<Basket> products = new HashSet<>();
+    private Set<Basket> basket = new HashSet<>();
 
 
 
@@ -159,15 +159,13 @@ public class Order {
         this.orderStatus = orderStatus;
     }
 
-
-    public Set<Basket> getProducts() {
-        return products;
+    public Set<Basket> getBasket() {
+        return basket;
     }
 
-    public void setProducts(Set<Basket> products) {
-        this.products = products;
+    public void setBasket(Set<Basket> basket) {
+        this.basket = basket;
     }
-
 
     @Override
     public int hashCode() {
@@ -200,7 +198,7 @@ public class Order {
                 ", deliveryMethod=" + deliveryMethod +
                 ", paymentStatus=" + paymentStatus +
                 ", orderStatus=" + orderStatus +
-                ", products=" + products +
+                ", basket=" + basket +
                 '}';
     }
 }

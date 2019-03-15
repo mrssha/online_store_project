@@ -1,5 +1,6 @@
 package dbservice.dao;
 
+import dbservice.entity.Address;
 import dbservice.entity.Customer;
 import dbservice.entity.Order;
 import dbservice.entity.Product;
@@ -26,12 +27,12 @@ public class OrderDaoImpl implements OrderDao {
     }
 
     @Override
-    public List<Order> getByCustomer(Customer customer) {
+    public List<Order> getByCustomerId(long id) {
         CriteriaBuilder cBuilder = entityManager.getCriteriaBuilder();
         CriteriaQuery<Order> criteriaQuery = cBuilder.createQuery(Order.class);
         Root<Order> root = criteriaQuery.from(Order.class);
         criteriaQuery.select(root);
-        criteriaQuery.where(cBuilder.equal(root.get("customer"), customer.getId()));
+        criteriaQuery.where(cBuilder.equal(root.get("customer"), id));
         return entityManager.createQuery(criteriaQuery).getResultList();
     }
 
@@ -45,27 +46,23 @@ public class OrderDaoImpl implements OrderDao {
         return entityManager.createQuery(criteriaQuery).getResultList();
     }
 
-
     @Override
     public int getProductQuantity(Order order, Product product) {
         return 0;
     }
 
     @Override
-    @Transactional
     public void add(Order order) {
         entityManager.persist(order);
     }
 
     @Override
-    @Transactional
     public void deleteById(long id) {
         Order order = entityManager.find(Order.class, id);
         entityManager.remove(order);
     }
 
     @Override
-    @Transactional
     public void update(Order order) {
         entityManager.merge(order);
     }

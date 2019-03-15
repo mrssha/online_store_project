@@ -1,5 +1,6 @@
 package dbservice.dao;
 
+import dbservice.dto.ProductDto;
 import dbservice.entity.Product;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -8,7 +9,9 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -22,6 +25,38 @@ public class ProductDaoImpl implements ProductDao {
     public Product getById(long id) {
         return entityManager.find(Product.class, id);
     }
+
+
+    @Override
+    public List<Product> getByParams(String name, String category, String brand){
+
+        CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Product> criteriaQuery = builder.createQuery(Product.class);
+        Root<Product> root = criteriaQuery.from(Product.class);
+
+        List<Predicate> predicates = new ArrayList<Predicate>();
+
+        if (name != null) {
+            predicates.add(
+                    builder.equal(root.get("name"), name));
+        }
+        if (category != null) {
+            predicates.add(
+                    builder.equal(root.get("category"), category));
+        }
+        if (brand != null) {
+            predicates.add(
+                    builder.equal(root.get("brand"), brand));
+        }
+        criteriaQuery.select(root)
+                .where(predicates.toArray(new Predicate[]{}));
+        //execute query and do something with result
+        return entityManager.createQuery(criteriaQuery).getResultList();
+
+    }
+
+
+
 
     @Override
     public List<Product> getByName(String name) {
@@ -51,14 +86,12 @@ public class ProductDaoImpl implements ProductDao {
     }
 
     @Override
-    @Transactional
     public void add(Product product) {
         entityManager.persist(product);
 
     }
 
     @Override
-    @Transactional
     public void deleteById(long id) {
         Product product = entityManager.find(Product.class, id);
         entityManager.remove(product);
@@ -66,7 +99,6 @@ public class ProductDaoImpl implements ProductDao {
     }
 
     @Override
-    @Transactional
     public void update(Product product) {
         entityManager.merge(product);
 

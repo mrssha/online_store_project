@@ -1,7 +1,4 @@
-import dbservice.entity.Address;
-import dbservice.entity.Customer;
-import dbservice.entity.Order;
-import dbservice.entity.Product;
+import dbservice.entity.*;
 import org.hibernate.*;
 import org.hibernate.query.Query;
 import org.hibernate.cfg.Configuration;
@@ -10,6 +7,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import javax.persistence.metamodel.EntityType;
 
@@ -41,8 +39,48 @@ public class Main {
         final Session session = getSession();
         try {
 
+            CriteriaBuilder builder = session.getCriteriaBuilder();
+            CriteriaQuery<Product> criteriaQuery = builder.createQuery(Product.class);
+            Root<Product> root = criteriaQuery.from(Product.class);
+
+            List<Predicate> predicates = new ArrayList<Predicate>();
+
+            String name = null;
+            String category = "snowboards";
+            String brand = null;
+            Double price = 10000.0;
+
+
+            if (name != null) {
+                predicates.add(
+                        builder.equal(root.get("name"), name));
+            }
+            if (category != null) {
+                predicates.add(
+                        builder.equal(root.get("category"), category));
+            }
+            if (brand != null) {
+                predicates.add(
+                        builder.equal(root.get("brand"), brand));
+            }
+            if (price != null) {
+                predicates.add(
+                        builder.between(root.get("price"), 0, 12000));
+            }
+
+            criteriaQuery.select(root)
+                    .where(predicates.toArray(new Predicate[]{}));
+            //execute query and do something with result
+            List<Product> products = session.createQuery(criteriaQuery).getResultList();
+            for (Product product: products){
+                System.out.println(product);
+            }
+            System.out.println(products.size());
+
+
             //Создание Order
 
+            /*
             Transaction trx = session.beginTransaction();
             Customer cust3 = (Customer)session.load(Customer.class, 3L);
 
@@ -54,6 +92,44 @@ public class Main {
 
             session.persist(order);
             trx.commit();
+            */
+
+            /*
+            Order order = (Order)session.load(Order.class, 2L);
+            //EntityManager entityManager = session.getEntityManagerFactory().createEntityManager();
+
+            CriteriaBuilder cBuilder = session.getCriteriaBuilder();
+            CriteriaQuery<Basket> criteriaQuery = cBuilder.createQuery(Basket.class);
+            Root<Basket> root = criteriaQuery.from(Basket.class);
+            criteriaQuery.select(root);
+            criteriaQuery.where(cBuilder.equal(root.get("order"), order));
+            List<Basket> baskets = session.createQuery(criteriaQuery).getResultList();
+            for (Basket basket: baskets) {
+                System.out.println(basket.getOrder().getId().toString()+" "+  basket.getProduct().getName() +
+                        " " + basket.getQuantity());
+            }
+            int y=9;
+            int r=8;
+            */
+
+
+
+            /*
+            Transaction trx = session.beginTransaction();
+            Order ord = (Order)session.load(Order.class, 4L);
+            Product prod = (Product)session.load(Product.class, 5L);
+
+            Basket bas = new Basket();
+            bas.setOrder(ord);
+            bas.setProduct(prod);
+            bas.setQuantity(2);
+            bas.setId(new BasketId(ord.getId(),prod.getId()));
+
+            session.persist(bas);
+            trx.commit();
+            */
+
+
 
 
 

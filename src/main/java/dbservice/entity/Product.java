@@ -42,10 +42,10 @@ public class Product {
 
     @OneToMany(
             mappedBy = "product",
-            cascade = CascadeType.ALL,
+            cascade = CascadeType.REMOVE,
             orphanRemoval = true
     )
-    private Set<Basket> orders = new HashSet<>();
+    private Set<Basket> basket = new HashSet<>();
 
     public Product(){
     }
@@ -114,12 +114,12 @@ public class Product {
         this.quantity = quantity;
     }
 
-    public Set<Basket> getOrders() {
-        return orders;
+    public Set<Basket> getBasket() {
+        return basket;
     }
 
-    public void setOrders(Set<Basket> orders) {
-        this.orders = orders;
+    public void setBasket(Set<Basket> basket) {
+        this.basket = basket;
     }
 
     @Override
@@ -150,7 +150,7 @@ public class Product {
                 ", weight=" + weight +
                 ", sex='" + sex + '\'' +
                 ", quantity=" + quantity +
-                ", orders=" + orders.toString() +
+                ", basket=" + basket +
                 '}';
     }
 

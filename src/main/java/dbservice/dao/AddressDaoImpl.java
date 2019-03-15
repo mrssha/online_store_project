@@ -49,14 +49,12 @@ public class AddressDaoImpl implements AddressDao {
     }
 
     @Override
-    @Transactional
     public void add(Address address){
         entityManager.persist(address);
 
     }
 
     @Override
-    @Transactional
     public void deleteById(long id){
        Address address = entityManager.find(Address.class, id);
        entityManager.remove(address);
@@ -64,7 +62,6 @@ public class AddressDaoImpl implements AddressDao {
     }
 
     @Override
-    @Transactional
     public void update(Address address) {
         entityManager.merge(address);
     }

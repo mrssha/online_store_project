@@ -43,13 +43,11 @@ public class CustomerDaoImpl implements CustomerDao {
     }
 
     @Override
-    @Transactional
     public void add(Customer customer) {
         entityManager.persist(customer);
     }
 
     @Override
-    @Transactional
     public void deleteById(long id) {
         Customer customer = entityManager.find(Customer.class, id);
         entityManager.remove(customer);
@@ -57,7 +55,6 @@ public class CustomerDaoImpl implements CustomerDao {
     }
 
     @Override
-    @Transactional
     public void update(Customer customer) {
         entityManager.merge(customer);
     }

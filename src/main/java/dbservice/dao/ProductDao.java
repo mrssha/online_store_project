@@ -14,10 +14,12 @@ public interface ProductDao {
 
     List<Product> getByBrand(String name);
 
-    void add(Product customer);
+    List<Product> getByParams(String name, String category, String brand);
+
+    void add(Product product);
 
     void deleteById(long id);
 
-    void update(Product customer);
+    void update(Product product);
 
 }
