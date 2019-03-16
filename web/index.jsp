@@ -11,6 +11,6 @@
     <title>$Title$</title>
   </head>
   <body>
-  $Hello!$
+  $This is index file!$
   </body>
 </html>

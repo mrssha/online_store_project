@@ -14,7 +14,6 @@ import java.util.List;
 import java.util.Set;
 
 @Controller
-@RequestMapping("/")
 public class ProductController {
 
     @Autowired
@@ -54,7 +53,7 @@ public class ProductController {
     */
 
 
-    @RequestMapping(value = "/",  method = RequestMethod.GET)
+    @RequestMapping(value = "/", method = RequestMethod.GET)
     public String printHello(ModelMap model){
         model.addAttribute("message", "Hello Spring MVC Framework!");
         return "hello"; //имя вида

@@ -16,6 +16,7 @@
 
 
     <context:component-scan base-package="dbservice" />
+
     <context:annotation-config/>
 
     <mvc:resources location="/resources/" mapping="/resources/**"></mvc:resources>
@@ -83,12 +84,6 @@
     <tx:annotation-driven transaction-manager="transactionManagerJPA" />
 
 
-
-    <bean id="oderDao" class="dbservice.dao.OrderDaoImpl"/>
-    <bean id="addressDao" class="dbservice.dao.AddressDaoImpl"/>
-    <bean id="basketDao" class="dbservice.dao.BasketDaoImpl"/>
-    <bean id="productDao" class="dbservice.dao.ProductDaoImpl"/>
-    <bean id="castomerDao" class="dbservice.dao.CustomerDaoImpl"/>
 
 
 
