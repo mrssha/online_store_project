@@ -14,12 +14,13 @@ import java.util.List;
 import java.util.Set;
 
 @Controller
-@RequestMapping("/search")
+@RequestMapping("/")
 public class ProductController {
 
     @Autowired
     ProductService productService;
 
+    /*
     @GetMapping("/{id}")
     public String getProductById(@PathVariable Long id, Model model){
         ProductDto product = productService.getById(id);
@@ -29,7 +30,9 @@ public class ProductController {
         return "product_detail";
     }
 
-    @GetMapping
+
+
+    @GetMapping("/hello")
     public String getProductByParams(@RequestParam(value = "name", required = false) String name,
                                      @RequestParam(value = "brand", required = false) String brand,
                                      @RequestParam(value = "category", required = false) String category){
@@ -39,6 +42,7 @@ public class ProductController {
         //model.addAttribute("price", product.getPrice());
         return "product_detail";
     }
+    */
 
     //@GetMapping("/list")
     /*
@@ -50,7 +54,7 @@ public class ProductController {
     */
 
 
-    @RequestMapping(value = "/hello",  method = RequestMethod.GET)
+    @RequestMapping(value = "/",  method = RequestMethod.GET)
     public String printHello(ModelMap model){
         model.addAttribute("message", "Hello Spring MVC Framework!");
         return "hello"; //имя вида

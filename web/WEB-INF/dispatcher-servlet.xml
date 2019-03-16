@@ -2,15 +2,95 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+       xmlns:beans="http://www.springframework.org/schema/c"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/tx
+       http://www.springframework.org/schema/tx/spring-tx.xsd
+       http://www.springframework.org/schema/mvc
+       http://www.springframework.org/schema/mvc/spring-mvc.xsd">
 
 
+    <context:component-scan base-package="dbservice" />
+    <context:annotation-config/>
+
+    <mvc:resources location="/resources/" mapping="/resources/**"></mvc:resources>
 
     <bean id="viewResolver"
           class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="prefix" value="/WEB-INF/views/" />
         <property name="suffix" value=".jsp" />
     </bean>
+
+    <mvc:annotation-driven>
+        <mvc:message-converters>
+            <bean class="org.springframework.http.converter.StringHttpMessageConverter"/>
+            <!--<bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter"/>-->
+        </mvc:message-converters>
+    </mvc:annotation-driven>
+
+
+    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+        <property name="driverClassName" value="org.postgresql.Driver" />
+        <property name="url" value="jdbc:postgresql://localhost:5433/store_database?serverTimezone=UTC" />
+        <property name="username" value="postgres" />
+        <property name="password" value="1" />
+    </bean>
+
+
+
+
+    <bean id="entityManagerFactory"
+          class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+        <property name="dataSource" ref="dataSource" />
+        <property name="persistenceUnitName" value="myPersistenceUnit"/>
+        <property name="persistenceXmlLocation" value="classpath*:persistence.xml" />
+        <property name="packagesToScan" value="dbservice" />
+
+        <property name="jpaVendorAdapter">
+            <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter" />
+        </property>
+
+        <property name="jpaProperties">
+            <props>
+                <prop key="hibernate.dialect">org.hibernate.dialect.PostgreSQL95Dialect</prop>
+                <prop key="hibernate.show_sql">true</prop>
+                <prop key="hibernate.hbm2ddl.auto">update</prop>
+                <prop key="hibernate.format_sql">true</prop>
+                <prop key="hibernate.use_sql_comments">true</prop>
+                <prop key="hibernate.default_schema">public</prop>
+            </props>
+        </property>
+
+    </bean>
+
+
+    <bean class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor"/>
+
+
+    <bean id="persistenceExceptionTranslationPostProcessor" class=
+            "org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" />
+
+
+    <bean id="transactionManagerJPA" class="org.springframework.orm.jpa.JpaTransactionManager">
+        <property name="entityManagerFactory" ref="entityManagerFactory" />
+    </bean>
+
+    <tx:annotation-driven transaction-manager="transactionManagerJPA" />
+
+
+
+    <bean id="oderDao" class="dbservice.dao.OrderDaoImpl"/>
+    <bean id="addressDao" class="dbservice.dao.AddressDaoImpl"/>
+    <bean id="basketDao" class="dbservice.dao.BasketDaoImpl"/>
+    <bean id="productDao" class="dbservice.dao.ProductDaoImpl"/>
+    <bean id="castomerDao" class="dbservice.dao.CustomerDaoImpl"/>
+
+
 
 
 </beans>
