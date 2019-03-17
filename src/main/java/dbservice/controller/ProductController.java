@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 import java.util.Set;
@@ -20,7 +21,7 @@ public class ProductController {
     @Autowired
     ProductService productService;
 
-    /*
+
     @GetMapping("/{id}")
     public String getProductById(@PathVariable Long id, Model model){
         ProductDto product = productService.getById(id);
@@ -29,7 +30,6 @@ public class ProductController {
         model.addAttribute("price", product.getPrice());
         return "product_detail";
     }
-
 
 
     @GetMapping("/hello")
@@ -42,20 +42,19 @@ public class ProductController {
         //model.addAttribute("price", product.getPrice());
         return "product_detail";
     }
-    */
 
-    //@GetMapping("/list")
-    /*
+
     @RequestMapping( method = RequestMethod.GET)
     public List<ProductDto> listProducts(@RequestParam(value = "name", required = false) String name) {
 
         return productService.getByName("name");
     }
-    */
 
 
+
+    //Заработал!
     @RequestMapping( method = RequestMethod.GET)
-    public String printHello(ModelMap model){
+    public String printHello(ModelMap model){ ;
         System.out.println("I m here!!!!!!!!!");
         model.addAttribute("message", "Hello Spring MVC Framework!");
         return "hello"; //имя вида

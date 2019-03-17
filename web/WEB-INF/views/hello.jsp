@@ -9,7 +9,7 @@
 
 <html>
 <head>
-    <title>Hello Spring MVC</title>
+    <title>$Hello Spring MVC$</title>
 </head>
 
 <body>
