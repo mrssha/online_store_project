@@ -43,12 +43,18 @@ public class Main {
             CriteriaQuery<Product> criteriaQuery = builder.createQuery(Product.class);
             Root<Product> root = criteriaQuery.from(Product.class);
 
+            Integer min = 5000;
+            Integer max = 15000;
+
+
             List<Predicate> predicates = new ArrayList<Predicate>();
 
             String name = null;
-            String category = "snowboards";
-            String brand = null;
-            Double price = 10000.0;
+            String category = null;
+            String brand = "K2";
+            //Double minPrice = Double.valueOf(min);
+            //Double maxPrice = Double.valueOf(max);
+
 
 
             if (name != null) {
@@ -63,9 +69,26 @@ public class Main {
                 predicates.add(
                         builder.equal(root.get("brand"), brand));
             }
-            if (price != null) {
-                predicates.add(
-                        builder.between(root.get("price"), 0, 12000));
+            if (min != null){
+                if (max != null){
+                    Double minPrice = Double.valueOf(min);
+                    Double maxPrice = Double.valueOf(max);
+                    predicates.add(
+                            builder.between(root.get("price"), minPrice, maxPrice));
+                }
+                else {
+                    Double minPrice = Double.valueOf(min);
+                    predicates.add(
+                            builder.greaterThanOrEqualTo(root.get("price"), minPrice));
+                }
+            }
+            else{
+                if (max != null){
+                    Double maxPrice = Double.valueOf(max);
+                    predicates.add(
+                            builder.lessThanOrEqualTo(root.get("price"), maxPrice));
+                }
+
             }
 
             criteriaQuery.select(root)
