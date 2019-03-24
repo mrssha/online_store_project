@@ -5,6 +5,8 @@ import dbservice.dao.CustomerDao;
 import dbservice.dto.CustomerDto;
 import dbservice.entity.Customer;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,6 +24,9 @@ public class CustomerServiceImpl implements CustomerService {
     @Autowired
     private CustomerConverter customerConverter;
 
+    @Autowired
+    BCryptPasswordEncoder passwordEncoder;
+
     @Override
     public CustomerDto getCustomerById(long id) {
         return customerConverter.convertToDto(customerDao.getById(id));
@@ -29,7 +34,16 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public CustomerDto getCustomerByEmail(String email) {
-        return customerConverter.convertToDto(customerDao.getByEmail(email));
+        try {
+            return customerConverter.convertToDto(customerDao.getByEmail(email));
+        }
+
+        catch (javax.persistence.NoResultException exception  ){
+            return null;
+        }
+        catch (EmptyResultDataAccessException exception  ){
+            return null;
+        }
     }
 
     @Override
@@ -41,6 +55,8 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     @Transactional
     public void addCustomer(CustomerDto customerDto) {
+        customerDto.setPassword(passwordEncoder.encode(customerDto.getPassword()));
+        customerDto.setRole("ROLE_USER");
         customerDao.add(customerConverter.convertToEntity(customerDto));
     }
 
