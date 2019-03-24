@@ -23,10 +23,10 @@ public class ProductConverterImpl implements ProductConverter {
         productDto.setQuantity(product.getQuantity());
         productDto.setBrand(product.getBrand());
         productDto.setWeight(product.getWeight());
-        productDto.setSex(productDto.getSex());
+        productDto.setSex(product.getSex());
+        productDto.setImageSm(product.getImageSm());
+        productDto.setImageBg(product.getImageBg());
         //productDto.setDescription(product.getDescription());
-        //productDto.setPhotoMd(product.getPhotoMd());
-        //productDto.setPhotoSm(product.getPhotoSm());
         return productDto;
     }
 
@@ -40,6 +40,8 @@ public class ProductConverterImpl implements ProductConverter {
         product.setBrand(productDto.getBrand());
         product.setWeight(productDto.getWeight());
         product.setSex(productDto.getSex());
+        product.setImageSm(productDto.getImageSm());
+        product.setImageBg(productDto.getImageBg());
         return product;
     }
 

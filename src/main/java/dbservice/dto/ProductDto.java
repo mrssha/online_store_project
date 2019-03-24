@@ -15,6 +15,8 @@ public class ProductDto {
     private Double weight;
     private String sex;
     private Integer quantity;
+    private String imageSm;
+    private String imageBg;
 
     public ProductDto(){
     }
@@ -83,6 +85,21 @@ public class ProductDto {
         this.quantity = quantity;
     }
 
+    public String getImageSm() {
+        return imageSm;
+    }
+
+    public void setImageSm(String imageSm) {
+        this.imageSm = imageSm;
+    }
+
+    public String getImageBg() {
+        return imageBg;
+    }
+
+    public void setImageBg(String imageBg) {
+        this.imageBg = imageBg;
+    }
 
     @Override
     public int hashCode() {

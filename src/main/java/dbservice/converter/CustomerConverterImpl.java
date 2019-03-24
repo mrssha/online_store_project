@@ -20,6 +20,7 @@ public class CustomerConverterImpl implements CustomerConverter {
         customerDto.setEmail(customer.getEmail());
         customerDto.setPassword(customer.getPassword());
         customerDto.setBirthDate(customer.getBirthDate());
+        customerDto.setRole(customer.getRole());
         return customerDto;
     }
 
@@ -42,6 +43,7 @@ public class CustomerConverterImpl implements CustomerConverter {
         customer.setEmail(customerDto.getEmail());
         customer.setPassword(customerDto.getPassword());
         customer.setBirthDate(customerDto.getBirthDate());
+        customer.setRole(customerDto.getRole());
         return customer;
     }
 

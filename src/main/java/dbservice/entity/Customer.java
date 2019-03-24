@@ -27,6 +27,9 @@ public class Customer{
     @Column(name = "birth_date")
     private Date birthDate;
 
+    @Column(name = "role")
+    private String role;
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "customer")
     private List<Address> addresses = new ArrayList<>();
 
@@ -102,6 +105,14 @@ public class Customer{
         this.orders = orders;
     }
 
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
     @Override
     public int hashCode() {
         return Objects.hash(this.getId());
@@ -127,6 +138,7 @@ public class Customer{
                 ", secondName='" + secondName + '\'' +
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
+                ", role='" + role + '\'' +
                 ", birthDate=" + birthDate +
                 ", addresses=" + addresses +
                 ", orders=" + orders +

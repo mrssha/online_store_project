@@ -17,6 +17,8 @@ CREATE TABLE IF NOT EXISTS public."product"
     weight double precision,
     sex character varying(6),
     quantity integer NOT NULL,
+    image_sm character varying(45),
+    image_bg character varying(45),
     CONSTRAINT "product_pkey" PRIMARY KEY (id_product)
 );
 
@@ -27,8 +29,10 @@ CREATE TABLE IF NOT EXISTS public."customer"
     first_name character varying(45) NOT NULL,
     second_name character varying(45) NOT NULL,
     email character varying(45) UNIQUE NOT NULL,
-    password character varying(45) NOT NULL,
+    password character varying(255) NOT NULL,
     birth_date date,
+    role character varying(15) NOT NULL
+        CHECK (role in ('ROLE_USER', 'ROLE_ADMIN', 'ROLE_ANONYMOUS')),
     CONSTRAINT "customer_pkey" PRIMARY KEY (id_customer)
 );
 

@@ -33,6 +33,12 @@ public class Product {
     @Column(name = "quantity")
     private Integer quantity;
 
+    @Column(name = "image_sm")
+    private String imageSm;
+
+    @Column(name = "image_bg")
+    private String imageBg;
+
     /*
     // Разбивваем на ManyToOne + OneToMany
     @ManyToMany(fetch = FetchType.LAZY, mappedBy = "products")
@@ -112,6 +118,22 @@ public class Product {
 
     public void setQuantity(Integer quantity) {
         this.quantity = quantity;
+    }
+
+    public String getImageSm() {
+        return imageSm;
+    }
+
+    public void setImageSm(String imageSm) {
+        this.imageSm = imageSm;
+    }
+
+    public String getImageBg() {
+        return imageBg;
+    }
+
+    public void setImageBg(String imageBg) {
+        this.imageBg = imageBg;
     }
 
     public Set<Basket> getBasket() {

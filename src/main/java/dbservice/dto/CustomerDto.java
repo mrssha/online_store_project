@@ -10,6 +10,7 @@ public class CustomerDto {
     private String email;
     private String password;
     private Date birthDate;
+    private String role;
 
     public CustomerDto(){
     }
@@ -62,6 +63,13 @@ public class CustomerDto {
         this.birthDate = birthDate;
     }
 
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
 
     @Override
     public int hashCode() {
@@ -82,13 +90,14 @@ public class CustomerDto {
 
     @Override
     public String toString() {
-        return "Customer{" +
+        return "CustomerDto{" +
                 "id=" + id +
                 ", firstName='" + firstName + '\'' +
                 ", secondName='" + secondName + '\'' +
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
                 ", birthDate=" + birthDate +
+                ", role='" + role + '\'' +
                 '}';
     }
 }
