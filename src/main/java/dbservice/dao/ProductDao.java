@@ -8,13 +8,16 @@ public interface ProductDao {
 
     Product getById(long id);
 
+    List<Product> getAll();
+
     List<Product> getByName(String name);
 
     List<Product> getByCategory(String name);
 
     List<Product> getByBrand(String name);
 
-    List<Product> getByParams(String name, String category, String brand);
+    List<Product> getByParams(String name, String category, String brand,
+                              Integer minPrice, Integer maxPrice);
 
     void add(Product product);
 

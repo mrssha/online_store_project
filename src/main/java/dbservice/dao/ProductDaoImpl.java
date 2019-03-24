@@ -26,14 +26,23 @@ public class ProductDaoImpl implements ProductDao {
         return entityManager.find(Product.class, id);
     }
 
+    @Override
+    public List<Product> getAll() {
+        CriteriaBuilder cBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Product> criteriaQuery = cBuilder.createQuery(Product.class);
+        Root<Product> root = criteriaQuery.from(Product.class);
+        criteriaQuery.select(root);
+        return entityManager.createQuery(criteriaQuery).getResultList();
+    }
+
 
     @Override
-    public List<Product> getByParams(String name, String category, String brand){
+    public List<Product> getByParams(String name, String category, String brand,
+                                     Integer minPrice, Integer maxPrice){
 
         CriteriaBuilder builder = entityManager.getCriteriaBuilder();
         CriteriaQuery<Product> criteriaQuery = builder.createQuery(Product.class);
         Root<Product> root = criteriaQuery.from(Product.class);
-
         List<Predicate> predicates = new ArrayList<Predicate>();
 
         if (name != null) {
@@ -47,6 +56,28 @@ public class ProductDaoImpl implements ProductDao {
         if (brand != null) {
             predicates.add(
                     builder.equal(root.get("brand"), brand));
+        }
+
+        if (minPrice != null){
+            if (maxPrice != null){
+                Double minPriceDouble = Double.valueOf(minPrice);
+                Double maxPriceDouble = Double.valueOf(maxPrice);
+                predicates.add(
+                        builder.between(root.get("price"), minPriceDouble, maxPriceDouble));
+            }
+            else {
+                Double minPriceDouble = Double.valueOf(minPrice);
+                predicates.add(
+                        builder.greaterThanOrEqualTo(root.get("price"), minPriceDouble));
+            }
+        }
+        else{
+            if (maxPrice != null){
+                Double maxPriceDouble = Double.valueOf(maxPrice);
+                predicates.add(
+                        builder.lessThanOrEqualTo(root.get("price"), maxPriceDouble));
+            }
+
         }
         criteriaQuery.select(root)
                 .where(predicates.toArray(new Predicate[]{}));

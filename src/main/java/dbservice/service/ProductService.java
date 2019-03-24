@@ -9,13 +9,16 @@ public interface ProductService {
 
     ProductDto getById(long id);
 
+    List<ProductDto> getAllProducts();
+
     List<ProductDto> getByName(String name);
 
     List<ProductDto> getByCategory(String category);
 
     List<ProductDto> getByBrand(String brand);
 
-    List<ProductDto> getByParams(String name, String category, String brand);
+    List<ProductDto> getByParams(String name, String category, String brand,
+                                 Integer minPrice, Integer maxPrice);
 
     void add(ProductDto product);
 

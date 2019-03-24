@@ -19,9 +19,15 @@ public class ProductServiceImpl implements ProductService {
     @Autowired
     ProductConverter productConverter;
 
+
     @Override
     public ProductDto getById(long id) {
         return productConverter.convertToDto(productDao.getById(id));
+    }
+
+    @Override
+    public List<ProductDto> getAllProducts() {
+        return productConverter.convertToDtoList(productDao.getAll());
     }
 
     @Override
@@ -40,8 +46,10 @@ public class ProductServiceImpl implements ProductService {
         return productConverter.convertToDtoList(productDao.getByBrand(brand));
     }
 
-    public List<ProductDto> getByParams(String name, String category, String brand){
-        return productConverter.convertToDtoList(productDao.getByParams(name, category, brand));
+
+    @Override
+    public List<ProductDto> getByParams(String name, String category, String brand, Integer minPrice, Integer maxPrice){
+        return productConverter.convertToDtoList(productDao.getByParams(name, category, brand, minPrice, maxPrice));
     }
 
     @Override
