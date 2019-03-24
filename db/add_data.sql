@@ -1,10 +1,14 @@
 
-insert into "customer" (first_name, second_name, email, password, birth_date)
-values ('Maria', 'Shalnova', 'mail_1@mail.ru', '123ddd', '1999-01-08');
-insert into "customer" (first_name, second_name, email, password, birth_date)
-values ('Sofia', 'Ivanova', 'mail_2@mail.ru', '123ddd', '1999-01-08');
-insert into "customer" (first_name, second_name, email, password, birth_date)
-values ('Ivan', 'Ivanov', 'ivan@mail.ru', '10004', '2007-01-01');
+
+insert into "customer"(first_name, second_name, email, password, role)
+values ('AdminName', 'AdminSecondName', 'admin@mail.ru', 'admin', 'ROLE_ADMIN');
+
+insert into "customer" (first_name, second_name, email, password, birth_date, role)
+values ('Maria', 'Shalnova', 'mail_1@mail.ru', '123ddd', '1999-01-08', 'ROLE_USER');
+insert into "customer" (first_name, second_name, email, password, birth_date, role)
+values ('Sofia', 'Ivanova', 'mail_2@mail.ru', '123ddd', '1999-01-08', 'ROLE_USER');
+insert into "customer" (first_name, second_name, email, password, birth_date, role)
+values ('Ivan', 'Ivanov', 'ivan@mail.ru', '10004', '2007-01-01', 'ROLE_USER');
 
 
 insert into "address" (id_customer, country, city, postcode, street, flat_number, house_number)
@@ -26,6 +30,28 @@ insert into "product" (name, price, category, brand,weight, sex, quantity)
 values ('Snowboard coat', 5000,'clothes', '666', 300, 'male', 5);
 insert into "product" (name, price, category, brand, weight, sex, quantity)
 values ('Snowboard coat', 5000,'clothes', '666', 300, 'female', 5);
+insert into "product" (name, price, category, brand, weight, sex, quantity)
+values ('Snowboard Volkl', 7000,'snowboards', 'Volkl', 300, 'female', 5);
+
+insert into "product" (name, price, category, brand,weight, sex, quantity)
+values ('Snowboard coat', 5000,'clothes', '666', 300, 'male', 5);
+insert into "product" (name, price, category, brand, weight, sex, quantity)
+values ('Snowboard coat', 5000,'clothes', '666', 300, 'female', 5);
+insert into "product" (name, price, category, brand, weight, sex, quantity)
+values ('Snowboard Volkl', 7000,'snowboards', 'Volkl', 300, 'female', 5);
+
+--Сноуборды
+insert into "product" (name, price, category, brand,weight, sex, quantity, image_sm, image_bg)
+values ('Special Lady 2017-18 lipstick', 8500,'snowboards', 'BF', 300, 'unisex', 10,'1_BF.jpg','1_BF_big.jpg');
+
+insert into "product" (name, price, category, brand,weight, sex, quantity, image_sm, image_bg)
+values ('BF snowboards ELUSIVE 2018-19', 10100,'snowboards', 'BF', 300, 'unisex', 10,'2_BF.jpg','2_BF_big.jpg');
+
+insert into "product" (name, price, category, brand,weight, sex, quantity, image_sm, image_bg)
+values ('BURTON AFTER SCHOOL SPE 2018-19', 10100,'snowboards', 'BURTON', 300, 'unisex', 10,'3_Burton.jpg','3_Burton_big.jpg');
+
+
+
 
 insert into "order" (id_customer, id_customer_address, date_order) values (2, 1, '2018-02-01');
 insert into "order" (id_customer, id_customer_address, date_order) values (1, 3, '2018-01-21');
@@ -58,8 +84,6 @@ ON "order".id_order = "basket".id_order
 join "product"
 ON "product".id_product = "basket".id_product
 where "order".id_order =1) as customers_purchase;
-
-
 
 
 /*
