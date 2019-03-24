@@ -1,0 +1,28 @@
+.card {
+    width: 150px;
+    height: 350px;
+    border: none;
+    margin-bottom: 30px;
+}
+
+.card-body {
+    padding: 0.5rem 0.25rem;
+}
+
+.card-title {
+    height: 60px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: #646464;
+    font-size: 16px;
+    font-weight: 300;
+    line-height: 18px;
+    text-align: center;
+}
+
+.card-text {
+    color: #f05356;
+    font-size: 20px;
+    line-height: 20px;
+    text-align: center;
+}
