@@ -21,43 +21,30 @@ public class ProductController {
     @Autowired
     ProductService productService;
 
+    @RequestMapping( method = RequestMethod.GET)
+    public String homePage(){ ;
+        return "home";
+    }
 
-    @GetMapping("/{id}")
+    @GetMapping("product/{id}")
     public String getProductById(@PathVariable Long id, Model model){
         ProductDto product = productService.getById(id);
-        model.addAttribute("name", product.getName());
-        model.addAttribute(product.getBrand());
-        model.addAttribute("price", product.getPrice());
-        return "product_detail";
+        model.addAttribute("productDetail", product);
+        return "productDetail";
     }
 
 
-    @GetMapping("/hello")
+    @GetMapping("/filter")
     public String getProductByParams(@RequestParam(value = "name", required = false) String name,
+                                     @RequestParam(value = "category", required = false) String category,
                                      @RequestParam(value = "brand", required = false) String brand,
-                                     @RequestParam(value = "category", required = false) String category){
-        List<ProductDto> products = productService.getByParams(name, brand, category);
-        //model.addAttribute("name", product.getName());
-        //model.addAttribute(product.getBrand());
-        //model.addAttribute("price", product.getPrice());
-        return "product_detail";
+                                     @RequestParam(value = "minPrice", required = false) Integer minPrice,
+                                     @RequestParam(value = "maxPrice", required = false) Integer maxPrice,
+                                     ModelMap model){
+        List<ProductDto> products = productService.getByParams(name, category, brand, minPrice, maxPrice);
+        model.addAttribute("selectedProducts", products);
+        return "home";
     }
 
-
-    @RequestMapping( method = RequestMethod.GET)
-    public List<ProductDto> listProducts(@RequestParam(value = "name", required = false) String name) {
-
-        return productService.getByName("name");
-    }
-
-
-
-    //Заработал!
-    @RequestMapping( method = RequestMethod.GET)
-    public String printHello(ModelMap model){ ;
-        System.out.println("I m here!!!!!!!!!");
-        model.addAttribute("message", "Hello Spring MVC Framework!");
-        return "hello"; //имя вида
-    }
 
 }
