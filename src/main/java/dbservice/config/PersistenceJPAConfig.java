@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import java.util.Properties;
 
+
 @Configuration
 @EnableTransactionManagement
 public class PersistenceJPAConfig{
