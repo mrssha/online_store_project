@@ -19,8 +19,8 @@ public class OrderConverterImpl implements OrderConverter {
     @Autowired
     private OrderConverter orderConverter;
 
-    @Autowired
-    private AddressConverter addressConverter;
+    //@Autowired
+    //private AddressConverter addressConverter;
 
     @Override
     public OrderDto convertToDto(Order order) {
@@ -28,7 +28,8 @@ public class OrderConverterImpl implements OrderConverter {
         orderDto.setId(order.getId());
         orderDto.setCustomer(customerConverter.convertToDto(order.getCustomer()));
         orderDto.setDateOrder(order.getDateOrder());
-        orderDto.setCustomerAddress(addressConverter.convertToDto(order.getCustomerAddress()));
+        //orderDto.setCustomerAddress(addressConverter.convertToDto(order.getCustomerAddress()));
+        orderDto.setCustomerAddress(order.getCustomerAddress());
         orderDto.setQuantityProducts(order.getQuantityProducts());
         orderDto.setPayment_amount(order.getPayment_amount());
         orderDto.setPaymentMethod(order.getPaymentMethod());
@@ -53,7 +54,8 @@ public class OrderConverterImpl implements OrderConverter {
         order.setId(orderDto.getId());
         order.setCustomer(customerConverter.convertToEntity(orderDto.getCustomer()));
         order.setDateOrder(orderDto.getDateOrder());
-        order.setCustomerAddress(addressConverter.convertToEntity(orderDto.getCustomerAddress()));
+        //order.setCustomerAddress(addressConverter.convertToEntity(orderDto.getCustomerAddress()));
+        order.setCustomerAddress(orderDto.getCustomerAddress());
         order.setQuantityProducts(orderDto.getQuantityProducts());
         order.setPayment_amount(orderDto.getPayment_amount());
         order.setPaymentMethod(orderDto.getPaymentMethod());

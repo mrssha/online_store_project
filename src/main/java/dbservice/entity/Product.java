@@ -39,12 +39,6 @@ public class Product {
     @Column(name = "image_bg")
     private String imageBg;
 
-    /*
-    // Разбивваем на ManyToOne + OneToMany
-    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "products")
-    private Set<Order> orders;
-    */
-
 
     @OneToMany(
             mappedBy = "product",
@@ -172,7 +166,6 @@ public class Product {
                 ", weight=" + weight +
                 ", sex='" + sex + '\'' +
                 ", quantity=" + quantity +
-                ", basket=" + basket +
                 '}';
     }
 

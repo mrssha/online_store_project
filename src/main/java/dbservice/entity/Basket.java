@@ -8,16 +8,17 @@ import java.util.Objects;
 @Table(name = "basket")
 public class Basket implements Serializable {
 
-    @EmbeddedId
-    private BasketId id;
+    @Id
+    @Column(name = "id_basket")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @MapsId("orderId")
     @JoinColumn(name = "id_order")
     private Order order;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @MapsId("productId")
     @JoinColumn(name = "id_product")
     private Product product;
 
@@ -28,20 +29,11 @@ public class Basket implements Serializable {
 
     }
 
-
-    public Basket(Order order, Product product) {
-        this.order = order;
-        this.product = product;
-        this.id = new BasketId(order.getId(), product.getId());
-    }
-
-
-    //@EmbeddedId
-    public BasketId getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(BasketId id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -77,14 +69,23 @@ public class Basket implements Serializable {
             return false;
 
         Basket basket = (Basket) obj;
-        return Objects.equals(this.getOrder(), basket.getOrder()) &&
+        return basket.getId().equals(this.getId()) &&
+                Objects.equals(this.getOrder(), basket.getOrder()) &&
                 Objects.equals(this.getProduct(), basket.getProduct());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(this.getOrder(), this.getProduct());
+        return Objects.hash(this.getId(), this.getOrder(), this.getProduct());
     }
 
-
+    @Override
+    public String toString() {
+        return "Basket{" +
+                "id=" + id +
+                ", order=" + order +
+                ", product=" + product +
+                ", quantity=" + quantity +
+                '}';
+    }
 }

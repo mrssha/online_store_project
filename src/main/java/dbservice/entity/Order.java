@@ -17,10 +17,16 @@ public class Order {
     @JoinColumn(name = "id_customer", referencedColumnName = "id_customer")
     private Customer customer;
 
+    /*
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_customer_address")
     private Address customerAddress;
-    // Связь односторонняя
+    // Убрала связь
+    */
+
+    @Column(name = "id_customer_address")
+    private Long customerAddress;
+
 
     @Column(name = "date_order", nullable = false)
     private Date dateOrder;
@@ -47,33 +53,12 @@ public class Order {
     @Column(name = "order_status", columnDefinition = "WAIT_PAYMENT")
     private OrderStatus orderStatus;
 
-    /*
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumns ({
-        @JoinColumn(name = "id_customer", referencedColumnName = "id_customer"),
-        @JoinColumn(name = "id_customer_address",referencedColumnName = "id_address")
-    })
-    private Customer customer;
-    */
-
-    /*
-    // Разделяем на OneToMany + ManyToOne
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "Basket",
-            joinColumns =@JoinColumn(name = "id_order", referencedColumnName = "id_order"),
-            inverseJoinColumns = @JoinColumn(name = "id_product", referencedColumnName = "id_product")
-    )
-    private Set<Product> products;
-    */
-
-
     @OneToMany(
             mappedBy = "order",
-            cascade = CascadeType.ALL,
+            cascade = CascadeType.REMOVE,
             orphanRemoval = true
     )
     private Set<Basket> basket = new HashSet<>();
-
 
 
     public Order(){
@@ -95,6 +80,15 @@ public class Order {
         this.customer = customer;
     }
 
+    public Long getCustomerAddress() {
+        return customerAddress;
+    }
+
+    public void setCustomerAddress(Long customerAddress) {
+        this.customerAddress = customerAddress;
+    }
+
+    /*
     public Address getCustomerAddress() {
         return customerAddress;
     }
@@ -102,6 +96,7 @@ public class Order {
     public void setCustomerAddress(Address customerAddress) {
         this.customerAddress = customerAddress;
     }
+    */
 
     public Date getDateOrder() {
         return dateOrder;
@@ -159,6 +154,7 @@ public class Order {
         this.orderStatus = orderStatus;
     }
 
+
     public Set<Basket> getBasket() {
         return basket;
     }
@@ -166,6 +162,7 @@ public class Order {
     public void setBasket(Set<Basket> basket) {
         this.basket = basket;
     }
+
 
     @Override
     public int hashCode() {
@@ -184,7 +181,6 @@ public class Order {
         return order.getId().equals(this.getId());
     }
 
-
     @Override
     public String toString() {
         return "Order{" +
@@ -198,7 +194,6 @@ public class Order {
                 ", deliveryMethod=" + deliveryMethod +
                 ", paymentStatus=" + paymentStatus +
                 ", orderStatus=" + orderStatus +
-                ", basket=" + basket +
                 '}';
     }
 }

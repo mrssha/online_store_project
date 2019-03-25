@@ -12,7 +12,8 @@ public class OrderDto {
 
     private CustomerDto customer;
 
-    private AddressDto customerAddress;
+    //private AddressDto customerAddress;
+    private Long customerAddress;
 
     private Date dateOrder;
 
@@ -48,6 +49,15 @@ public class OrderDto {
         this.customer = customer;
     }
 
+    public Long getCustomerAddress() {
+        return customerAddress;
+    }
+
+    public void setCustomerAddress(Long customerAddress) {
+        this.customerAddress = customerAddress;
+    }
+
+    /*
     public AddressDto getCustomerAddress() {
         return customerAddress;
     }
@@ -55,6 +65,7 @@ public class OrderDto {
     public void setCustomerAddress(AddressDto customerAddress) {
         this.customerAddress = customerAddress;
     }
+    */
 
     public Date getDateOrder() {
         return dateOrder;

@@ -33,7 +33,7 @@ public class Customer{
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "customer")
     private List<Address> addresses = new ArrayList<>();
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY,
+    @OneToMany(cascade = CascadeType.REMOVE, fetch = FetchType.LAZY,
             mappedBy = "customer")
     private Set<Order> orders = new HashSet<>();
 
@@ -138,10 +138,9 @@ public class Customer{
                 ", secondName='" + secondName + '\'' +
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
-                ", role='" + role + '\'' +
                 ", birthDate=" + birthDate +
+                ", role='" + role + '\'' +
                 ", addresses=" + addresses +
-                ", orders=" + orders +
                 '}';
     }
 }

@@ -52,7 +52,6 @@ values ('BURTON AFTER SCHOOL SPE 2018-19', 10100,'snowboards', 'BURTON', 300, 'u
 
 
 
-
 insert into "order" (id_customer, id_customer_address, date_order) values (2, 1, '2018-02-01');
 insert into "order" (id_customer, id_customer_address, date_order) values (1, 3, '2018-01-21');
 insert into "order" (id_customer, id_customer_address, date_order) values (2, 4, '2018-02-02');
