@@ -9,13 +9,21 @@ import java.util.Set;
 
 public interface BasketDao {
 
-    List<Product> getProductsInOrder(Order order);
+    Basket getById(long id);
 
-    List<Basket> getOrdersBasket(Order order);
+    List<Product> getProductsInOrder(long id_order);
+
+    List<Order> getOrdersForProduct(long id_product);
+
+    /*
+    List<Basket> getBasketsByProduct(Product product);
+
+    List<Basket> getBasketsByOrder(Order order);
+    */
 
     void add(Basket basket);
 
-    //void deleteByOrder(Order order);
+    void deleteById(long id);
 
-    //void update(Basket basket);
+    void update(Basket basket);
 }
