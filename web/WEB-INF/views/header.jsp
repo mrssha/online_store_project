@@ -32,6 +32,9 @@
                 <c:if test="${sessionScope.principalUser != null}">
                     <a class="nav-link active" href="profile">Профиль ${sessionScope.principalUser.getFirstName()}</a>
                 </c:if>
+                <c:if test="${sessionScope.principalUser == null}">
+                    <a class="nav-link active" href="signup">Регистрация</a>
+                </c:if>
             </li>
 
             <li class="nav-item">
