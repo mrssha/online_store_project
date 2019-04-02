@@ -14,6 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.HashMap;
 
 
 @Controller
@@ -32,23 +33,17 @@ public class LoginController {
 
     @RequestMapping( value = "/signup", method = RequestMethod.POST)
     public ModelAndView signup(@ModelAttribute("newUser") CustomerDto customerDto){
-        String email = customerDto.getEmail();
         ModelAndView modelAndView = new ModelAndView();
-        if (customerService.getCustomerByEmail(email) != null){
+        String result = customerService.addCustomer(customerDto);
+        if (result.equals("EMAIL_EXIST")){
             String message = "Пользователь с таким email уже существует." +
                     " Введите другой email либо перейдите на сраницу входа в систему";
             modelAndView.addObject("message", message);
             modelAndView.setViewName("signup");
             return modelAndView;
         }
-        // Здесь должна быть валидация
-        //if badvalidation -> return sign_up
-
-        // Обработка exception
-        customerService.addCustomer(customerDto);
         String message = "Регистрация прошла успешно. Введите данные для входа в систему";
         modelAndView.addObject("message_user_created", message);
-        //здесь возможно лучше сделать автологин и переправлять на home
         modelAndView.setViewName("login");
         return modelAndView;
     }
@@ -67,6 +62,7 @@ public class LoginController {
         String email = userDetails.getUsername();
         HttpSession session = request.getSession();
         session.setAttribute("principalUser", customerService.getCustomerByEmail(email));
+//        session.setAttribute("cart", new HashMap<String, Integer>());
         return "home";
     }
 

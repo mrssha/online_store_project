@@ -19,10 +19,10 @@ import java.util.Set;
 public class ProductController {
 
     @Autowired
-    ProductService productService;
+    private ProductService productService;
 
     @RequestMapping( method = RequestMethod.GET)
-    public String homePage(){ ;
+    public String homePage(){
         return "home";
     }
 
