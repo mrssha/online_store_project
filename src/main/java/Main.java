@@ -1,18 +1,12 @@
+import com.sun.org.apache.xalan.internal.xsltc.dom.AdaptiveResultTreeImpl;
 import dbservice.entity.*;
 import org.hibernate.*;
-import org.hibernate.query.Query;
 import org.hibernate.cfg.Configuration;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
-import javax.persistence.metamodel.EntityType;
-
-import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.List;
 
 public class Main {
 
@@ -37,8 +31,12 @@ public class Main {
 
     public static void main(final String[] args) throws Exception {
         final Session session = getSession();
+
+
+
         try {
 
+            /*
             CriteriaBuilder builder = session.getCriteriaBuilder();
             CriteriaQuery<Product> criteriaQuery = builder.createQuery(Product.class);
             Root<Product> root = criteriaQuery.from(Product.class);
@@ -99,6 +97,38 @@ public class Main {
                 System.out.println(product);
             }
             System.out.println(products.size());
+            */
+
+
+            /*
+            Transaction trx = session.beginTransaction();
+            Customer cust3 = (Customer)session.load(Customer.class, 1L);
+            Product prod = (Product)session.load(Product.class, 12L);
+
+
+            Cart cart = new Cart();
+            cart.setCustomer(cust3);
+            cart.setProduct(prod);
+            cart.setQuantity(1);
+            session.persist(cart);
+            trx.commit();
+            */
+
+            long id_customer =  5L;
+            long id_product =  4L;
+            /*
+            CriteriaBuilder cBuilder = session.getCriteriaBuilder();
+            CriteriaQuery<Cart> criteriaQuery = cBuilder.createQuery(Cart.class);
+            Root<Cart> root = criteriaQuery.from(Cart.class);
+            criteriaQuery.select(root);
+            criteriaQuery.where(cBuilder.equal(root.get("customer"), id_customer));
+            List<Cart> carts =  session.createQuery(criteriaQuery).getResultList();
+            System.out.println(carts.size());
+            */
+
+
+
+
 
 
             //Создание Order
@@ -136,17 +166,32 @@ public class Main {
             */
 
 
+            /*
+            long id_product = 11L;
+            CriteriaBuilder cBuilder = session.getCriteriaBuilder();
+            CriteriaQuery<Order> criteriaQuery = cBuilder.createQuery(Order.class);
+            Root<Basket> root = criteriaQuery.from(Basket.class);
+            criteriaQuery.select(root.get("order"));
+            criteriaQuery.where(cBuilder.equal(root.get("product"), id_product));
+            List<Order>  products = session.createQuery(criteriaQuery).getResultList();
+            for (Order product: products){
+                System.out.println(product);
+            }
+            System.out.println(products.size());
+            */
+
+
+
 
             /*
             Transaction trx = session.beginTransaction();
-            Order ord = (Order)session.load(Order.class, 4L);
-            Product prod = (Product)session.load(Product.class, 5L);
+            Order ord = (Order)session.load(Order.class, 1L);
+            Product prod = (Product)session.load(Product.class, 12L);
 
             Basket bas = new Basket();
             bas.setOrder(ord);
             bas.setProduct(prod);
             bas.setQuantity(2);
-            bas.setId(new BasketId(ord.getId(),prod.getId()));
 
             session.persist(bas);
             trx.commit();
@@ -156,11 +201,64 @@ public class Main {
 
 
 
+
             /*
-            // Order находит, но при вызове toString() падает
-            Order ord = (Order) session.load(Order.class, 1L);
-            System.out.println(ord.toString());
+            Transaction trx = session.beginTransaction();
+            Order ord = (Order)session.load(Order.class, 2L);
+            //Product prod = (Product)session.load(Product.class, 2L);
+            //Basket bas = (Basket) session.load(Basket.class, 6L);
+            session.delete(ord);
+            trx.commit();
             */
+
+            /*
+            Transaction trx = session.beginTransaction();
+            Product prod = (Product)session.load(Product.class, 2L);
+            prod.setPrice(9500.0);
+            //Basket bas = (Basket) session.load(Basket.class, 6L);
+            session.update(prod);
+            trx.commit();
+            */
+
+
+
+
+            /*
+            //Order order = (Order)session.load(Order.class, 1L);
+            long id = 1L;
+            CriteriaBuilder cBuilder = session.getCriteriaBuilder();
+            CriteriaQuery<Product> criteriaQuery = cBuilder.createQuery(Product.class);
+            Root<Basket> root = criteriaQuery.from(Basket.class);
+            criteriaQuery.select(root.get("product"));
+            criteriaQuery.where(cBuilder.equal(root.get("order"), id));
+            List<Product> products =  session.createQuery(criteriaQuery).getResultList();
+
+            for (Product product: products){
+                System.out.println(product);
+            }
+            System.out.println(products.size());
+            */
+
+
+
+
+            /*
+            long id = 1L;
+            CriteriaBuilder cBuilder = session.getCriteriaBuilder();
+            CriteriaQuery<Basket> criteriaQuery = cBuilder.createQuery(Basket.class);
+            Root<Basket> root = criteriaQuery.from(Basket.class);
+            criteriaQuery.select(root);
+            criteriaQuery.where(cBuilder.equal(root.get("order"), id));
+            List<Basket> baskets =  session.createQuery(criteriaQuery).getResultList();
+            for (Basket basket: baskets){
+                System.out.println(basket);
+            }
+            System.out.println(baskets.size());
+            */
+
+
+
+
 
 
 
@@ -180,21 +278,29 @@ public class Main {
             */
 
 
+
             /*
             Transaction trx = session.beginTransaction();
-            Customer cust2 = new Customer();
-            cust2.setFirstName("Harry");
-            cust2.setSecondName("Potter");
-            cust2.setEmail("potter@mail.com");
-            cust2.setPassword("alohomora");
+            Customer cus = session.load(Customer.class, 5L);
+            //Customer cust2 = new Customer();
+            //cust2.setFirstName("");
+            //cust2.setSecondName("Potter");
+            //cust2.setEmail("potter@mail.com");
+            //cust2.setPassword("alohomora");
 
             Address address2 = new Address();
-            address2.setId(7L);
-            address2.setStreet("Parnas");
-            address2.setCustomer(cust2);
-            session.save(cust2);
+            //address2.setId(7L);
+            address2.setStreet("Moika");
+            address2.setCustomer(cus);
+
+            session.persist(address2);
             trx.commit();
             */
+
+
+            Customer cus = session.load(Customer.class, 5L);
+            System.out.println(cus.getAddresses());
+
 
 
 

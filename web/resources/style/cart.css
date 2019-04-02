@@ -1,0 +1,21 @@
+.list-group{
+    margin: 40px;
+}
+
+.price{
+    color: #DC143C;
+    font-size: 20px;
+    line-height: 20px;
+    text-align: center;
+}
+
+.cart-amount{
+    font-size: 25px;
+    line-height: 25px;
+}
+
+/*.item-photo{*/
+    /*margin-left: 10px;*/
+    /*border: 1px solid #dddddd;"*/
+/*}*/
+
