@@ -18,6 +18,9 @@ public class AddressConverterImpl implements AddressConverter{
 
     @Override
     public AddressDto convertToDto(Address address) {
+        if (address == null){
+            return null;
+        }
         AddressDto addressDto = new AddressDto();
         addressDto.setId(address.getId());
         addressDto.setCountry(address.getCountry());
@@ -26,13 +29,15 @@ public class AddressConverterImpl implements AddressConverter{
         addressDto.setStreet(address.getStreet());
         addressDto.setFlatNumber(address.getFlatNumber());
         addressDto.setHouseNumber(address.getHouseNumber());
-
         addressDto.setCustomer(customerConverter.convertToDto(address.getCustomer()));
         return addressDto;
     }
 
     @Override
     public Address convertToEntity(AddressDto addressDto) {
+        if (addressDto == null){
+            return null;
+        }
         Address address = new Address();
         address.setId(addressDto.getId());
         address.setCountry(addressDto.getCountry());
@@ -63,20 +68,4 @@ public class AddressConverterImpl implements AddressConverter{
         return addresses;
     }
 
-
-    /*
-    @Override
-    public Set<AddressDto> convertToDtoSet(Set<Address> addresses) {
-        Set<AddressDto> addressesDto = new HashSet<>();
-        for (Address address: addresses){
-            addressesDto.add(convertToDto(address));
-        }
-        return addressesDto;
-    }
-
-    @Override
-    public Set<Address> convertToEntitySet(Set<AddressDto> addressDto) {
-        return null;
-    }
-    */
 }

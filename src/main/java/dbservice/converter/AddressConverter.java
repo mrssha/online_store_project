@@ -16,10 +16,4 @@ public interface AddressConverter {
 
     List<Address> convertToEntityList(List<AddressDto> addressDto);
 
-
-    /*
-    Set<AddressDto> convertToDtoSet(Set<Address> addresses);
-
-    Set<Address> convertToEntitySet(Set<AddressDto> addressDto);
-    */
 }

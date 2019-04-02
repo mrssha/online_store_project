@@ -16,6 +16,9 @@ public class ProductConverterImpl implements ProductConverter {
 
     @Override
     public ProductDto convertToDto(Product product) {
+        if (product == null){
+            return null;
+        }
         ProductDto productDto = new ProductDto();
         productDto.setId(product.getId());
         productDto.setName(product.getName());
@@ -23,6 +26,7 @@ public class ProductConverterImpl implements ProductConverter {
         productDto.setQuantity(product.getQuantity());
         productDto.setBrand(product.getBrand());
         productDto.setWeight(product.getWeight());
+        productDto.setCategory(product.getCategory());
         productDto.setSex(product.getSex());
         productDto.setImageSm(product.getImageSm());
         productDto.setImageBg(product.getImageBg());
@@ -32,12 +36,16 @@ public class ProductConverterImpl implements ProductConverter {
 
     @Override
     public Product convertToEntity(ProductDto productDto) {
+        if (productDto == null){
+            return null;
+        }
         Product product = new Product();
         product.setId(productDto.getId());
         product.setName(productDto.getName());
         product.setPrice(productDto.getPrice());
         product.setQuantity(productDto.getQuantity());
         product.setBrand(productDto.getBrand());
+        product.setCategory(productDto.getCategory());
         product.setWeight(productDto.getWeight());
         product.setSex(productDto.getSex());
         product.setImageSm(productDto.getImageSm());

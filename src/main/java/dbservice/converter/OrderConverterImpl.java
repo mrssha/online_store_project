@@ -16,14 +16,14 @@ public class OrderConverterImpl implements OrderConverter {
     @Autowired
     private CustomerConverter customerConverter;
 
-    @Autowired
-    private OrderConverter orderConverter;
-
     //@Autowired
     //private AddressConverter addressConverter;
 
     @Override
     public OrderDto convertToDto(Order order) {
+        if (order == null){
+            return null;
+        }
         OrderDto orderDto = new OrderDto();
         orderDto.setId(order.getId());
         orderDto.setCustomer(customerConverter.convertToDto(order.getCustomer()));
@@ -50,6 +50,9 @@ public class OrderConverterImpl implements OrderConverter {
 
     @Override
     public Order convertToEntity(OrderDto orderDto) {
+        if (orderDto == null){
+            return null;
+        }
         Order order = new Order();
         order.setId(orderDto.getId());
         order.setCustomer(customerConverter.convertToEntity(orderDto.getCustomer()));
