@@ -47,6 +47,13 @@ public class Product {
     )
     private Set<Basket> basket = new HashSet<>();
 
+    @OneToMany(
+            mappedBy = "product",
+            cascade = CascadeType.REMOVE,
+            orphanRemoval = true
+    )
+    private Set<Cart> cart = new HashSet<>();
+
     public Product(){
     }
 

@@ -37,6 +37,13 @@ public class Customer{
             mappedBy = "customer")
     private Set<Order> orders = new HashSet<>();
 
+    @OneToMany(
+            mappedBy = "customer",
+            cascade = CascadeType.REMOVE,
+            orphanRemoval = true
+    )
+    private Set<Cart> cart = new HashSet<>();
+
     public Customer(){
 
     }

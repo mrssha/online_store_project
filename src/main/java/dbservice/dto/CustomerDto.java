@@ -11,6 +11,7 @@ public class CustomerDto {
     private String password;
     private Date birthDate;
     private String role;
+    //private List<AddressDto> addresses = new ArrayList<>();
 
     public CustomerDto(){
     }
@@ -70,6 +71,16 @@ public class CustomerDto {
     public void setRole(String role) {
         this.role = role;
     }
+
+    /*
+    public List<AddressDto> getAddresses() {
+        return addresses;
+    }
+
+    public void setAddresses(List<AddressDto> addresses) {
+        this.addresses = addresses;
+    }
+    */
 
     @Override
     public int hashCode() {
