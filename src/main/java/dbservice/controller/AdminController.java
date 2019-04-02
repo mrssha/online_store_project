@@ -1,7 +1,6 @@
 package dbservice.controller;
 
 
-import dbservice.dto.AddressDto;
 import dbservice.dto.ProductDto;
 import dbservice.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +24,7 @@ public class AdminController {
     public String manageProducts(ModelMap modelMap){
         List<ProductDto> products = productService.getAllProducts();
         modelMap.addAttribute("products", products);
-        return "manageProducts";
+        return "productManager";
     }
 
     @RequestMapping( value = "/products/addProduct", method = RequestMethod.POST)
@@ -37,6 +36,6 @@ public class AdminController {
 
     @RequestMapping( value = "/categories", method = RequestMethod.GET)
     public String manageCategories(ModelMap modelMap){
-        return "manageProducts";
+        return "productManager";
     }
 }

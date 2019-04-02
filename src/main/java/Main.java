@@ -2,6 +2,7 @@ import com.sun.org.apache.xalan.internal.xsltc.dom.AdaptiveResultTreeImpl;
 import dbservice.entity.*;
 import org.hibernate.*;
 import org.hibernate.cfg.Configuration;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -298,9 +299,9 @@ public class Main {
             */
 
 
-            Customer cus = session.load(Customer.class, 5L);
-            System.out.println(cus.getAddresses());
-
+            BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+            String pas = passwordEncoder.encode("admin");
+            System.out.println(pas);
 
 
 

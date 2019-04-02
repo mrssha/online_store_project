@@ -1,4 +1,6 @@
 
+insert into "customer"(first_name, second_name, email, password, role)
+values ('Admin', 'Admin', 'adm@mail.ru', '$2a$10$aoaPysMjRLQppdJEMDCtTevDyKwKcLHiW0TtF5kT4dxU6aSNFrxdG', 'ROLE_ADMIN');
 
 insert into "customer"(first_name, second_name, email, password, role)
 values ('AdminName', 'AdminSecondName', 'admin@mail.ru', 'admin', 'ROLE_ADMIN');
