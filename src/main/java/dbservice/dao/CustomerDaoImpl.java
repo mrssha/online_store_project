@@ -30,7 +30,8 @@ public class CustomerDaoImpl implements CustomerDao {
         Root <Customer> customerRoot = criteriaQuery.from(Customer.class);
         criteriaQuery.select(customerRoot);
         criteriaQuery.where(cBuilder.equal(customerRoot.get("email"), email));
-        return entityManager.createQuery(criteriaQuery).getSingleResult();
+        return entityManager.createQuery(criteriaQuery).getResultList().
+                stream().findFirst().orElse(null);
     }
 
     @Override

@@ -81,7 +81,6 @@ public class ProductDaoImpl implements ProductDao {
         }
         criteriaQuery.select(root)
                 .where(predicates.toArray(new Predicate[]{}));
-        //execute query and do something with result
         return entityManager.createQuery(criteriaQuery).getResultList();
 
     }

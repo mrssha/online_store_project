@@ -72,6 +72,7 @@ public class AddressDto {
         this.houseNumber = houseNumber;
     }
 
+
     public CustomerDto getCustomer() {
         return customer;
     }
@@ -79,6 +80,7 @@ public class AddressDto {
     public void setCustomer(CustomerDto customer) {
         this.customer = customer;
     }
+
 
     @Override
     public int hashCode() {
@@ -101,7 +103,7 @@ public class AddressDto {
     public String toString() {
         return "AddressDto{" +
                 "id=" + id +
-                ", id_customer=" + customer.getId() +
+                //", id_customer=" + customer.getId() +
                 ", country='" + country + '\'' +
                 ", city='" + city + '\'' +
                 ", postcode=" + postcode +
