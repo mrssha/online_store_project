@@ -7,15 +7,19 @@ import java.util.Set;
 
 public interface CustomerService {
 
-    public CustomerDto getCustomerById(long id);
+    CustomerDto getCustomerById(long id);
 
-    public CustomerDto getCustomerByEmail(String email);
+    CustomerDto getCustomerByEmail(String email);
 
-    public Set<CustomerDto> getAllCustomers();
+    Set<CustomerDto> getAllCustomers();
 
-    public void addCustomer(CustomerDto customerDto);
+    String addCustomer(CustomerDto customerDto);
 
-    public void updateCustomer(CustomerDto customerDto);
+    CustomerDto changeInfo(CustomerDto customerBefore, CustomerDto customerAfter);
 
-    public void deleteCustomerById(long id);
+    String changePassword(String  email, String oldPassword, String newPassword);
+
+    void updateCustomer(CustomerDto customerDto);
+
+    void deleteCustomerById(long id);
 }

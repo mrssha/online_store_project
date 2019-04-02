@@ -21,33 +21,39 @@ public class ProductServiceImpl implements ProductService {
 
 
     @Override
+    @Transactional
     public ProductDto getById(long id) {
         return productConverter.convertToDto(productDao.getById(id));
     }
 
     @Override
+    @Transactional
     public List<ProductDto> getAllProducts() {
         return productConverter.convertToDtoList(productDao.getAll());
     }
 
     @Override
+    @Transactional
     public List<ProductDto> getByName(String name) {
         return productConverter.convertToDtoList(productDao.getByName(name));
     }
 
 
     @Override
+    @Transactional
     public List<ProductDto> getByCategory(String category) {
         return productConverter.convertToDtoList(productDao.getByCategory(category));
     }
 
     @Override
+    @Transactional
     public List<ProductDto> getByBrand(String brand) {
         return productConverter.convertToDtoList(productDao.getByBrand(brand));
     }
 
 
     @Override
+    @Transactional
     public List<ProductDto> getByParams(String name, String category, String brand, Integer minPrice, Integer maxPrice){
         return productConverter.convertToDtoList(productDao.getByParams(name, category, brand, minPrice, maxPrice));
     }

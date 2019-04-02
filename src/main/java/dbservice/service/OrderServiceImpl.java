@@ -1,19 +1,18 @@
 package dbservice.service;
 
 import dbservice.converter.OrderConverter;
+import dbservice.converter.ProductConverter;
+import dbservice.dao.BasketDao;
+import dbservice.dao.CartDao;
 import dbservice.dao.OrderDao;
-import dbservice.dto.CustomerDto;
-import dbservice.dto.OrderDto;
-import dbservice.dto.ProductDto;
-import dbservice.entity.Order;
+import dbservice.dao.ProductDao;
+import dbservice.dto.*;
+import dbservice.entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 @Service
 public class OrderServiceImpl implements OrderService {
@@ -24,22 +23,37 @@ public class OrderServiceImpl implements OrderService {
     @Autowired
     OrderDao orderDao;
 
+    @Autowired
+    ProductDao productDao;
+
+    @Autowired
+    ProductConverter productConverter;
+
+    @Autowired
+    BasketDao basketDao;
+
+    @Autowired
+    CartDao cartDao;
+
     public Map<ProductDto, Integer> getOrdersProducts(OrderDto orderDto){
         return null;
     }
 
     @Override
+    @Transactional
     public OrderDto getById(long id) {
         return orderConverter.convertToDto(orderDao.getById(id));
     }
 
     @Override
+    @Transactional
     public Set<OrderDto> getByCustomerId(long id) {
         Set<Order> orders = new HashSet<>(orderDao.getByCustomerId(id));
         return orderConverter.convertToDtoSet(orders);
     }
 
     @Override
+    @Transactional
     public Set<OrderDto> getByDate(Date date) {
         Set<Order> orders = new HashSet<>(orderDao.getByDate(date));
         return orderConverter.convertToDtoSet(orders);
@@ -65,4 +79,50 @@ public class OrderServiceImpl implements OrderService {
     }
 
 
+
+    @Override
+    @Transactional
+    public void confirmOrder(OrderDto orderDto, List<CartDto> cartItems){
+        Order newOrder = createNewOrder(orderDto, cartItems);
+        orderDao.add(newOrder);
+
+        for (CartDto cartItem: cartItems){
+            Basket orderProduct = new Basket();
+            orderProduct.setOrder(newOrder);
+            orderProduct.setProduct(productConverter.convertToEntity(cartItem.getProduct()));
+            orderProduct.setQuantity(cartItem.getQuantity());
+            basketDao.add(orderProduct);
+
+            Product changedProduct = productDao.getById(cartItem.getProduct().getId());
+            int oldQuantity = changedProduct.getQuantity();
+            changedProduct.setQuantity(oldQuantity - cartItem.getQuantity());
+            productDao.update(changedProduct);
+
+            cartDao.deleteById(cartItem.getId());
+        }
+
+
+    }
+
+
+    private Order createNewOrder(OrderDto orderDto, List<CartDto> cartItems){
+        Order order = orderConverter.convertToEntity(orderDto);
+        Date date = new Date();
+        order.setDateOrder(date);
+        order.setPaymentStatus(PaymentStatus.WAITING);
+        order.setOrderStatus(OrderStatus.WAIT_PAYMENT);
+        int amount = 0;
+        double totalPrice = 0;
+        for(CartDto cart: cartItems){
+            amount += cart.getQuantity();
+            totalPrice += cart.getProduct().getPrice() * cart.getQuantity();
+        }
+        order.setQuantityProducts(amount);
+        order.setPayment_amount(totalPrice);
+        return order;
+    }
+
 }
+
+
+

@@ -38,5 +38,4 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         return new User(customerDto.getEmail(),
                 customerDto.getPassword(), roles);
     }
-
 }

@@ -20,11 +20,13 @@ public class AddressServiceImpl implements AddressService {
 
 
     @Override
+    @Transactional
     public AddressDto getAddressById(long id) {
         return addressConverter.convertToDto(addressDao.getById(id));
     }
 
     @Override
+    @Transactional
     public List<AddressDto> getAddressByCustomerId(long id) {
         return addressConverter.convertToDtoList(addressDao.getByCustomerId(id));
     }

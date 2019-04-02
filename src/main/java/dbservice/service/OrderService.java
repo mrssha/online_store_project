@@ -1,5 +1,6 @@
 package dbservice.service;
 
+import dbservice.dto.CartDto;
 import dbservice.dto.CustomerDto;
 import dbservice.dto.OrderDto;
 import dbservice.dto.ProductDto;
@@ -27,5 +28,7 @@ public interface OrderService {
     void deleteById(long id);
 
     void update(OrderDto order);
+
+    void confirmOrder(OrderDto order, List<CartDto> cartItems);
 
 }

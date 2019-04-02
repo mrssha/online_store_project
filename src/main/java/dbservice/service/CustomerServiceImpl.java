@@ -28,25 +28,19 @@ public class CustomerServiceImpl implements CustomerService {
     BCryptPasswordEncoder passwordEncoder;
 
     @Override
+    @Transactional
     public CustomerDto getCustomerById(long id) {
         return customerConverter.convertToDto(customerDao.getById(id));
     }
 
     @Override
+    @Transactional
     public CustomerDto getCustomerByEmail(String email) {
-        try {
-            return customerConverter.convertToDto(customerDao.getByEmail(email));
-        }
-
-        catch (javax.persistence.NoResultException exception  ){
-            return null;
-        }
-        catch (EmptyResultDataAccessException exception  ){
-            return null;
-        }
+        return customerConverter.convertToDto(customerDao.getByEmail(email));
     }
 
     @Override
+    @Transactional
     public Set<CustomerDto> getAllCustomers() {
         Set<Customer> allCustomers = new HashSet<>(customerDao.getAll());
         return customerConverter.convertToDtoSet(allCustomers);
@@ -54,10 +48,38 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     @Transactional
-    public void addCustomer(CustomerDto customerDto) {
+    public String  addCustomer(CustomerDto customerDto) {
+        String email = customerDto.getEmail();
+        if (getCustomerByEmail(email) != null) {
+            return "EMAIL_EXIST";
+        }
         customerDto.setPassword(passwordEncoder.encode(customerDto.getPassword()));
         customerDto.setRole("ROLE_USER");
         customerDao.add(customerConverter.convertToEntity(customerDto));
+        return "CUSTOMER_CREATED";
+    }
+
+    @Override
+    @Transactional
+    public CustomerDto changeInfo(CustomerDto customerBefore, CustomerDto customerAfter){
+        customerBefore.setFirstName(customerAfter.getFirstName());
+        customerBefore.setSecondName(customerAfter.getSecondName());
+        //customerBefore.setEmail(customerAfter.getEmail());
+        //customerBefore.setBirthDate(customerAfter.getBirthDate());
+        updateCustomer(customerBefore);
+        return customerBefore;
+    }
+
+    @Override
+    @Transactional
+    public String changePassword(String  email, String oldPassword, String newPassword){
+        CustomerDto customerDto = getCustomerByEmail(email);
+        if (passwordEncoder.matches(oldPassword, customerDto.getPassword())){
+            customerDto.setPassword(passwordEncoder.encode(newPassword));
+            updateCustomer(customerDto);
+            return "PASSWORD_CHANGED";
+        }
+        return "INVALID_OLD_PASSWORD";
     }
 
     @Override
