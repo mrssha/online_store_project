@@ -62,7 +62,6 @@ public class LoginController {
         String email = userDetails.getUsername();
         HttpSession session = request.getSession();
         session.setAttribute("principalUser", customerService.getCustomerByEmail(email));
-//        session.setAttribute("cart", new HashMap<String, Integer>());
         return "home";
     }
 
@@ -74,10 +73,5 @@ public class LoginController {
         return "redirect:/login?logout";
     }
 
-
-    @RequestMapping( value = "/admin", method = RequestMethod.GET)
-    public String admin(ModelMap modelMap){
-        return "admin";
-    }
 
 }

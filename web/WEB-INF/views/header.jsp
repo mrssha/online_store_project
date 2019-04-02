@@ -7,6 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
 <nav class="navbar navbar-default bg-light">
     <c:set var="contextPath" value="${pageContext.request.getContextPath()}"/>
@@ -29,6 +30,22 @@
         </ul>
 
         <ul class="nav  justify-content-end" >
+
+            <sec:authorize access="hasRole('ADMIN')">
+
+                <li class="nav-item">
+                    <div class="dropdown">
+                        <a class="btn btn-secondary dropdown-toggle btn-sm" href="" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Admin
+                        </a>
+
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                            <a class="dropdown-item" href="${contextPath}/admin/products">Products</a>
+                            <a class="dropdown-item" href="${contextPath}/admin/categories">Categories</a>
+                        </div>
+                    </div>
+                </li>
+            </sec:authorize>
 
             <li class="nav-item">
                 <c:if test="${sessionScope.principalUser != null}">
