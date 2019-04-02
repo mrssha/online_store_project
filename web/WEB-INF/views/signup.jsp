@@ -50,8 +50,8 @@
         <input type="text" id="secondName" class="form-control" name="secondName"
                value="${newUser.secondName}" placeholder="Second name" required>
 
-        <label for="dateBirth" class="sr-only">Дата рождения</label>
-        <input type="date" id="dateBirth" class="form-control" name="dateBirth"
+        <label for="dateBirthId" class="sr-only">Дата рождения</label>
+        <input type="date" id="dateBirthId" class="form-control" name="birthDate1"
                value="${newUser.birthDate}" placeholder="Date of birth" required>
 
         <button class="btn btn-lg btn-primary btn-block" type="submit">Sign up</button>

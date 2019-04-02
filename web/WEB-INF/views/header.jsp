@@ -9,12 +9,14 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <nav class="navbar navbar-default bg-light">
-    <div class="container-fluid">
+    <c:set var="contextPath" value="${pageContext.request.getContextPath()}"/>
 
+    <div class="container-fluid">
         <ul class="nav">
             <li class="nav-item">
-                <a class="navbar-brand" href="#">
-                    <img src="${pageContext.request.getContextPath()}/resources/image/logo.png" width="30" height="30" class="d-inline-block align-top" alt="">
+                <a class="navbar-brand" href="${pageContext.request.getContextPath()}">
+                    <img src="${pageContext.request.getContextPath()}/resources/image/logo.png"
+                         width="30" height="30" class="d-inline-block align-top" alt="">
                     Letsnow
                 </a>
             </li>
@@ -30,24 +32,24 @@
 
             <li class="nav-item">
                 <c:if test="${sessionScope.principalUser != null}">
-                    <a class="nav-link active" href="profile">Профиль ${sessionScope.principalUser.getFirstName()}</a>
+                    <a class="nav-link active" href="${contextPath}/profile">User profile</a>
                 </c:if>
                 <c:if test="${sessionScope.principalUser == null}">
-                    <a class="nav-link active" href="signup">Регистрация</a>
+                    <a class="nav-link active" href="${contextPath}/signup">Signup</a>
                 </c:if>
             </li>
 
             <li class="nav-item">
                 <c:if test="${sessionScope.principalUser == null}">
-                    <a class="nav-link active" href="login">Войти</a>
+                    <a class="nav-link active" href="${contextPath}/login">Login</a>
                 </c:if>
                 <c:if test="${sessionScope.principalUser != null}">
-                    <a class="nav-link active" href="logout">Выйти</a>
+                    <a class="nav-link active" href="${contextPath}/logout">Logout</a>
                 </c:if>
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" href="#">Корзина</a>
+                <a class="nav-link" href="${contextPath}/cart">Product cart</a>
             </li>
         </ul>
 

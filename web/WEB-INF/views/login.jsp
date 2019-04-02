@@ -55,6 +55,7 @@
                 <input type="checkbox" value="remember-me"> Remember me
             </label>
         </div>
+
         <input type="hidden"
                name="${_csrf.parameterName}"
                value="${_csrf.token}"/>

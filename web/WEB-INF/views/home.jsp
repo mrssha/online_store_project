@@ -13,7 +13,7 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
-    <link href="${contextPath}/resources/style/home.css" rel="stylesheet">
+    <link rel="stylesheet" href="${contextPath}/resources/style/home.css">
 
     <title>Letsnow</title>
 </head>
@@ -68,20 +68,28 @@
         </nav>
 
         <div class="col-md-10">
-            <div class="row justify-content-start product-list">
+            <div class="container-fluid mt-4">
+            <div class="row product-list">
                 <c:forEach items="${requestScope.selectedProducts}" var="product">
                     <div class="col">
-                        <div class="card" >
+                        <div class="card text-center" >
                             <a href="${contextPath}/product/${product.id}">
                                 <img  src="${contextPath}/resources/image/bg/${product.imageBg}" class="card-img-top" alt="product_photo">
                                 <div class="card-body" >
-                                    <h5 class="card-title">${product.name}</h5>
+                                    <p class="card-title">${product.name}</p>
                                     <p class="card-text">${product.price}</p>
                                 </div>
                             </a>
+
+                            <button id="addRemoveId${product.id}" type="button" class="btn"
+                                    onclick="addRemoveProduct('${contextPath}/addRemoveProduct', '${product.id}', id)"
+                                    ${product.quantity eq 0  ? 'disabled="disabled"' : ''}>
+                                Add to cart
+                            </button>
                         </div>
                     </div>
                 </c:forEach>
+            </div>
             </div>
         </div>
     </div>
@@ -96,7 +104,7 @@
 
 
 <script>var contextPath = '${contextPath}'</script>
-
+<script src="${contextPath}/resources/script/tocart.js"></script>
 </body>
 </html>
 
