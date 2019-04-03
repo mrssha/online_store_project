@@ -278,30 +278,38 @@ public class Main {
             System.out.println(prod.toString());
             */
 
-
-
             /*
             Transaction trx = session.beginTransaction();
-            Customer cus = session.load(Customer.class, 5L);
-            //Customer cust2 = new Customer();
-            //cust2.setFirstName("");
-            //cust2.setSecondName("Potter");
-            //cust2.setEmail("potter@mail.com");
-            //cust2.setPassword("alohomora");
-
-            Address address2 = new Address();
-            //address2.setId(7L);
-            address2.setStreet("Moika");
-            address2.setCustomer(cus);
-
-            session.persist(address2);
+            //Customer cus = session.load(Customer.class, 5L);
+            Category category = new Category();
+            category.setCategoryName("snowboards");
+            session.persist(category);
             trx.commit();
             */
 
 
+            /*
+            Transaction trx = session.beginTransaction();
+            Category cat = session.load(Category.class, 1L);
+
+            Product prod = new Product();
+            prod.setName("Сноборд 100500");
+            prod.setPrice(6000.0);
+            prod.setBrand("666");
+            prod.setCategory(cat);
+            prod.setQuantity(12);
+
+            session.persist(prod);
+            trx.commit();
+            */
+
+
+
+            /*
             BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
             String pas = passwordEncoder.encode("admin");
             System.out.println(pas);
+            */
 
 
 

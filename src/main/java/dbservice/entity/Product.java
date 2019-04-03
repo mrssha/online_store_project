@@ -18,8 +18,12 @@ public class Product {
     @Column(name = "price")
     private Double price;
 
-    @Column(name = "category")
-    private String category;
+//    @Column(name = "category")
+//    private String category;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_category")
+    private Category category;
 
     @Column(name = "brand")
     private String brand;
@@ -81,11 +85,21 @@ public class Product {
         this.price = price;
     }
 
+    /*
     public String getCategory() {
         return category;
     }
 
     public void setCategory(String category) {
+        this.category = category;
+    }
+    */
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
         this.category = category;
     }
 
@@ -145,6 +159,14 @@ public class Product {
         this.basket = basket;
     }
 
+    public Set<Cart> getCart() {
+        return cart;
+    }
+
+    public void setCart(Set<Cart> cart) {
+        this.cart = cart;
+    }
+
     @Override
     public int hashCode() {
         return Objects.hash(this.getId());
@@ -164,16 +186,17 @@ public class Product {
 
     @Override
     public String toString() {
-        return "ProductEntity{" +
+        return "Product{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", price=" + price +
-                ", category='" + category + '\'' +
+                ", category=" + category +
                 ", brand='" + brand + '\'' +
                 ", weight=" + weight +
                 ", sex='" + sex + '\'' +
                 ", quantity=" + quantity +
+                ", imageSm='" + imageSm + '\'' +
+                ", imageBg='" + imageBg + '\'' +
                 '}';
     }
-
 }

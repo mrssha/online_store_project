@@ -35,7 +35,7 @@
         <div class="col-md-4">
             <div class="my-3 py-3">
                 <h2 class="display-5">${requestScope.productDetail.name}</h2>
-                <p class="lead">Category: ${requestScope.productDetail.category}</p>
+                <p class="lead">Category: ${requestScope.productDetail.category.categoryName}</p>
                 <p class="lead">Brand: ${requestScope.productDetail.brand}</p>
             </div>
             <div class="my-3 py-3">

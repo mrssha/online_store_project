@@ -17,7 +17,7 @@ public interface ProductService {
 
     List<ProductDto> getByBrand(String brand);
 
-    List<ProductDto> getByParams(String name, String category, String brand,
+    List<ProductDto> getByParams(String name, Long id_category, String brand,
                                  Integer minPrice, Integer maxPrice);
 
     void add(ProductDto product);

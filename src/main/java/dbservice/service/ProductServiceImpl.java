@@ -54,8 +54,8 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     @Transactional
-    public List<ProductDto> getByParams(String name, String category, String brand, Integer minPrice, Integer maxPrice){
-        return productConverter.convertToDtoList(productDao.getByParams(name, category, brand, minPrice, maxPrice));
+    public List<ProductDto> getByParams(String name, Long id_category, String brand, Integer minPrice, Integer maxPrice){
+        return productConverter.convertToDtoList(productDao.getByParams(name, id_category, brand, minPrice, maxPrice));
     }
 
     @Override

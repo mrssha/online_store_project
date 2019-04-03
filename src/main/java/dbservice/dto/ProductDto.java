@@ -1,16 +1,14 @@
 package dbservice.dto;
 
-
-import java.util.HashSet;
 import java.util.Objects;
-import java.util.Set;
 
 public class ProductDto {
 
     private Long id;
     private String name;
     private Double price;
-    private String category;
+    //private String category;
+    private CategoryDto category;
     private String brand;
     private Double weight;
     private String sex;
@@ -45,11 +43,20 @@ public class ProductDto {
         this.price = price;
     }
 
+    /*
     public String getCategory() {
         return category;
     }
 
     public void setCategory(String category) {
+        this.category = category;
+    }*/
+
+    public CategoryDto getCategory() {
+        return category;
+    }
+
+    public void setCategory(CategoryDto category) {
         this.category = category;
     }
 
@@ -118,18 +125,20 @@ public class ProductDto {
         return product.getId().equals(this.getId());
     }
 
+
     @Override
     public String toString() {
         return "ProductDto{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", price=" + price +
-                ", category='" + category + '\'' +
+                ", category=" + category +
                 ", brand='" + brand + '\'' +
                 ", weight=" + weight +
                 ", sex='" + sex + '\'' +
-                ", quantity='" + quantity + '\'' +
+                ", quantity=" + quantity +
+                ", imageSm='" + imageSm + '\'' +
+                ", imageBg='" + imageBg + '\'' +
                 '}';
     }
-
 }

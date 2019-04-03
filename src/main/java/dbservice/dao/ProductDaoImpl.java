@@ -37,8 +37,10 @@ public class ProductDaoImpl implements ProductDao {
 
 
     @Override
-    public List<Product> getByParams(String name, String category, String brand,
+    public List<Product> getByParams(String name, Long id_category, String brand,
                                      Integer minPrice, Integer maxPrice){
+
+
 
         CriteriaBuilder builder = entityManager.getCriteriaBuilder();
         CriteriaQuery<Product> criteriaQuery = builder.createQuery(Product.class);
@@ -49,9 +51,9 @@ public class ProductDaoImpl implements ProductDao {
             predicates.add(
                     builder.equal(root.get("name"), name));
         }
-        if (category != null) {
+        if (id_category != null) {
             predicates.add(
-                    builder.equal(root.get("category"), category));
+                    builder.equal(root.get("category"), id_category));
         }
         if (brand != null) {
             predicates.add(
@@ -84,8 +86,6 @@ public class ProductDaoImpl implements ProductDao {
         return entityManager.createQuery(criteriaQuery).getResultList();
 
     }
-
-
 
 
     @Override

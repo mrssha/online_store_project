@@ -16,7 +16,7 @@ public interface ProductDao {
 
     List<Product> getByBrand(String name);
 
-    List<Product> getByParams(String name, String category, String brand,
+    List<Product> getByParams(String name, Long id_category, String brand,
                               Integer minPrice, Integer maxPrice);
 
     void add(Product product);

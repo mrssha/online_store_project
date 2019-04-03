@@ -28,17 +28,18 @@
             <div class="sidebar-sticky">
                 <form id="filterId" action="filter" method="get">
                     <div class="form-group">
-                        <label for="selectCategoryId">Выберете категорию поиска</label>
-                        <select class="form-control" id="selectCategoryId"
+                        <label for="selectCategory">Category</label>
+                        <select class="form-control" id="selectCategory"
                                 name="category">
-                            <option>snowboards</option>
-                            <option>accessories</option>
-                            <option>clothes</option>
+                            <%--<option selected>Choose category</option>--%>
+                            <c:forEach items="${sessionScope.categories}" var="category">
+                                <option value=${category.id}>${category.categoryName}</option>
+                            </c:forEach>
                         </select>
                     </div>
 
                     <div class="form-group">
-                        <label for="selectBrandId">Брэнд</label>
+                        <label for="selectBrandId">Brand</label>
                         <select multiple class="form-control" id="selectBrandId"
                                 name="brand">
                             <option>K2</option>
@@ -50,18 +51,18 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="minPriceId">Минимальная цена</label>
+                        <label for="minPriceId">Minimum price</label>
                         <input type="number" min=0 class="form-control" name="minPrice"
                                value="${minPrice}" id="minPriceId" placeholder= 0>
                     </div>
 
                     <div class="form-group">
-                        <label for="maxPriceId">Максимальная цена</label>
+                        <label for="maxPriceId">Maximum price</label>
                         <input type="number" min=0 class="form-control" name="maxPrice"
                                value="${maxPrice}" id="maxPriceId" >
                     </div>
 
-                    <button type="submit" class="btn btn-primary mb-2">Применить фильтр</button>
+                    <button type="submit" class="btn btn-primary mb-2">Submit</button>
 
                 </form>
             </div>
