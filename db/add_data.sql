@@ -1,10 +1,7 @@
 
 insert into "customer"(first_name, second_name, email, password, role)
-values ('Admin', 'Admin', 'adm@mail.ru', '$2a$10$aoaPysMjRLQppdJEMDCtTevDyKwKcLHiW0TtF5kT4dxU6aSNFrxdG', 'ROLE_ADMIN');
-
-insert into "customer"(first_name, second_name, email, password, role)
-values ('AdminName', 'AdminSecondName', 'admin@mail.ru', 'admin', 'ROLE_ADMIN');
-
+values ('Admin', 'Admin', 'admin@mail.ru',
+        '$2a$10$aoaPysMjRLQppdJEMDCtTevDyKwKcLHiW0TtF5kT4dxU6aSNFrxdG', 'ROLE_ADMIN');
 insert into "customer" (first_name, second_name, email, password, birth_date, role)
 values ('Maria', 'Shalnova', 'mail_1@mail.ru', '123ddd', '1999-01-08', 'ROLE_USER');
 insert into "customer" (first_name, second_name, email, password, birth_date, role)
@@ -22,35 +19,29 @@ values (1, 'Russia2', 'SPB', 55555, '2 street', 10, 20);
 insert into "address" (id_customer, country, city, postcode, street, flat_number, house_number)
 values (2, 'Russia', 'MOSCOW', 222, 'moscow street', 100, 200);
 
-insert into "product" (name, price, category, brand, weight, sex, quantity)
-values ('Snowboard K2', 15000,'snowboards', 'K2', 300, 'unisex', 10);
-insert into "product" (name, price, category, brand, weight, sex, quantity)
-values ('Snowboard 666', 10000,'snowboards', '666', 400, 'unisex', 3);
-insert into "product" (name, price, category, brand, weight, sex, quantity)
-values ('Snowboard glasses', 5000,'accessories', 'K2', 100, 'unisex', 5);
-insert into "product" (name, price, category, brand,weight, sex, quantity)
-values ('Snowboard coat', 5000,'clothes', '666', 300, 'male', 5);
-insert into "product" (name, price, category, brand, weight, sex, quantity)
-values ('Snowboard coat', 5000,'clothes', '666', 300, 'female', 5);
-insert into "product" (name, price, category, brand, weight, sex, quantity)
-values ('Snowboard Volkl', 7000,'snowboards', 'Volkl', 300, 'female', 5);
 
-insert into "product" (name, price, category, brand,weight, sex, quantity)
-values ('Snowboard coat', 5000,'clothes', '666', 300, 'male', 5);
-insert into "product" (name, price, category, brand, weight, sex, quantity)
-values ('Snowboard coat', 5000,'clothes', '666', 300, 'female', 5);
-insert into "product" (name, price, category, brand, weight, sex, quantity)
-values ('Snowboard Volkl', 7000,'snowboards', 'Volkl', 300, 'female', 5);
+insert into "category"(category_name) values ('snowboards');
+insert into "category"(category_name) values ('snowboard boots');
+insert into "category"(category_name) values ('accessories');
+
+insert into "product" (name, price, id_category, brand, weight, sex, quantity)
+values ('Snowboard K2', 15000, 1 , 'K2', 300, 'unisex', 10);
+insert into "product" (name, price, id_category, brand, weight, sex, quantity)
+values ('Snowboard 666', 10000, 1 , '666', 400, 'unisex', 3);
+insert into "product" (name, price, id_category, brand, weight, sex, quantity)
+values ('Snowboard glasses', 5000, 3 , 'K2', 100, 'unisex', 5);
+insert into "product" (name, price, id_category, brand, weight, sex, quantity)
+values ('Snowboard Volkl', 7000, 1, 'Volkl', 300, 'female', 5);
 
 --Сноуборды
-insert into "product" (name, price, category, brand,weight, sex, quantity, image_sm, image_bg)
-values ('Special Lady 2017-18 lipstick', 8500,'snowboards', 'BF', 300, 'unisex', 10,'1_BF.jpg','1_BF_big.jpg');
+insert into "product" (name, price, id_category, brand,weight, sex, quantity, image_sm, image_bg)
+values ('Special Lady 2017-18 lipstick', 8500, 1 , 'BF', 300, 'unisex', 10,'1_BF.jpg','1_BF_big.jpg');
 
-insert into "product" (name, price, category, brand,weight, sex, quantity, image_sm, image_bg)
-values ('BF snowboards ELUSIVE 2018-19', 10100,'snowboards', 'BF', 300, 'unisex', 10,'2_BF.jpg','2_BF_big.jpg');
+insert into "product" (name, price, id_category, brand,weight, sex, quantity, image_sm, image_bg)
+values ('BF snowboards ELUSIVE 2018-19', 10100, 1 , 'BF', 300, 'unisex', 10,'2_BF.jpg','2_BF_big.jpg');
 
-insert into "product" (name, price, category, brand,weight, sex, quantity, image_sm, image_bg)
-values ('BURTON AFTER SCHOOL SPE 2018-19', 10100,'snowboards', 'BURTON', 300, 'unisex', 10,'3_Burton.jpg','3_Burton_big.jpg');
+insert into "product" (name, price, id_category, brand,weight, sex, quantity, image_sm, image_bg)
+values ('BURTON AFTER SCHOOL SPE 2018-19', 10100, 1, 'BURTON', 300, 'unisex', 10,'3_Burton.jpg','3_Burton_big.jpg');
 
 
 
