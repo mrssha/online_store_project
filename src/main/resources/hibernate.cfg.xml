@@ -21,6 +21,7 @@
         <mapping class="dbservice.entity.Product"/>
         <mapping class="dbservice.entity.Basket"/>
         <mapping class="dbservice.entity.Cart"/>
+        <mapping class="dbservice.entity.Category"/>
         <!-- DB schema will be updated if needed -->
         <!-- <property name="hbm2ddl.auto">update</property> -->
     </session-factory>

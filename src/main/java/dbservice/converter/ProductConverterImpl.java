@@ -4,6 +4,7 @@ import dbservice.dto.OrderDto;
 import dbservice.dto.ProductDto;
 import dbservice.entity.Order;
 import dbservice.entity.Product;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -13,6 +14,10 @@ import java.util.Set;
 
 @Component("productConverter")
 public class ProductConverterImpl implements ProductConverter {
+
+
+    @Autowired
+    private CategoryConverter categoryConverter;
 
     @Override
     public ProductDto convertToDto(Product product) {
@@ -26,7 +31,8 @@ public class ProductConverterImpl implements ProductConverter {
         productDto.setQuantity(product.getQuantity());
         productDto.setBrand(product.getBrand());
         productDto.setWeight(product.getWeight());
-        productDto.setCategory(product.getCategory());
+        //productDto.setCategory(product.getCategory());
+        productDto.setCategory(categoryConverter.convertToDto(product.getCategory()));
         productDto.setSex(product.getSex());
         productDto.setImageSm(product.getImageSm());
         productDto.setImageBg(product.getImageBg());
@@ -45,7 +51,8 @@ public class ProductConverterImpl implements ProductConverter {
         product.setPrice(productDto.getPrice());
         product.setQuantity(productDto.getQuantity());
         product.setBrand(productDto.getBrand());
-        product.setCategory(productDto.getCategory());
+        //product.setCategory(productDto.getCategory());
+        product.setCategory(categoryConverter.convertToEntity(productDto.getCategory()));
         product.setWeight(productDto.getWeight());
         product.setSex(productDto.getSex());
         product.setImageSm(productDto.getImageSm());
