@@ -45,11 +45,27 @@ public class OrderServiceImpl implements OrderService {
         return orderConverter.convertToDto(orderDao.getById(id));
     }
 
+
     @Override
     @Transactional
-    public Set<OrderDto> getByCustomerId(long id) {
-        Set<Order> orders = new HashSet<>(orderDao.getByCustomerId(id));
-        return orderConverter.convertToDtoSet(orders);
+    public List<OrderDto> getAllOrders() {
+        List<Order> orders = orderDao.getAllOrders();
+        List<OrderDto> ordersDto = new ArrayList<>();
+        for (Order order: orders){
+            ordersDto.add(orderConverter.convertToDto(order));
+        }
+        return ordersDto;
+    }
+
+    @Override
+    @Transactional
+    public List<OrderDto> getByCustomerId(long id) {
+        List<Order> orders = orderDao.getByCustomerId(id);
+        List<OrderDto> ordersDto = new ArrayList<>();
+        for (Order order: orders){
+            ordersDto.add(orderConverter.convertToDto(order));
+        }
+        return ordersDto;
     }
 
     @Override

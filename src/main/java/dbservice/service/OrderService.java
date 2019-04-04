@@ -17,7 +17,9 @@ public interface OrderService {
 
     OrderDto getById(long id);
 
-    Set<OrderDto> getByCustomerId(long id);
+    List<OrderDto> getByCustomerId(long id);
+
+    List<OrderDto> getAllOrders();
 
     Set<OrderDto> getByDate(Date date);
 

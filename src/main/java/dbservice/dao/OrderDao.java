@@ -14,6 +14,8 @@ public interface OrderDao {
 
     List<Order> getByCustomerId(long id);
 
+    List<Order> getAllOrders();
+
     List<Order> getByDate(Date date);
 
     int getProductQuantity(Order order, Product product);

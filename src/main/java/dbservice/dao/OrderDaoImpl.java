@@ -36,6 +36,16 @@ public class OrderDaoImpl implements OrderDao {
         return entityManager.createQuery(criteriaQuery).getResultList();
     }
 
+
+    @Override
+    public List<Order> getAllOrders() {
+        CriteriaBuilder cBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Order> criteriaQuery = cBuilder.createQuery(Order.class);
+        Root<Order> root = criteriaQuery.from(Order.class);
+        criteriaQuery.select(root);
+        return entityManager.createQuery(criteriaQuery).getResultList();
+    }
+
     @Override
     public List<Order> getByDate(Date date){
         CriteriaBuilder cBuilder = entityManager.getCriteriaBuilder();
