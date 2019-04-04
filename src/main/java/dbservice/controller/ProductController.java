@@ -29,10 +29,11 @@ public class ProductController {
     private CategoryService categoryService;
 
     @RequestMapping( method = RequestMethod.GET)
-    public String homePage(HttpServletRequest request){
+    public String homePage(HttpServletRequest request, ModelMap modelMap){
         List<CategoryDto> categories = categoryService.getAllCategories();
         HttpSession session = request.getSession();
         session.setAttribute ("categories", categories);
+       // modelMap.addAttribute("categories", categories);
         return "home";
     }
 

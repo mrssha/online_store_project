@@ -71,7 +71,7 @@ public class OrderController {
         newOrder.setCustomer(customer);
         orderService.confirmOrder(newOrder, cartItems);
 
-        return "order_success";
+        return "orderSuccess";
     }
 
 

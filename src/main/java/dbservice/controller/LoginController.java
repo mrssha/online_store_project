@@ -62,7 +62,7 @@ public class LoginController {
         String email = userDetails.getUsername();
         HttpSession session = request.getSession();
         session.setAttribute("principalUser", customerService.getCustomerByEmail(email));
-        return "home";
+        return "redirect:/";
     }
 
 
