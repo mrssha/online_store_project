@@ -28,6 +28,7 @@
 
 <div class="container-fluid">
 
+    <sec:authorize access="isAuthenticated()">
     <div class="row mb-2">
         <div class="col-md-6">
             <div class="my-4 text-center">
@@ -80,35 +81,23 @@
 
         <div class="col-md-6">
 
-            <%--<c:if test="${requestScope.cartItems.size() != 0}">--%>
+            <c:if test="${requestScope.cartItems.size() != 0}">
+                <div class="d-md-flex flex-md-equal w-100 mt-md-5 text-center overflow-hidden">
+                    <div class="bg-light shadow-sm mx-auto" style="width: 70%; height: 250px; border-radius: 21px 21px 21px 21px;">
+                        <div class="my-3 p-3">
+                            <p class="lead">Total: ${requestScope.total} rub</p>
+                            <p class="lead">Amount of products: ${requestScope.amount}</p>
 
-            <div class="d-md-flex flex-md-equal w-100 mt-md-5 text-center overflow-hidden">
-                <div class="bg-light shadow-sm mx-auto" style="width: 70%; height: 250px; border-radius: 21px 21px 21px 21px;">
-                    <div class="my-3 p-3">
-                        <p class="lead">Total: ${requestScope.total} rub</p>
-                        <p class="lead">Amount of products: ${requestScope.amount}</p>
-
-                        <button type="button" class="btn btn-block btn-success btn-lg"
-                                onclick='location.href="${contextPath}/order"'>
-                            Made an order
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <div class="my-3 p-3">
-
-                <sec:authorize access="!isAuthenticated()">
-                    <div class="row site-padding auth justify-content-center">
-                        <div class="col-md-6">
-                            Please Log in to continue
-                            <button  type="button" class="btn btn-success btn"
-                                     onClick='location.href="${contextPath}/login"'>
-                                Go to cart</button>
+                            <button type="button" class="btn btn-block btn-success btn-lg"
+                                    onclick='location.href="${contextPath}/order"'>
+                                Made an order
+                            </button>
                         </div>
                     </div>
-                </sec:authorize>
+                </div>
+            </c:if>
 
+            <div class="my-3 p-3">
                 <%--<c:if test="${requestScope.missingProducts.size() == 0}">--%>
                     <%--<p>Все продукты в наличии</p>--%>
                 <%--</c:if>--%>
@@ -121,6 +110,23 @@
             </div>
         </div>
     </div>
+    </sec:authorize>
+
+    <sec:authorize access="!isAuthenticated()">
+        <div class="d-md-flex flex-md-equal mt-md-5 text-center overflow-hidden">
+            <div class="bg-light shadow-sm mx-auto" style="width: 40%; height: 250px; border-radius: 21px 21px 21px 21px;">
+                <div class="my-3 p-3">
+
+                    <p class="lead">Please Log in to continue</p>
+
+                    <button  type="button" class="btn btn-success btn-lg"
+                             onClick='location.href="${contextPath}/login"'>
+                        Login</button>
+                </div>
+            </div>
+        </div>
+    </sec:authorize>
+
 </div>
 
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

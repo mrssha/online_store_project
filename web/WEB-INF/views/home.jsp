@@ -42,11 +42,13 @@
                         <label for="selectBrandId">Brand</label>
                         <select multiple class="form-control" id="selectBrandId"
                                 name="brand">
-                            <option>K2</option>
+                            <option>Jones</option>
                             <option>BF</option>
-                            <option>666</option>
+                            <option>NIDECKER</option>
                             <option>BURTON</option>
-                            <option>Roxy</option>
+                            <option>ROXY</option>
+                            <option>K2</option>
+                            <option>666</option>
                         </select>
                     </div>
 

@@ -86,12 +86,13 @@
                                name="secondName" placeholder="Second name" required>
                     </div>
 
-                    <div class="form-group">
-                        <label for="inputEmail">Enter email</label>
-                        <input type="email" id="inputEmail" class="form-control my-0" name="email"
-                               value="${sessionScope.principalUser.email}${changeInfo.email}"
-                               placeholder="Email address" required>
-                    </div>
+                    <%--<div class="form-group">--%>
+                        <%--<label for="inputEmail">Enter email</label>--%>
+                        <%--<input type="email" id="inputEmail" class="form-control my-0" name="email"--%>
+                               <%--value="${sessionScope.principalUser.email}${changeInfo.email}"--%>
+                               <%--placeholder="Email address" required>--%>
+                    <%--</div>--%>
+
                     <%--<label for="inputDate">Enter new date of birth</label>--%>
                     <%--<input type="date" class="form-control" id="inputDate" placeholder="Date of birth"--%>
                            <%--value="${changeInfo.birthDate}" name="birthDate">--%>
