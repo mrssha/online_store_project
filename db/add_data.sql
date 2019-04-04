@@ -24,41 +24,63 @@ insert into "category"(category_name) values ('snowboards');
 insert into "category"(category_name) values ('snowboard boots');
 insert into "category"(category_name) values ('accessories');
 
-insert into "product" (name, price, id_category, brand, weight, sex, quantity)
-values ('Snowboard K2', 15000, 1 , 'K2', 300, 'unisex', 10);
-insert into "product" (name, price, id_category, brand, weight, sex, quantity)
-values ('Snowboard 666', 10000, 1 , '666', 400, 'unisex', 3);
+-- insert into "product" (name, price, id_category, brand, weight, sex, quantity)
+-- values ('Snowboard K2', 15000, 1 , 'K2', 300, 'unisex', 10);
+-- insert into "product" (name, price, id_category, brand, weight, sex, quantity)
+-- values ('Snowboard 666', 10000, 1 , '666', 400, 'unisex', 3);
 insert into "product" (name, price, id_category, brand, weight, sex, quantity)
 values ('Snowboard glasses', 5000, 3 , 'K2', 100, 'unisex', 5);
-insert into "product" (name, price, id_category, brand, weight, sex, quantity)
-values ('Snowboard Volkl', 7000, 1, 'Volkl', 300, 'female', 5);
+-- insert into "product" (name, price, id_category, brand, weight, sex, quantity)
+-- values ('Snowboard Volkl', 7000, 1, 'Volkl', 300, 'female', 5);
 
---Сноуборды
+--Сноуборды с картинками
 insert into "product" (name, price, id_category, brand,weight, sex, quantity, image_sm, image_bg)
 values ('Special Lady 2017-18 lipstick', 8500, 1 , 'BF', 300, 'unisex', 10,'1_BF.jpg','1_BF_big.jpg');
 
 insert into "product" (name, price, id_category, brand,weight, sex, quantity, image_sm, image_bg)
-values ('BF snowboards ELUSIVE 2018-19', 10100, 1 , 'BF', 300, 'unisex', 10,'2_BF.jpg','2_BF_big.jpg');
-
-insert into "product" (name, price, id_category, brand,weight, sex, quantity, image_sm, image_bg)
 values ('BURTON AFTER SCHOOL SPE 2018-19', 10100, 1, 'BURTON', 300, 'unisex', 10,'3_Burton.jpg','3_Burton_big.jpg');
 
+insert into "product" (name, price, id_category, brand,weight, sex, quantity, image_sm, image_bg)
+values ('Jones Prodigy 2018-19', 18400, 1, 'Jones', 500, 'unisex', 20,'2_Jones.jpg','2_jones_big.jpg');
+
+insert into "product" (name, price, id_category, brand,weight, sex, quantity, image_sm, image_bg)
+values ('NIDECKER Elle 2018-19', 11200, 1, 'NIDECKER', 600, 'unisex', 20,'4_nid.jpg','4_nid_big.jpg');
+
+insert into "product" (name, price, id_category, brand,weight, sex, quantity, image_sm, image_bg)
+values ('Roxy SMOOTHIE C2 2018-19', 26500, 1, 'ROXY', 1000, 'unisex', 15,'5_roxy.jpg','5_roxy_big.jpg');
+
+insert into "product" (name, price, id_category, brand,weight, sex, quantity, image_sm, image_bg)
+values ('Roxy ALLY BAN 2018-19', 25200, 1, 'ROXY', 700, 'unisex', 8,'6_roxy.jpg','6_roxy_big.jpg');
 
 
-insert into "order" (id_customer, id_customer_address, date_order) values (2, 1, '2018-02-01');
-insert into "order" (id_customer, id_customer_address, date_order) values (1, 3, '2018-01-21');
-insert into "order" (id_customer, id_customer_address, date_order) values (2, 4, '2018-02-02');
+insert into "product" (name, price, id_category, brand,weight, sex, quantity, image_sm, image_bg)
+values ('Roxy SUGAR BAN 2018-19', 24500, 1, 'ROXY', 700, 'unisex', 10,'7_roxy.jpg','7_roxy_big.jpg');
+
+insert into "product" (name, price, id_category, brand,weight, sex, quantity, image_sm, image_bg)
+values ('BURTON YEASAYER SMALLS 2018-19', 15500, 1, 'BURTON', 700, 'unisex',7,'8_burt.jpg','8_burt_big.jpg');
+
+insert into "product" (name, price, id_category, brand,weight, sex, quantity, image_sm, image_bg)
+values ('Jones Solution 2018-19', 52000, 1, 'Jones', 700, 'unisex',2,'10_jones.jpg','10_jones_big.jpg');
+
+insert into "product" (name, price, id_category, brand,weight, sex, quantity, image_sm, image_bg)
+values ('Roxy XOXO ban 2017-18', 26500, 1, 'ROXY', 800, 'unisex', 5,'11_roxy.jpg','11_roxy_big.jpg');
+
+-- delete from "product" where id_product=11;
+
+-- insert into "order" (id_customer, id_customer_address, date_order) values (2, 1, '2018-02-01');
+-- insert into "order" (id_customer, id_customer_address, date_order) values (1, 3, '2018-01-21');
+-- insert into "order" (id_customer, id_customer_address, date_order) values (2, 4, '2018-02-02');
 
 --insert into "order" (id_customer, date_order) values (2, '2018-02-01' );
 --insert into "order" (id_customer, date_order ) values (1,'2018-02-01');
 --insert into "order" (id_customer, date_order ) values (2,'2018-02-01' );
 
-insert into "basket"  (id_order, id_product, quantity) VALUES (1, 2, 1);
-insert into "basket"  (id_order, id_product, quantity) VALUES (1, 5, 1);
-insert into "basket"  (id_order, id_product, quantity) VALUES (1, 3, 2);
-insert into "basket"  (id_order, id_product, quantity) VALUES (2, 2, 2);
-insert into "basket"  (id_order, id_product, quantity) VALUES (2, 5, 3);
-insert into "basket"  (id_order, id_product, quantity) VALUES (1, 1, 1);
+-- insert into "basket"  (id_order, id_product, quantity) VALUES (1, 2, 1);
+-- insert into "basket"  (id_order, id_product, quantity) VALUES (1, 5, 1);
+-- insert into "basket"  (id_order, id_product, quantity) VALUES (1, 3, 2);
+-- insert into "basket"  (id_order, id_product, quantity) VALUES (2, 2, 2);
+-- insert into "basket"  (id_order, id_product, quantity) VALUES (2, 5, 3);
+-- insert into "basket"  (id_order, id_product, quantity) VALUES (1, 1, 1);
 
 
 select "product".id_product, "product".price, "basket".quantity

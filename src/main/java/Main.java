@@ -7,6 +7,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 public class Main {
@@ -36,6 +38,10 @@ public class Main {
 
 
         try {
+
+            Calendar calendar = Calendar.getInstance();
+            Date date =  calendar.getTime();
+            System.out.println(date);
 
             /*
             CriteriaBuilder builder = session.getCriteriaBuilder();
