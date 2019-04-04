@@ -32,7 +32,6 @@
         <ul class="nav  justify-content-end" >
 
             <sec:authorize access="hasRole('ADMIN')">
-
                 <li class="nav-item">
                     <div class="dropdown">
                         <a class="btn btn-secondary dropdown-toggle btn-sm" href="" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -42,10 +41,17 @@
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                             <a class="dropdown-item" href="${contextPath}/admin/products">Products</a>
                             <a class="dropdown-item" href="${contextPath}/admin/categories">Categories</a>
+                            <a class="dropdown-item" href="${contextPath}/admin/orders">Orders</a>
                         </div>
                     </div>
                 </li>
             </sec:authorize>
+
+            <li class="nav-item">
+                <c:if test="${sessionScope.principalUser != null}">
+                    <a class="nav-link active" href="${contextPath}/orders">Orders</a>
+                </c:if>
+            </li>
 
             <li class="nav-item">
                 <c:if test="${sessionScope.principalUser != null}">

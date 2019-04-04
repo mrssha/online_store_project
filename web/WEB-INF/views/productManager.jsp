@@ -25,7 +25,8 @@
 
 <div class="container-fluid">
 
-    <form id="productForm" action="${contextPath}/admin/products/addProduct" method="post" modelAttribute="newProduct">
+    <form id="productForm" action="${contextPath}/admin/products/addProduct"
+          method="post" modelAttribute="newProduct">
 
         <form>
             <div class="my-3 text-center">
@@ -37,20 +38,18 @@
                     <input type="text" name="name" class="form-control" id="selectNameId" required>
                 </div>
                 <div class="col">
-                    <label for="selectCategoryId">Category</label>
-                    <select class="form-control" id="selectCategoryId"
-                            name="category" required>
-                        <option selected>Choose category</option>
-                        <option>snowboards</option>
-                        <option>accessories</option>
-                        <option>clothes</option>
+                    <label for="cat">Category</label>
+                    <select class="form-control" id="cat" name="categoryId">
+                        <c:forEach items="${requestScope.categories}" var="category">
+                        <option value=${category.id}>${category.categoryName}</option>
+                        </c:forEach>
                     </select>
                 </div>
                 <div class="col">
                     <label for="selectBrandId">Brand</label>
                     <select class="form-control" id="selectBrandId"
                             name="brand" required>
-                        <option selected>Choose brand</option>
+                        <%--<option selected>Choose brand</option>--%>
                         <option>K2</option>
                         <option>BF</option>
                         <option>666</option>
@@ -87,7 +86,6 @@
                 </button>
             </div>
         </form>
-
     </form>
 
     <table class="table">
@@ -103,23 +101,31 @@
             <th scope="col">Quantity</th>
             <th scope="col">Small image</th>
             <th scope="col">Big image</th>
+            <th scope="col"></th>
         </tr>
         </thead>
 
         <tbody>
-            <c:forEach items="${requestScope.products}" var="product">
+        <c:forEach items="${requestScope.products}" var="product">
             <tr>
                 <th scope="row">${product.id}</th>
                 <td>${product.name}</td>
-                <td>${product.category}</td>
+                <td>${product.category.categoryName}</td>
                 <td>${product.brand}</td>
                 <td>${product.weight}</td>
                 <td>${product.price}</td>
                 <td>${product.quantity}</td>
                 <td>${product.imageSm}</td>
                 <td>${product.imageBg}</td>
+                <td width="100">
+                    <button id="${product.id}" type="button" class="btn btn-sm"
+                            onclick="deleteRow('${contextPath}/admin/products/delete',
+                                ${product.id}, id)">
+                        delete
+                    </button>
+                </td>
             </tr>
-            </c:forEach>
+        </c:forEach>
         </tbody>
     </table>
 
@@ -132,5 +138,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
+<script src="${contextPath}/resources/script/category.js"></script>
 </body>
 </html>
