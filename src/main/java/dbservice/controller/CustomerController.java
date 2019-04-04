@@ -2,10 +2,11 @@ package dbservice.controller;
 
 import dbservice.dto.AddressDto;
 import dbservice.dto.CustomerDto;
+import dbservice.dto.OrderDto;
 import dbservice.service.AddressService;
 import dbservice.service.CustomerService;
+import dbservice.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
@@ -22,6 +23,9 @@ public class CustomerController {
 
     @Autowired
     private AddressService addressService;
+
+    @Autowired
+    private OrderService orderService;
 
     @RequestMapping( value = "/profile",  method = RequestMethod.GET)
     public String customerProfile(ModelMap modelMap, HttpServletRequest request){
@@ -74,6 +78,16 @@ public class CustomerController {
         CustomerDto changedCustomer = customerService.getCustomerByEmail(email);
         request.getSession().setAttribute("principalUser", changedCustomer);
         return "redirect:/profile";
+    }
+
+    @RequestMapping( value = "/orders",  method = RequestMethod.GET)
+    public String customerOrders(ModelMap modelMap, HttpServletRequest request){
+        Principal principalUser = request.getUserPrincipal();
+        CustomerDto customer = customerService.getCustomerByEmail(principalUser.getName());
+        List<OrderDto> orders = orderService.getByCustomerId(customer.getId());
+        List<AddressDto> addresses =  addressService.getAddressByCustomerId(customer.getId());
+        modelMap.addAttribute("orders", orders);
+        return "orderHistory";
     }
 
 
