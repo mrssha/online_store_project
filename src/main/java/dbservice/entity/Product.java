@@ -18,9 +18,6 @@ public class Product {
     @Column(name = "price")
     private Double price;
 
-//    @Column(name = "category")
-//    private String category;
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_category")
     private Category category;
@@ -44,12 +41,14 @@ public class Product {
     private String imageBg;
 
 
+    /*
     @OneToMany(
             mappedBy = "product",
             cascade = CascadeType.REMOVE,
             orphanRemoval = true
     )
     private Set<Basket> basket = new HashSet<>();
+    */
 
     @OneToMany(
             mappedBy = "product",
@@ -84,16 +83,6 @@ public class Product {
     public void setPrice(Double price) {
         this.price = price;
     }
-
-    /*
-    public String getCategory() {
-        return category;
-    }
-
-    public void setCategory(String category) {
-        this.category = category;
-    }
-    */
 
     public Category getCategory() {
         return category;
@@ -151,6 +140,7 @@ public class Product {
         this.imageBg = imageBg;
     }
 
+    /*
     public Set<Basket> getBasket() {
         return basket;
     }
@@ -158,6 +148,7 @@ public class Product {
     public void setBasket(Set<Basket> basket) {
         this.basket = basket;
     }
+    */
 
     public Set<Cart> getCart() {
         return cart;

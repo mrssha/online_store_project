@@ -1,6 +1,7 @@
 package dbservice.dao;
 
 import dbservice.entity.Address;
+import dbservice.entity.AddressType;
 import dbservice.entity.Customer;
 
 import java.util.List;
@@ -12,6 +13,8 @@ public interface AddressDao {
     List<Address> getByCustomerId(long id);
 
     List<Address> getByCustomer(Customer customer);
+
+    List<Address> getByAddressType(AddressType type);
 
     List<Address> getAll();
 

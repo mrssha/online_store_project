@@ -2,22 +2,18 @@
 insert into "customer"(first_name, second_name, email, password, role)
 values ('Admin', 'Admin', 'admin@mail.ru',
         '$2a$10$aoaPysMjRLQppdJEMDCtTevDyKwKcLHiW0TtF5kT4dxU6aSNFrxdG', 'ROLE_ADMIN');
-insert into "customer" (first_name, second_name, email, password, birth_date, role)
-values ('Maria', 'Shalnova', 'mail_1@mail.ru', '123ddd', '1999-01-08', 'ROLE_USER');
-insert into "customer" (first_name, second_name, email, password, birth_date, role)
-values ('Sofia', 'Ivanova', 'mail_2@mail.ru', '123ddd', '1999-01-08', 'ROLE_USER');
-insert into "customer" (first_name, second_name, email, password, birth_date, role)
-values ('Ivan', 'Ivanov', 'ivan@mail.ru', '10004', '2007-01-01', 'ROLE_USER');
+-- insert into "customer" (first_name, second_name, email, password, birth_date, role)
+-- values ('Maria', 'Shalnova', 'mail_1@mail.ru', '123ddd', '1999-01-08', 'ROLE_USER');
+-- insert into "customer" (first_name, second_name, email, password, birth_date, role)
+-- values ('Sofia', 'Ivanova', 'mail_2@mail.ru', '123ddd', '1999-01-08', 'ROLE_USER');
+-- insert into "customer" (first_name, second_name, email, password, birth_date, role)
+-- values ('Ivan', 'Ivanov', 'ivan@mail.ru', '10004', '2007-01-01', 'ROLE_USER');
 
 
-insert into "address" (id_customer, country, city, postcode, street, flat_number, house_number)
-values (2, 'Russia', 'NN', 123456, 'street', 1, 2);
-insert into "address" (id_customer, country, city, postcode, street, flat_number, house_number)
-values (3, 'Russia', 'NN', 123457, 'street', 2, 3);
-insert into "address" (id_customer, country, city, postcode, street, flat_number, house_number)
-values (1, 'Russia2', 'SPB', 55555, '2 street', 10, 20);
-insert into "address" (id_customer, country, city, postcode, street, flat_number, house_number)
-values (2, 'Russia', 'MOSCOW', 222, 'moscow street', 100, 200);
+insert into "address" ( country, city, postcode, street, flat_number, house_number, address_type)
+values ('Russia', 'NN', 123456, '1 street', 1, 2, 'PICKUP');
+insert into "address" (country, city, postcode, street, flat_number, house_number, address_type)
+values ('Russia', 'SPB', 555555, '2 street', 10, 20, 'PICKUP');
 
 
 insert into "category"(category_name) values ('snowboards');
@@ -28,10 +24,10 @@ insert into "category"(category_name) values ('accessories');
 -- values ('Snowboard K2', 15000, 1 , 'K2', 300, 'unisex', 10);
 -- insert into "product" (name, price, id_category, brand, weight, sex, quantity)
 -- values ('Snowboard 666', 10000, 1 , '666', 400, 'unisex', 3);
+
 insert into "product" (name, price, id_category, brand, weight, sex, quantity)
 values ('Snowboard glasses', 5000, 3 , 'K2', 100, 'unisex', 5);
--- insert into "product" (name, price, id_category, brand, weight, sex, quantity)
--- values ('Snowboard Volkl', 7000, 1, 'Volkl', 300, 'female', 5);
+
 
 --Сноуборды с картинками
 insert into "product" (name, price, id_category, brand,weight, sex, quantity, image_sm, image_bg)

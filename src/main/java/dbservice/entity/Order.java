@@ -17,16 +17,10 @@ public class Order {
     @JoinColumn(name = "id_customer", referencedColumnName = "id_customer")
     private Customer customer;
 
-    /*
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_customer_address")
     private Address customerAddress;
-    // Убрала связь
-    */
-
-    @Column(name = "id_customer_address")
-    private Long customerAddress;
-
 
     @Column(name = "date_order", nullable = false)
     private Date dateOrder;
@@ -80,15 +74,6 @@ public class Order {
         this.customer = customer;
     }
 
-    public Long getCustomerAddress() {
-        return customerAddress;
-    }
-
-    public void setCustomerAddress(Long customerAddress) {
-        this.customerAddress = customerAddress;
-    }
-
-    /*
     public Address getCustomerAddress() {
         return customerAddress;
     }
@@ -96,7 +81,7 @@ public class Order {
     public void setCustomerAddress(Address customerAddress) {
         this.customerAddress = customerAddress;
     }
-    */
+
 
     public Date getDateOrder() {
         return dateOrder;

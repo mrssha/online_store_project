@@ -18,9 +18,10 @@ public class Category {
     @Column(name = "category_name")
     private String categoryName;
 
+    /*
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "category")
     private Set<Product> products = new HashSet<>();
-
+    */
 
     public Category(){
     }
@@ -41,6 +42,7 @@ public class Category {
         this.categoryName = categoryName;
     }
 
+    /*
     public Set<Product> getProducts() {
         return products;
     }
@@ -48,6 +50,7 @@ public class Category {
     public void setProducts(Set<Product> products) {
         this.products = products;
     }
+    */
 
     @Override
     public boolean equals(Object o) {

@@ -1,6 +1,7 @@
 package dbservice.dao;
 
 import dbservice.entity.Address;
+import dbservice.entity.AddressType;
 import dbservice.entity.Customer;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -46,6 +47,18 @@ public class AddressDaoImpl implements AddressDao {
         criteriaQuery.where(cBuilder.equal(root.get("customer"), id));
         return entityManager.createQuery(criteriaQuery).getResultList();
     }
+
+
+    @Override
+    public List<Address> getByAddressType(AddressType type){
+        CriteriaBuilder cBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Address> criteriaQuery = cBuilder.createQuery(Address.class);
+        Root<Address> root = criteriaQuery.from(Address.class);
+        criteriaQuery.select(root);
+        criteriaQuery.where(cBuilder.equal(root.get("addressType"), type));
+        return entityManager.createQuery(criteriaQuery).getResultList();
+    }
+
 
     @Override
     public List<Address> getByCustomer(Customer customer) {
