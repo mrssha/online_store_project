@@ -3,6 +3,7 @@ package dbservice.controller;
 import dbservice.dto.AddressDto;
 import dbservice.dto.CustomerDto;
 import dbservice.dto.OrderDto;
+import dbservice.entity.AddressType;
 import dbservice.service.AddressService;
 import dbservice.service.CustomerService;
 import dbservice.service.OrderService;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
+import java.util.Collections;
 import java.util.List;
 
 @Controller
@@ -29,7 +31,6 @@ public class CustomerController {
 
     @RequestMapping( value = "/profile",  method = RequestMethod.GET)
     public String customerProfile(ModelMap modelMap, HttpServletRequest request){
-        //CustomerDto customer = (CustomerDto) request.getSession().getAttribute("principalUser");
         Principal principalUser = request.getUserPrincipal();
         CustomerDto customer = customerService.getCustomerByEmail(principalUser.getName());
         List<AddressDto> addresses = addressService.getAddressByCustomerId(customer.getId());
@@ -47,6 +48,7 @@ public class CustomerController {
         Principal principalUser = request.getUserPrincipal();
         CustomerDto customer = customerService.getCustomerByEmail(principalUser.getName());
         newAddress.setCustomer(customer);
+        newAddress.setAddressType(AddressType.CUSTOMER);
         addressService.addAddress(newAddress);
         return "redirect:/profile";
     }
@@ -58,7 +60,6 @@ public class CustomerController {
         Principal principalUser = request.getUserPrincipal();
         CustomerDto customer = customerService.getCustomerByEmail(principalUser.getName());
         CustomerDto changedCustomer = customerService.changeInfo(customer, newInfoCustomer);
-        //userDetailsService.loadUserByUsername(changedCustomer.getEmail());
         request.getSession().setAttribute("principalUser", changedCustomer);
         return "redirect:/profile";
     }
@@ -85,7 +86,6 @@ public class CustomerController {
         Principal principalUser = request.getUserPrincipal();
         CustomerDto customer = customerService.getCustomerByEmail(principalUser.getName());
         List<OrderDto> orders = orderService.getByCustomerId(customer.getId());
-        List<AddressDto> addresses =  addressService.getAddressByCustomerId(customer.getId());
         modelMap.addAttribute("orders", orders);
         return "orderHistory";
     }

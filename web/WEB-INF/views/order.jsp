@@ -75,17 +75,17 @@
                         </div>
 
                         <div id = "postamptAddressId" hidden>
-                                <h5 class="my-3">Choose postampt</h5>
+                            <h5 class="my-3">Choose pickup point</h5>
+                            <c:forEach items="${requestScope.pickupPoints}" var="point">
                                 <div class="custom-control custom-radio">
-                                    <input id="point1" name="deliveryAddress" type="radio" class="custom-control-input"
-                                           value=1 required>
-                                    <label class="custom-control-label" for="point1">Point 1</label>
+                                    <input id="pointId${point.id}" name="deliveryAddress" type="radio" class="custom-control-input"
+                                           value="${point.id}" required>
+                                    <label class="custom-control-label" for="pointId${point.id}">
+                                            Point: ${point.houseNumber} ${point.street}, Apt ${point.flatNumber}, ${point.city},
+                                            ${point.postcode}, ${point.country}
+                                    </label>
                                 </div>
-                                <div class="custom-control custom-radio">
-                                    <input id="point2" name="deliveryAddress" type="radio" class="custom-control-input"
-                                           value=2 required>
-                                    <label class="custom-control-label" for="point2">Point 2</label>
-                                </div>
+                            </c:forEach>
                         </div>
 
                         <hr class="mb-4">

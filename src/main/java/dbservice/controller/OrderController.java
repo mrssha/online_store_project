@@ -3,6 +3,7 @@ package dbservice.controller;
 
 import dbservice.dto.*;
 import dbservice.entity.Address;
+import dbservice.entity.AddressType;
 import dbservice.entity.DeliveryMethod;
 import dbservice.service.AddressService;
 import dbservice.service.CartService;
@@ -12,10 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -45,6 +43,7 @@ public class OrderController {
         CustomerDto customer = customerService.getCustomerByEmail(principalUser.getName());
         List<CartDto> cartItems = cartService.getCartItemsByCustomersEmail(principalUser.getName());
         List<AddressDto> addresses = addressService.getAddressByCustomerId(customer.getId());
+        List<AddressDto> pickupPoints = addressService.getByAddressType(AddressType.PICKUP);
 
         int amount = 0;
         double total = 0;
@@ -53,6 +52,7 @@ public class OrderController {
             total += cart.getProduct().getPrice() * cart.getQuantity();
         }
         modelMap.addAttribute("addresses", addresses);
+        modelMap.addAttribute("pickupPoints", pickupPoints);
         modelMap.addAttribute("amount", amount);
         modelMap.addAttribute("total", total);
         return "order";
@@ -61,6 +61,7 @@ public class OrderController {
 
     @RequestMapping( value = "/order/confirmOrder", method = RequestMethod.POST)
     public String confirmOrder(Model model, HttpServletRequest request,
+                               @RequestParam(value = "deliveryAddress") Long address_id,
                                @ModelAttribute("newOrder") OrderDto newOrder){
         Principal principalUser = request.getUserPrincipal();
         List<CartDto> cartItems = cartService.getCartItemsByCustomersEmail(principalUser.getName());
@@ -69,17 +70,11 @@ public class OrderController {
         }
         CustomerDto customer = customerService.getCustomerByEmail(principalUser.getName());
         newOrder.setCustomer(customer);
+        AddressDto address = addressService.getAddressById(address_id);
+        newOrder.setCustomerAddress(address);
         orderService.confirmOrder(newOrder, cartItems);
-
         return "orderSuccess";
     }
-
-
-
-
-
-
-
 
 
     @RequestMapping( value = "/confirm", method = RequestMethod.GET)
