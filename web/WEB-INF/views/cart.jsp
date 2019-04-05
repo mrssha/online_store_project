@@ -42,18 +42,20 @@
                 <c:forEach items="${requestScope.cartItems}" var="cartItem">
                     <li class="list-group-item">
                         <div class="row align-items no-gutters  flex-md-row mb-4  h-md-250 position-relative">
-                        <div class="col-auto d-none d-lg-block" >
-                            <img  src="${contextPath}/resources/image/sm/${cartItem.product.imageSm}"
-                                  class="item-photo" alt="product_photo">
-                        </div>
+                            <a href="${contextPath}/product/${cartItem.product.id}">
+                            <div class="col-auto d-none d-lg-block" >
+                                <img  src="${contextPath}/resources/image/sm/${cartItem.product.imageSm}"
+                                      class="item-photo" alt="product_photo">
+                            </div>
+                            </a>
                         <div class="col p-4 d-flex flex-column position-static">
                             <p class="mb-0">${cartItem.product.name}</p>
                             <div class="mb-1 text-muted">Brand: ${cartItem.product.brand}</div>
                             <div class="mb-1 text-muted">In Stock: ${cartItem.product.quantity}</div>
 
                             <div class="cart-amount my-3 ">
-                                <%--<span data-action="remove" onclick="" class="">–</span>--%>
-                                <button id="add" type="button" class="btn btn-sm"
+
+                                <button id="remove" type="button" class="btn btn-sm"
                                         onclick="removeFromCart('${contextPath}/removeFromCart',
                                                 '${cartItem.product.id}', 'quantityId${cartItem.product.id}')">
                                     _
@@ -66,9 +68,8 @@
                                 </button>
                             </div>
                         </div>
-                            <%--style="border: 1px solid #dddddd;--%>
 
-                        <div class="col p-4 d-flex flex-column text-center position-static">
+                        <div class="col p-4 d-flex flex-column text-center">
                             <p class="price">${cartItem.product.price} rub</p>
                         </div>
 
@@ -84,14 +85,22 @@
             <c:if test="${requestScope.cartItems.size() != 0}">
                 <div class="d-md-flex flex-md-equal w-100 mt-md-5 text-center overflow-hidden">
                     <div class="bg-light shadow-sm mx-auto" style="width: 70%; height: 250px; border-radius: 21px 21px 21px 21px;">
-                        <div class="my-3 p-3">
-                            <p class="lead">Total: ${requestScope.total} rub</p>
-                            <p class="lead">Amount of products: ${requestScope.amount}</p>
+                        <div class="total my-3 p-3">
+                            <p>Total: ${requestScope.total} rub</p>
+                            <p>Products: ${requestScope.amount}</p>
 
-                            <button type="button" class="btn btn-block btn-success btn-lg"
+                            <button type="button" class="btn btn-block btn-success btn-lg my-4"
                                     onclick='location.href="${contextPath}/order"'>
                                 Made an order
                             </button>
+                            <div class="message">
+                                <c:if test="${requestScope.missingProducts.size() != 0}">
+                                    <p class="mb-0">Some products from your order are missing:</p>
+                                    <c:forEach items="${requestScope.missingProducts}" var="missingProduct">
+                                        <p>${missingProduct.name}</p>
+                                    </c:forEach>
+                                </c:if>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -101,12 +110,12 @@
                 <%--<c:if test="${requestScope.missingProducts.size() == 0}">--%>
                     <%--<p>Все продукты в наличии</p>--%>
                 <%--</c:if>--%>
-                <c:if test="${requestScope.missingProducts.size() != 0}">
-                    <p>Некоторые товары из вашего заказа отсутствуют на складе:</p>
-                    <c:forEach items="${requestScope.missingProducts}" var="missingProduct">
-                        <p>${missingProduct}</p>
-                    </c:forEach>
-                </c:if>
+                <%--<c:if test="${requestScope.missingProducts.size() != 0}">--%>
+                    <%--<p>Некоторые товары из вашего заказа отсутствуют на складе:</p>--%>
+                    <%--<c:forEach items="${requestScope.missingProducts}" var="missingProduct">--%>
+                        <%--<p>${missingProduct.name}</p>--%>
+                    <%--</c:forEach>--%>
+                <%--</c:if>--%>
             </div>
         </div>
     </div>

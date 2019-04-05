@@ -71,7 +71,7 @@
         </nav>
 
         <div class="col-md-10">
-            <div class="container-fluid mt-4">
+            <div class="container-fluid mt-5">
             <div class="row product-list">
                 <c:forEach items="${requestScope.selectedProducts}" var="product">
                     <div class="col">

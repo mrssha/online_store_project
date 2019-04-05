@@ -33,7 +33,6 @@ public class ProductController {
         List<CategoryDto> categories = categoryService.getAllCategories();
         HttpSession session = request.getSession();
         session.setAttribute ("categories", categories);
-       // modelMap.addAttribute("categories", categories);
         return "home";
     }
 

@@ -34,9 +34,9 @@ public class CartController {
         Principal principalUser = request.getUserPrincipal();
         if (principalUser != null){
             List<CartDto> cartItems = cartService.getCartItemsByCustomersEmail(principalUser.getName());
-
             model.addAttribute("missingProducts", cartService.checkMissingItems(cartItems));
             model.addAttribute("cartItems", cartItems);
+
             int amount = 0;
             double total = 0;
             for(CartDto cart: cartItems){
@@ -56,17 +56,14 @@ public class CartController {
     public Map<String, String> addRemoveProduct(@RequestBody String id_product, HttpServletRequest request){
         Map<String, String> result = new HashMap<>();
         Principal principalUser = request.getUserPrincipal();
-
         if (principalUser != null){
             // проверка id на null
             String message = cartService.addRemoveCartItem(principalUser.getName(),
                     Long.parseLong(id_product));
             result.put("message", message);
             return result;
-            //return cartService.addRemoveCartItem(principalUser.getName(),
-                    //Long.parseLong(id_product));
         }
-        result.put("message", "hello!!!");
+        result.put("message", "");
         return result;
     }
 

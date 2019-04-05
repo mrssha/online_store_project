@@ -50,11 +50,11 @@
         <input type="password" id="password" class="form-control" name="password"
                placeholder="Password" required>
 
-        <div class="checkbox mb-3">
-            <label>
-                <input type="checkbox" value="remember-me"> Remember me
-            </label>
-        </div>
+        <%--<div class="checkbox mb-3">--%>
+            <%--<label>--%>
+                <%--<input type="checkbox" value="remember-me"> Remember me--%>
+            <%--</label>--%>
+        <%--</div>--%>
 
         <input type="hidden"
                name="${_csrf.parameterName}"

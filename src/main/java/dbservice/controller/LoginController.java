@@ -58,7 +58,6 @@ public class LoginController {
     @RequestMapping( value = "/login", method = RequestMethod.POST)
     public String login(HttpServletRequest request){
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        //System.out.println("User has authorities: " + userDetails.getAuthorities());
         String email = userDetails.getUsername();
         HttpSession session = request.getSession();
         session.setAttribute("principalUser", customerService.getCustomerByEmail(email));
