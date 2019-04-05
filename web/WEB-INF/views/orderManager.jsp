@@ -35,17 +35,17 @@
             <th scope="col">Id</th>
 
             <th scope="col">Date order</th>
-            <th scope="col">Quantity products</th>
+            <th scope="col" width="50">Quantity products</th>
 
             <th scope="col">Total</th>
-            <th scope="col">Payment method</th>
+            <th scope="col" width="100">Payment method</th>
 
             <th scope="col">Delivery method</th>
             <th scope="col">Address delivery</th>
 
             <th scope="col">Payment status</th>
             <th scope="col">Order status</th>
-            <th scope="col"></th>
+            <th scope="col">Save changes</th>
         </tr>
         </thead>
 
@@ -61,39 +61,40 @@
                     <%--<fmt:formatDate pattern="MM/dd/yyyy" value="${date}" var="parsedDate" />--%>
                     <%--<td>${parsedDate}</td>--%>
                 <td>${order.dateOrder}</td>
-                <td>${order.quantityProducts}</td>
+                <td width="10">${order.quantityProducts}</td>
                 <td>${order.payment_amount} rub</td>
                 <td>${order.paymentMethod}</td>
                 <td>${order.deliveryMethod}</td>
-                <td>${order.customerAddress}</td>
-                <td>${order.paymentStatus}</td>
-                <td>${order.orderStatus}</td>
                 <td>
-                    <!-- Button trigger modal -->
-                    <button id="${order.id}" type="button" class="btn btn-sm" data-toggle="modal" data-target="#exampleModal">
-                        Edit
-                    </button>
+                    ${order.customerAddress.houseNumber} ${order.customerAddress.street},
+                    ${order.customerAddress.flatNumber}, ${order.customerAddress.city},
+                    ${order.customerAddress.postcode}, ${order.customerAddress.country}
+                </td>
+                <td>${order.paymentStatus}</td>
 
-                    <!-- Modal -->
-                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <div class="modal-body">
-                                    ...
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                    <button type="button" class="btn btn-primary">Save changes</button>
-                                </div>
-                            </div>
+                <td>
+                    <div class="dropdown show">
+                        <button id ="dropId${order.id}" class="btn bg-white dropdown-toggle" href="#" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                ${order.orderStatus}
+                        </button>
+                        <div id = "menuId${order.id}" class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                            <a class="dropdown-item" onclick="changeValue('dropId${order.id}', 'AWAIT_PAYMENT')">
+                                AWAIT_PAYMENT</a>
+                            <a class="dropdown-item" onclick="changeValue('dropId${order.id}', 'WAIT_SHIPMENT')">
+                                WAIT_SHIPMENT</a>
+                            <a class="dropdown-item" onclick="changeValue('dropId${order.id}', 'SHIPPED')">
+                                SHIPPED</a>
+                            <a class="dropdown-item" onclick="changeValue('dropId${order.id}','DELIVERED')">
+                                DELIVERED</a>
                         </div>
                     </div>
+                </td>
+                <td>
+                    <button id="${order.id}" type="button" class="btn btn-sm"
+                            onclick="update('${contextPath}/admin/orders/save',
+                                ${order.id}, id)">
+                        Save
+                    </button>
 
                 </td>
             </tr>
@@ -110,5 +111,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
+
+<script src="${contextPath}/resources/script/orderManager.js"></script>
 </body>
 </html>

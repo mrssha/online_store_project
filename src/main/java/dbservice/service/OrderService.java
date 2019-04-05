@@ -8,6 +8,7 @@ import dbservice.entity.Address;
 import dbservice.entity.Customer;
 import dbservice.entity.Order;
 
+import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -30,6 +31,8 @@ public interface OrderService {
     void deleteById(long id);
 
     void update(OrderDto order);
+
+    void updateFromJson (String orderJson) throws IOException;
 
     void confirmOrder(OrderDto order, List<CartDto> cartItems);
 

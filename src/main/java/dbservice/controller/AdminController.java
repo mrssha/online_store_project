@@ -85,6 +85,21 @@ public class AdminController {
     }
 
     @ResponseBody
+    @RequestMapping( value = "/orders/save", method = RequestMethod.POST)
+    public void updateOrder(@RequestBody String orderJson){
+        System.out.println(orderJson);
+
+        try {
+            orderService.updateFromJson(orderJson);
+        }
+        catch (IOException e){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid value", e);
+        }
+
+
+    }
+
+    @ResponseBody
     @RequestMapping( value = "/products/delete", method = RequestMethod.POST)
     public void deleteProduct(@RequestBody String id_product){
         productService.deleteById(Long.parseLong(id_product));

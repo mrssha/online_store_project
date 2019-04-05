@@ -45,8 +45,6 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     @Transactional
     public void updateFromJson (String categoryJson) throws IOException {
-
-
         ObjectMapper mapper = new ObjectMapper();
         JsonNode rootNode = mapper.readTree(categoryJson);
         System.out.println(rootNode);
@@ -56,8 +54,6 @@ public class CategoryServiceImpl implements CategoryService {
         CategoryDto categoryDto = getById(id);
         categoryDto.setCategoryName(name);
         update(categoryDto);
-
-
     }
 
     @Override

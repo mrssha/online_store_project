@@ -27,7 +27,11 @@
 <div class="container-fluid">
     <div class="my-3 text-center">
         <h2>Order history</h2>
+        <c:if test="${requestScope.orders.size() == 0}">
+            <p>You have no orders yet.</p>
+        </c:if>
     </div>
+    <c:if test="${requestScope.orders.size() != 0}">
     <table class="table my-3">
         <thead class="thead-dark">
         <tr>
@@ -52,6 +56,7 @@
         <c:set var="count" value="0" scope="page" />
 
         <c:forEach items="${requestScope.orders}" var="order">
+
             <c:set var="count" value="${count + 1}" scope="page"/>
 
             <tr>
@@ -64,13 +69,18 @@
                 <td>${order.payment_amount} rub</td>
                 <td>${order.paymentMethod}</td>
                 <td>${order.deliveryMethod}</td>
-                <td>${order.customerAddress}</td>
+                <td>
+                    ${order.customerAddress.houseNumber} ${order.customerAddress.street},
+                        Apt ${order.customerAddress.flatNumber}, ${order.customerAddress.city},
+                    ${order.customerAddress.postcode}, ${order.customerAddress.country}
+                </td>
                 <td>${order.paymentStatus}</td>
                 <td>${order.orderStatus}</td>
             </tr>
         </c:forEach>
         </tbody>
     </table>
+    </c:if>
 
 </div>
 

@@ -39,9 +39,24 @@ public class Main {
 
         try {
 
-            Calendar calendar = Calendar.getInstance();
-            Date date =  calendar.getTime();
-            System.out.println(date);
+
+            /*
+            AddressType type = AddressType.PICKUP;
+            CriteriaBuilder cBuilder = session.getCriteriaBuilder();
+            CriteriaQuery<Address> criteriaQuery = cBuilder.createQuery(Address.class);
+            Root<Address> root = criteriaQuery.from(Address.class);
+            criteriaQuery.select(root);
+            criteriaQuery.where(cBuilder.equal(root.get("addressType"), type));
+            List<Address> addresses = session.createQuery(criteriaQuery).getResultList();
+            System.out.println(addresses);
+            */
+
+            //OrderStatus.values();
+            //System.out.println(OrderStatus.values());
+
+//            Calendar calendar = Calendar.getInstance();
+//            Date date =  calendar.getTime();
+//            System.out.println(date);
 
             /*
             CriteriaBuilder builder = session.getCriteriaBuilder();

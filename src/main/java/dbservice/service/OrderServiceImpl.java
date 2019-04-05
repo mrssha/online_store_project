@@ -1,5 +1,7 @@
 package dbservice.service;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import dbservice.converter.OrderConverter;
 import dbservice.converter.ProductConverter;
 import dbservice.dao.BasketDao;
@@ -12,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.IOException;
 import java.util.*;
 
 @Service
@@ -88,6 +91,21 @@ public class OrderServiceImpl implements OrderService {
         orderDao.update(orderConverter.convertToEntity(order));
     }
 
+
+    @Override
+    @Transactional
+    public void updateFromJson (String orderJson) throws IOException {
+        ObjectMapper mapper = new ObjectMapper();
+        JsonNode rootNode = mapper.readTree(orderJson);
+        System.out.println(rootNode);
+        Long id = rootNode.get("id").asLong();
+        String orderStatus = rootNode.get("orderStatus").asText();
+        OrderDto orderDto = getById(id);
+        orderDto.setOrderStatus(OrderStatus.valueOf(orderStatus));
+        update(orderDto);
+    }
+
+
     @Override
     @Transactional
     public void deleteById(long id) {
@@ -137,6 +155,8 @@ public class OrderServiceImpl implements OrderService {
         order.setPayment_amount(totalPrice);
         return order;
     }
+
+
 
 }
 
