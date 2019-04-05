@@ -35,6 +35,10 @@ public class Address {
     @Column(name = "house_number")
     private Integer houseNumber;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "address_type")
+    private AddressType addressType;
+
 
     public Address(){
     }
@@ -103,6 +107,14 @@ public class Address {
         this.customer = customer;
     }
 
+    public AddressType getAddressType() {
+        return addressType;
+    }
+
+    public void setAddressType(AddressType addressType) {
+        this.addressType = addressType;
+    }
+
     @Override
     public int hashCode() {
         return Objects.hash(this.getId());
@@ -125,7 +137,6 @@ public class Address {
     public String toString() {
         return "AddressEntity{" +
                 "id=" + id +
-                ", id_customer=" + customer.getId() +
                 ", country='" + country + '\'' +
                 ", city='" + city + '\'' +
                 ", postcode=" + postcode +

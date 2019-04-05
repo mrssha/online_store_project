@@ -1,5 +1,7 @@
 package dbservice.dto;
 
+import dbservice.entity.AddressType;
+
 import java.util.Objects;
 
 public class AddressDto {
@@ -12,6 +14,7 @@ public class AddressDto {
     private Integer flatNumber;
     private Integer houseNumber;
     private CustomerDto customer;
+    private AddressType addressType;
 
     public AddressDto(){
     }
@@ -72,7 +75,6 @@ public class AddressDto {
         this.houseNumber = houseNumber;
     }
 
-
     public CustomerDto getCustomer() {
         return customer;
     }
@@ -81,6 +83,13 @@ public class AddressDto {
         this.customer = customer;
     }
 
+    public AddressType getAddressType() {
+        return addressType;
+    }
+
+    public void setAddressType(AddressType addressType) {
+        this.addressType = addressType;
+    }
 
     @Override
     public int hashCode() {
@@ -103,7 +112,6 @@ public class AddressDto {
     public String toString() {
         return "AddressDto{" +
                 "id=" + id +
-                //", id_customer=" + customer.getId() +
                 ", country='" + country + '\'' +
                 ", city='" + city + '\'' +
                 ", postcode=" + postcode +

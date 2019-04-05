@@ -30,6 +30,7 @@ public class AddressConverterImpl implements AddressConverter{
         addressDto.setFlatNumber(address.getFlatNumber());
         addressDto.setHouseNumber(address.getHouseNumber());
         addressDto.setCustomer(customerConverter.convertToDto(address.getCustomer()));
+        addressDto.setAddressType(address.getAddressType());
         return addressDto;
     }
 
@@ -47,6 +48,7 @@ public class AddressConverterImpl implements AddressConverter{
         address.setFlatNumber(addressDto.getFlatNumber());
         address.setHouseNumber(addressDto.getHouseNumber());
         address.setCustomer(customerConverter.convertToEntity(addressDto.getCustomer()));
+        address.setAddressType(addressDto.getAddressType());
         return address;
     }
 

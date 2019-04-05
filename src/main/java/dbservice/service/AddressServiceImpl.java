@@ -3,6 +3,7 @@ package dbservice.service;
 import dbservice.converter.AddressConverter;
 import dbservice.dao.AddressDao;
 import dbservice.dto.AddressDto;
+import dbservice.entity.AddressType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -33,9 +34,14 @@ public class AddressServiceImpl implements AddressService {
 
     @Override
     @Transactional
+    public List<AddressDto> getByAddressType(AddressType type){
+        return addressConverter.convertToDtoList(addressDao.getByAddressType(type));
+    }
+
+    @Override
+    @Transactional
     public void addAddress(AddressDto addressDto) {
         addressDao.add(addressConverter.convertToEntity(addressDto));
-
     }
 
     @Override

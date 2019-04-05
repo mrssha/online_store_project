@@ -1,19 +1,22 @@
 package dbservice.service;
 
 import dbservice.dto.AddressDto;
+import dbservice.entity.AddressType;
 
 import java.util.List;
 
 
 public interface AddressService {
 
-    public AddressDto getAddressById(long id);
+    AddressDto getAddressById(long id);
 
-    public List<AddressDto> getAddressByCustomerId(long id);
+    List<AddressDto> getAddressByCustomerId(long id);
 
-    public void addAddress(AddressDto addressDto);
+    List<AddressDto> getByAddressType(AddressType type);
 
-    public void updateAddress(AddressDto addressDto);
+    void addAddress(AddressDto addressDto);
 
-    public void deleteAddressById(long id);
+    void updateAddress(AddressDto addressDto);
+
+    void deleteAddressById(long id);
 }
