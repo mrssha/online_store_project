@@ -7,6 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <html>
 <head>
     <title>Customer profile</title>
@@ -18,7 +19,7 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
-    <%--<link rel="stylesheet" href="${contextPath}/resources/style/profile.css">--%>
+    <link rel="stylesheet" href="${contextPath}/resources/style/profile.css">
 </head>
 <body>
 
@@ -28,7 +29,7 @@
     <div class="row my-4" >
         <div class="col-md-1">
         </div>
-        <div class="col-md-3">
+        <div class="col-md-4">
             <div class="my-2 py-2">
                 <h2 class="display-5">${sessionScope.principalUser.firstName} ${sessionScope.principalUser.secondName}</h2>
                 <p class="text-muted mb-0">Email</p>
@@ -39,18 +40,19 @@
                 <p class="mb-0">Date: ${sessionScope.principalUser.birthDate}</p>
             </div>
 
-            <div class="btn-group" role="group" aria-label="Basic example">
+            <div class="btn-group my-3" role="group" aria-label="Basic example">
                 <button id="editInfo" type="button" class="btn btn-outline-info btn-sm m-2" onclick="showFormEdit()">
                     Edit profile info
-                </button>
-                <button id="addAddres" type="button" class="btn btn-outline-info btn-sm m-2" onclick="showFormAddress()">
-                    Add address
                 </button>
                 <button id="editPassword" type="button" class="btn btn-outline-info btn-sm m-2"
                         onclick="showFormEditPassword()">
                     Change password
                 </button>
+                <button id="addAddres" type="button" class="btn btn-outline-info btn-sm m-2" onclick="showFormAddress()">
+                    Add address
+                </button>
             </div>
+
             <c:if test="${requestScope.addresses.size()!=0}">
                 <p class="my-3 text-muted">Addresses:</p>
                 <c:forEach items="${requestScope.addresses}" var="address">
@@ -72,95 +74,162 @@
         </div>
         <div class="col-md-3">
             <div class="my-3">
-                <form id="editProfile" action="${contextPath}/profile/changeInfo" hidden method="post">
+                <form:form id="editProfile" action="${contextPath}/profile/changeInfo"
+                           hidden = "${not empty hiddenInfoForm ? null : 'true'}"
+                           method="post" modelAttribute="changeInfo">
                     <div class="form-group">
-                        <label for="inputFirstName">Enter first name</label>
-                        <input type="text" class="form-control my-0" id="inputFirstName"
-                               value="${sessionScope.principalUser.firstName}${changeInfo.firstName}"
-                               name="firstName" required>
+                        <label for="inputFirstName">Edit first name</label>
+                        <form:input type="text" class="form-control my-0" id="inputFirstName"
+                               value="${sessionScope.principalUser.firstName}"
+                               path="firstName" required ="true"/>
+                        <form:errors path="firstName" cssClass="error"/>
+
                     </div>
                     <div class="form-group">
-                        <label for="inputSecondName">Enter second name</label>
-                        <input type="text" class="form-control my-0" id="inputSecondName"
-                               value="${sessionScope.principalUser.secondName}${changeInfo.secondName}"
-                               name="secondName" placeholder="Second name" required>
+                        <label for="inputSecondName">Edit second name</label>
+                        <form:input type="text" class="form-control my-0" id="inputSecondName"
+                               value="${sessionScope.principalUser.secondName}"
+                               path="secondName" placeholder="Second name" required ="true"/>
+                        <form:errors path="secondName" cssClass="error"/>
                     </div>
 
                     <%--<div class="form-group">--%>
                         <%--<label for="inputEmail">Enter email</label>--%>
                         <%--<input type="email" id="inputEmail" class="form-control my-0" name="email"--%>
-                               <%--value="${sessionScope.principalUser.email}${changeInfo.email}"--%>
+                               <%--value="${sessionScope.principalUser.email}"--%>
                                <%--placeholder="Email address" required>--%>
                     <%--</div>--%>
 
-                    <%--<label for="inputDate">Enter new date of birth</label>--%>
-                    <%--<input type="date" class="form-control" id="inputDate" placeholder="Date of birth"--%>
-                           <%--value="${changeInfo.birthDate}" name="birthDate">--%>
+                    <div class="form-group">
+                        <label for="inputDate">Enter new date of birth</label>
+                        <form:input type="date" class="form-control" id="inputDate"
+                                    placeholder="Date of birth" path="birthDate" required ="true"/>
+                        <form:errors path="birthDate" cssClass="error"/>
+                    </div>
+
                     <button type="submit" class="btn btn-primary mt-2">Submit</button>
-                </form>
+                </form:form>
             </div>
+
             <div class="my-3">
-                <form id="editPasswordForm" action="${contextPath}/profile/changePassword" hidden method="post">
+                <form:form id="editPasswordForm" action="${contextPath}/profile/changePassword"
+                           hidden = "${not empty hiddenPassForm ? null : 'true'}"
+                           method="post" modelAttribute="changePass" >
                     <div class="form-group">
                         <label for="inputPassword1">Enter old password</label>
-                        <input type="password" class="form-control" id="inputPassword1"
-                               name="oldPassword" placeholder="Old password" required>
+                        <form:input type="password" class="form-control" id="inputPassword1"
+                               path ="oldPassword" placeholder="Old password" required ="true"/>
+                        <form:errors path="oldPassword" cssClass="error"/>
                     </div>
                     <div class="form-group">
                         <label for="inputPassword2">Enter new password</label>
-                        <input type="password" class="form-control" id="inputPassword2"
-                               name="newPassword" placeholder="New password" required>
+                        <form:input type="password" class="form-control" id="inputPassword2"
+                               path="newPassword" placeholder="New password" required="true"/>
+                        <form:errors path="newPassword" cssClass="error"/>
                     </div>
                     <button type="submit" class="btn btn-primary mt-2">Submit</button>
-                </form>
+                </form:form>
             </div>
 
             <c:if test ="${not empty requestScope.passEditMessage}">
-                <c:out value="${requestScope.passEditMessage}" />
+                <p id ="mes" class="messageEditPass">${requestScope.passEditMessage}</p>
             </c:if>
-            <%--<div id = "passwordMessageId" class="my-3" hidden>--%>
-                <%--<p>${requestScope.passEditMessage}</p>--%>
-            <%--</div>--%>
 
-        </div>
-        <div class="col-md-3">
             <div class="my-3">
-
-                <form id="addAddressForm" class="needs-validation" hidden
-                      action="${contextPath}/profile/addAddress" method="post">
+                <form:form id="addAddressForm" class="needs-validation"
+                           hidden="${not empty hiddenAddressForm ? null : 'true'}"
+                           action="${contextPath}/profile/addAddress" method="post" modelAttribute="newAddress">
                     <div class="form-group">
                         <label for="inputCountryId">Enter country</label>
-                        <input type="text" class="form-control" name = "country" id="inputCountryId"
-                               value="${newAddress.country}" placeholder="Country" required>
+                        <form:input type="text" class="form-control" id="inputCountryId"
+                                    placeholder="Country" path="country" required ="true"/>
+                        <form:errors path="country" cssClass="error"/>
                     </div>
                     <div class="form-group">
                         <label for="inputCityId">Enter city</label>
-                        <input type="text" class="form-control" name = "city" id="inputCityId"
-                               value="${newAddress.city}" placeholder="City" required>
+                        <form:input type="text" class="form-control" id="inputCityId"
+                                    path="city" placeholder="City" required ="true"/>
+                        <form:errors path="city" cssClass="error"/>
                     </div>
                     <div class="form-group">
                         <label for="inputPostcodeId">Enter new postcode</label>
-                        <input type="text" class="form-control" name="postcode"  id="inputPostcodeId"
-                               value="${newAddress.postcode}" placeholder="Postcode" required>
+                        <form:input type="number" class="form-control"  id="inputPostcodeId"
+                                    path="postcode" placeholder="Postcode" required="true"/>
+                        <form:errors path="postcode" cssClass="error"/>
                     </div>
                     <div class="form-group">
                         <label for="inputStreetId">Enter new street</label>
-                        <input type="text" class="form-control" name="street"  id="inputStreetId"
-                               value="${newAddress.street}" placeholder="Street" required>
+                        <form:input type="text" class="form-control" id="inputStreetId"
+                                    path="street" placeholder="Street" required="true"/>
+                        <form:errors path="street" cssClass="error"/>
                     </div>
-                    <div class="form-group">
-                        <label for="houseNumberId">Enter house number</label>
-                        <input type="number" class="form-control" id="houseNumberId"
-                               value="${newAddress.houseNumber}" name="houseNumber"  required>
-                    </div>
-                    <div class="form-group">
-                    <label for="flatNumberId">Enter flat number</label>
-                    <input type="number" class="form-control" id="flatNumberId"
-                           value="${newAddress.flatNumber}" name="flatNumber"  required>
+                    <div class="form-group form-row">
+                        <div class="col">
+                            <label for="houseNumberId">Enter house number</label>
+                            <form:input type="number" class="form-control" id="houseNumberId"
+                                        path="houseNumber" placeholder="House number" required ="true"/>
+                            <form:errors path="houseNumber" cssClass="error"/>
+                        </div>
+
+                        <div class="col">
+                            <label for="flatNumberId">Enter flat number</label>
+                            <form:input type="number" class="form-control" id="flatNumberId"
+                                        path="flatNumber" placeholder="Flat number" required ="true"/>
+                            <form:errors path="flatNumber" cssClass="error1"/>
+                        </div>
                     </div>
                     <button type="submit" class="btn btn-primary mt-2">Submit</button>
-                </form>
+                </form:form>
             </div>
+
+        </div>
+
+        <%--<div class="col-md-3">--%>
+            <%--<div class="my-3">--%>
+<%----%>
+                <%--<form:form id="addAddressForm" class="needs-validation"--%>
+                           <%--hidden="${not empty hiddenAddressForm ? null : 'true'}"--%>
+                      <%--action="${contextPath}/profile/addAddress" method="post" modelAttribute="newAddress">--%>
+                    <%--<div class="form-group">--%>
+                        <%--<label for="inputCountryId">Enter country</label>--%>
+                        <%--<form:input type="text" class="form-control" name = "country" id="inputCountryId"--%>
+                                <%--placeholder="Country" path="country"/>--%>
+                        <%--<form:errors path="country" cssClass="error"/>--%>
+                    <%--</div>--%>
+                    <%--<div class="form-group">--%>
+                        <%--<label for="inputCityId">Enter city</label>--%>
+                        <%--<form:input type="text" class="form-control" name = "city" id="inputCityId"--%>
+                               <%--path="city" placeholder="City" required ="true"/>--%>
+                        <%--<form:errors path="city" cssClass="error"/>--%>
+                    <%--</div>--%>
+                    <%--<div class="form-group">--%>
+                        <%--<label for="inputPostcodeId">Enter new postcode</label>--%>
+                        <%--<form:input type="number" class="form-control" name="postcode"  id="inputPostcodeId"--%>
+                               <%--path="postcode" placeholder="Postcode" required="true"/>--%>
+                        <%--<form:errors path="postcode" cssClass="error"/>--%>
+                    <%--</div>--%>
+                    <%--<div class="form-group">--%>
+                        <%--<label for="inputStreetId">Enter new street</label>--%>
+                        <%--<form:input type="text" class="form-control" name="street"  id="inputStreetId"--%>
+                               <%--path="street" placeholder="Street" required="true"/>--%>
+                        <%--<form:errors path="street" cssClass="error"/>--%>
+                    <%--</div>--%>
+                    <%--<div class="form-group">--%>
+                        <%--<label for="houseNumberId">Enter house number</label>--%>
+                        <%--<form:input type="number" class="form-control" id="houseNumberId"--%>
+                               <%--path="houseNumber" name="houseNumber"  required="true"/>--%>
+                        <%--<form:errors path="houseNumber" cssClass="error"/>--%>
+                    <%--</div>--%>
+                    <%--<div class="form-group">--%>
+                    <%--<label for="flatNumberId">Enter flat number</label>--%>
+                    <%--<form:input type="number" class="form-control" id="flatNumberId"--%>
+                           <%--path="flatNumber" name="flatNumber"  required="true"/>--%>
+                        <%--<form:errors path="flatNumber" cssClass="error"/>--%>
+                    <%--</div>--%>
+                    <%--<button type="submit" class="btn btn-primary mt-2">Submit</button>--%>
+                <%--</form:form>--%>
+            <%--</div>--%>
+
         </div>
     </div>
 </div>

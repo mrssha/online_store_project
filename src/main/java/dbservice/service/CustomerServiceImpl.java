@@ -2,6 +2,8 @@ package dbservice.service;
 
 import dbservice.converter.CustomerConverter;
 import dbservice.dao.CustomerDao;
+import dbservice.dto.ChangeInfoDto;
+import dbservice.dto.ChangePasswordDto;
 import dbservice.dto.CustomerDto;
 import dbservice.entity.Customer;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,21 +63,22 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     @Transactional
-    public CustomerDto changeInfo(CustomerDto customerBefore, CustomerDto customerAfter){
-        customerBefore.setFirstName(customerAfter.getFirstName());
-        customerBefore.setSecondName(customerAfter.getSecondName());
+    public CustomerDto changeInfo(CustomerDto customer, ChangeInfoDto changeInfo){
+        customer.setFirstName(changeInfo.getFirstName());
+        customer.setSecondName(changeInfo.getSecondName());
+        customer.setBirthDate(changeInfo.getBirthDate());
         //customerBefore.setEmail(customerAfter.getEmail());
         //customerBefore.setBirthDate(customerAfter.getBirthDate());
-        updateCustomer(customerBefore);
-        return customerBefore;
+        updateCustomer(customer);
+        return customer;
     }
 
     @Override
     @Transactional
-    public String changePassword(String  email, String oldPassword, String newPassword){
+    public String changePassword(String  email, ChangePasswordDto changePass){
         CustomerDto customerDto = getCustomerByEmail(email);
-        if (passwordEncoder.matches(oldPassword, customerDto.getPassword())){
-            customerDto.setPassword(passwordEncoder.encode(newPassword));
+        if (passwordEncoder.matches(changePass.getOldPassword(), customerDto.getPassword())){
+            customerDto.setPassword(passwordEncoder.encode(changePass.getNewPassword()));
             updateCustomer(customerDto);
             return "PASSWORD_CHANGED";
         }

@@ -1,5 +1,7 @@
 package dbservice.service;
 
+import dbservice.dto.ChangeInfoDto;
+import dbservice.dto.ChangePasswordDto;
 import dbservice.dto.CustomerDto;
 
 import java.util.List;
@@ -15,9 +17,9 @@ public interface CustomerService {
 
     String addCustomer(CustomerDto customerDto);
 
-    CustomerDto changeInfo(CustomerDto customerBefore, CustomerDto customerAfter);
+    CustomerDto changeInfo(CustomerDto customer, ChangeInfoDto changeInfo);
 
-    String changePassword(String  email, String oldPassword, String newPassword);
+    String changePassword(String  email, ChangePasswordDto changePass);
 
     void updateCustomer(CustomerDto customerDto);
 

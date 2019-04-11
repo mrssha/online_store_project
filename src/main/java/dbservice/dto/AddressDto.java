@@ -2,18 +2,39 @@ package dbservice.dto;
 
 import dbservice.entity.AddressType;
 
+import javax.validation.constraints.Digits;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
 import java.util.Objects;
 
 public class AddressDto {
 
     private Long id;
+
+    @NotEmpty(message = "Country shouldn't be empty")
     private String country;
+
+    @NotEmpty(message = "City shouldn't be empty")
     private String city;
+
+    @NotNull(message = "Postcode shouldn't be empty")
+    @Positive
     private Integer postcode;
+
+    @NotEmpty(message = "Street shouldn't be empty")
     private String street;
+
+    @NotNull(message = "Flat number shouldn't be empty")
+    @Positive(message = "Flat number should be greater than 0")
     private Integer flatNumber;
+
+    @NotNull(message = "House number shouldn't be empty")
+    @Positive(message = "House number should be greater than 0")
     private Integer houseNumber;
+
     private CustomerDto customer;
+
     private AddressType addressType;
 
     public AddressDto(){

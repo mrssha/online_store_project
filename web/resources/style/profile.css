@@ -1,0 +1,26 @@
+
+
+.form-group{
+    position: relative;
+}
+
+.error{
+     color: #DC143C;
+     position: absolute;
+     width: 450px;
+     left: 320px;
+     top: 30px;
+     margin-bottom: 0;
+     font-size: 15px;
+ }
+
+
+.error1{
+    color: #DC143C;
+    position: absolute;
+    width: 450px;
+    left: 161px;
+    top: 50px;
+    margin-bottom: 0;
+    font-size: 15px;
+}
