@@ -1,5 +1,6 @@
 
 .form-signup {
+    position: relative;
     width: 100%;
     max-width: 330px;
     padding: 15px;
@@ -28,4 +29,27 @@
     margin-bottom: 20px;
     border-top-left-radius: 0;
     border-top-right-radius: 0;
+}
+
+.itemForm{
+    position: relative;
+}
+
+.error{
+     color: #DC143C;
+     position: absolute;
+     width: 500px;
+     left: 310px;
+     top: 0;
+     margin-bottom: 0;
+     font-size: 15px;
+ }
+
+.error-email{
+    color: #DC143C;
+    position: absolute;
+    width: 300px;
+    left: 330px;
+    top: 60px;
+    font-size: 15px;
 }

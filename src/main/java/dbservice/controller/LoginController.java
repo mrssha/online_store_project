@@ -3,17 +3,25 @@ package dbservice.controller;
 import dbservice.dto.CustomerDto;
 import dbservice.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 
 
@@ -24,6 +32,13 @@ public class LoginController {
     private CustomerService customerService;
 
 
+
+    @Autowired
+    @Qualifier("LocalValidatorFactoryBean")
+    private Validator validator;
+
+
+
     @RequestMapping( value = "/signup", method = RequestMethod.GET)
     public String signup(ModelMap modelMap){
         modelMap.addAttribute("newUser", new CustomerDto());
@@ -31,18 +46,35 @@ public class LoginController {
     }
 
 
+
+    @InitBinder
+    public void initBinder(WebDataBinder binder) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
+        //binder.setValidator(validator);
+    }
+
+
+
     @RequestMapping( value = "/signup", method = RequestMethod.POST)
-    public ModelAndView signup(@ModelAttribute("newUser") CustomerDto customerDto){
+    public ModelAndView signup(@Valid @ModelAttribute("newUser") CustomerDto customerDto,
+                               BindingResult bindResult){
+
         ModelAndView modelAndView = new ModelAndView();
+        if (bindResult.hasErrors()) {
+            modelAndView.setViewName("signup");
+            return modelAndView;
+        }
+
         String result = customerService.addCustomer(customerDto);
         if (result.equals("EMAIL_EXIST")){
-            String message = "Пользователь с таким email уже существует." +
-                    " Введите другой email либо перейдите на сраницу входа в систему";
+            String message = "User with such email already exists. " +
+                    "Please, enter another email or go to the login page.";
             modelAndView.addObject("message", message);
             modelAndView.setViewName("signup");
             return modelAndView;
         }
-        String message = "Регистрация прошла успешно. Введите данные для входа в систему";
+        String message = "Registration completed successfully. Please, enter your login details.";
         modelAndView.addObject("message_user_created", message);
         modelAndView.setViewName("login");
         return modelAndView;

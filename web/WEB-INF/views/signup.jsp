@@ -7,6 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 
 <html>
@@ -29,39 +30,62 @@
 <jsp:include page="header.jsp"/>
 
 <div class="container">
-    <form class="form-signup" action="signup" method="post">
-        <h2 class="h3 mb-3 font-weight-normal">Введите данные для регистрации</h2>
+    <form:form class="form-signup" action="signup" method="post" modelAttribute="newUser">
+        <%--<form:errors cssClass="error"/>--%>
+        <h2 class="h3 mb-3 font-weight-normal">Enter data for sign up</h2>
+
+        <div class="itemForm">
         <label for="inputEmail" class="sr-only">Email*</label>
-        <input type="email" id="inputEmail" class="form-control" name="email"
-               value="${newUser.email}" placeholder="Email address" required autofocus>
+        <form:input type="email" id="inputEmail" class="form-control"
+               placeholder="Email address" path="email" required = "true"/>
+        <form:errors path="email" cssClass="error"/>
+        </div>
 
+        <div class="itemForm">
         <label for="firstPassword" class="sr-only">Введите пароль*</label>
-        <input type="password" id="firstPassword" class="form-control" name="password"
-               value="${newUser.password}" placeholder="Password" required>
+        <form:input type="password" id="firstPassword" class="form-control"
+               placeholder="Password" path="password" required = "true"/>
+        <form:errors path="password" cssClass="error"/>
+        </div>
 
+
+        <div class="itemForm">
         <label for="secondPassword" class="sr-only">Повторите пароль*</label>
-        <input type="password" id="secondPassword" class="form-control" placeholder="Repeat password" required>
+        <form:input type="password" id="secondPassword" class="form-control"
+                    placeholder="Repeat password" path="confirmedPassword" required = "true"/>
+        <form:errors path="confirmedPassword" cssClass="error"/>
+        <form:errors path="valid" cssClass="error"/>
+        </div>
 
+        <div class="itemForm">
         <label for="firstName" class="sr-only">Имя*</label>
-        <input type="text" id="firstName" class="form-control" name="firstName"
-               value="${newUser.firstName}" placeholder="First name" required>
+        <form:input type="text" id="firstName" class="form-control"
+               placeholder="First name" path="firstName" required = "true"/>
+        <form:errors path="firstName" cssClass="error"/>
+        </div>
 
+        <div class="itemForm">
         <label for="secondName" class="sr-only">Фамилия*</label>
-        <input type="text" id="secondName" class="form-control" name="secondName"
-               value="${newUser.secondName}" placeholder="Second name" required>
+        <form:input type="text" id="secondName" class="form-control"
+               placeholder="Second name" path="secondName" required = "true"/>
+        <form:errors path="secondName" cssClass="error"/>
+        </div>
 
+        <div class="itemForm">
         <label for="dateBirthId" class="sr-only">Дата рождения</label>
-        <input type="date" id="dateBirthId" class="form-control" name="birthDate1"
-               value="${newUser.birthDate}" placeholder="Date of birth" required>
+        <form:input type="date" id="dateBirthId" class="form-control"
+               placeholder="Date of birth" path="birthDate" required = "true"/>
+        <form:errors path="birthDate" cssClass="error"/>
+        </div>
 
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign up</button>
+        <button class="btn btn-lg btn-primary btn-block my-3" type="submit">Sign up</button>
 
         <c:if test ="${not empty requestScope.message}">
-            <c:out value="${requestScope.message}" />
+            <p class="error-email">${requestScope.message}</p>
         </c:if>
 
-        <p align="center" ><a href="login">Войти в систему</a><p>
-    </form>
+        <p align="center" ><a href="login">Log in</a><p>
+    </form:form>
 </div>
 
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
