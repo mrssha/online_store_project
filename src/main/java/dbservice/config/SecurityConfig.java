@@ -1,6 +1,6 @@
 package dbservice.config;
 
-import dbservice.service.UserDetailsServiceImpl;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -9,6 +9,7 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
@@ -23,13 +24,10 @@ public class SecurityConfig  extends WebSecurityConfigurerAdapter {
     private DaoAuthenticationProvider authenticationProvider;
 
     @Autowired
-    private UserDetailsServiceImpl userDetailsService;
+    private UserDetailsService userDetailsService;
 
     @Autowired
     BCryptPasswordEncoder passwordEncoder;
-
-    //@Autowired
-    //private AuthenticationSuccessHandler authenticationSuccessHandler;
 
 
     @Override
@@ -53,13 +51,11 @@ public class SecurityConfig  extends WebSecurityConfigurerAdapter {
                 .loginPage("/login")
                 .failureUrl("/login?error=true")
                 .successForwardUrl("/login")
-                //.successHandler(authenticationSuccessHandler)
                 .permitAll();
 
         http.logout()
                 .logoutUrl("/logout")
                 .logoutSuccessUrl("/login?logout")
-                //.logoutSuccessHandler(logoutSuccessHandler)
                 .permitAll()
                 .invalidateHttpSession(true);
     }

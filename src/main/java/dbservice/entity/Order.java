@@ -1,5 +1,7 @@
 package dbservice.entity;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
 import java.util.*;
 
@@ -22,6 +24,8 @@ public class Order {
     @JoinColumn(name = "id_customer_address")
     private Address customerAddress;
 
+    //@DateTimeFormat(iso= DateTimeFormat.ISO.DATE)
+    @DateTimeFormat(pattern="MM/dd/yyyy")
     @Column(name = "date_order", nullable = false)
     private Date dateOrder;
 

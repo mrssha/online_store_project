@@ -40,7 +40,7 @@
             </p>
         </c:if>
 
-        <h2 class="h3 mb-3 font-weight-normal">Введите данные для входа</h2>
+        <h2 class="h3 mb-3 font-weight-normal">Enter data for log in</h2>
         <label for="inputEmail" class="sr-only">Email address</label>
 
         <input type="email" id="inputEmail" class="form-control" name="username"
@@ -59,9 +59,10 @@
         <input type="hidden"
                name="${_csrf.parameterName}"
                value="${_csrf.token}"/>
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
 
-        <p align="center"><a href="signup">Регистрация</a></p>
+        <button class="btn btn-lg btn-primary btn-block my-3" type="submit">Sign in</button>
+
+        <p align="center"><a href="signup">Sign up</a></p>
     </form>
 </div>
 
