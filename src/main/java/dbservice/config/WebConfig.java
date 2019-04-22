@@ -1,6 +1,9 @@
 package dbservice.config;
 
 import dbservice.service.UserDetailsServiceImpl;
+import org.apache.activemq.broker.region.Destination;
+import org.apache.activemq.command.ActiveMQQueue;
+import org.apache.activemq.spring.ActiveMQConnectionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -8,12 +11,20 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.jms.annotation.EnableJms;
+import org.springframework.jms.core.JmsTemplate;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.validation.Validator;
+import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
+import org.springframework.validation.beanvalidation.MethodValidationPostProcessor;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
+
+import java.util.Arrays;
 import java.util.List;
 
 
@@ -21,11 +32,12 @@ import java.util.List;
 
 @Configuration
 @EnableWebMvc
+@EnableJms
 @ComponentScan(basePackages = "dbservice")
 public class WebConfig implements WebMvcConfigurer {
 
     @Autowired
-    private UserDetailsServiceImpl userDetailsService;
+    private UserDetailsService userDetailsService;
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
@@ -59,5 +71,44 @@ public class WebConfig implements WebMvcConfigurer {
         auth.setPasswordEncoder(passwordEncoder());
         return auth;
     }
+
+
+    @Bean("LocalValidatorFactoryBean")
+    public Validator validatorFactory () {
+        return new LocalValidatorFactoryBean();
+    }
+
+
+    @Bean
+    public ActiveMQConnectionFactory connectionFactory(){
+        ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory();
+        connectionFactory.setBrokerURL("tcp://localhost:61616");
+        connectionFactory.setUserName("user");
+        connectionFactory.setPassword("useruser0");
+        connectionFactory.setTrustedPackages(Arrays.asList("dbservice"));
+        return connectionFactory;
+    }
+
+
+//    @Bean
+//    public ActiveMQQueue messageDestination(){
+//        ActiveMQQueue destination = new ActiveMQQueue();
+//        destination.setPhysicalName("test");
+//        return destination;
+//    }
+
+    @Bean
+    public JmsTemplate jmsTemplate(){
+        JmsTemplate template = new JmsTemplate();
+        template.setConnectionFactory(connectionFactory());
+        //template.setDefaultDestination( messageDestination());
+        //template.setDefaultDestinationName("jms.queue.test");
+        template.setDefaultDestinationName("jms.queue.productsQueue");
+        return template;
+    }
+
+
+
+
 
 }

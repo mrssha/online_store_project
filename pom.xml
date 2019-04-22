@@ -28,6 +28,22 @@
                 <failOnMissingWebXml>false</failOnMissingWebXml>
             </configuration>
         </plugin>
+
+        <!--<plugin>-->
+            <!--<groupId>org.wildfly.plugins</groupId>-->
+            <!--<artifactId>wildfly-maven-plugin</artifactId>-->
+            <!--<version>1.2.1.Final</version>-->
+            <!--<executions>-->
+                <!--<execution>-->
+                    <!--<phase>install</phase>-->
+                    <!--<goals>-->
+                        <!--<goal>deploy</goal>-->
+                    <!--</goals>-->
+                <!--</execution>-->
+            <!--</executions>-->
+        <!--</plugin>-->
+
+
     </plugins>
     </build>
 
@@ -150,11 +166,29 @@
             <version>6.0.16.Final</version>
         </dependency>
 
-        <!--<dependency>-->
-            <!--<groupId>org.hibernate.validator</groupId>-->
-            <!--<artifactId>hibernate-validator-annotation-processor</artifactId>-->
-            <!--<version>6.0.16.Final</version>-->
-        <!--</dependency>-->
+        <!-- https://mvnrepository.com/artifact/org.springframework/spring-jms -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-jms</artifactId>
+            <version>5.1.6.RELEASE</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.apache.activemq/activemq-spring -->
+        <dependency>
+            <groupId>org.apache.activemq</groupId>
+            <artifactId>activemq-spring</artifactId>
+            <version>5.15.9</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-log4j12 -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+            <version>1.7.26</version>
+            <scope>test</scope>
+        </dependency>
+
+
 
 
         <!--<dependency>-->
