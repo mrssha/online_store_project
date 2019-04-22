@@ -19,6 +19,7 @@ public class ProductServiceImpl implements ProductService {
     @Autowired
     ProductConverter productConverter;
 
+    private List<ProductDto> topProducts;
 
     @Override
     @Transactional
@@ -57,6 +58,21 @@ public class ProductServiceImpl implements ProductService {
     public List<ProductDto> getByParams(String name, Long id_category, String brand, Integer minPrice, Integer maxPrice){
         return productConverter.convertToDtoList(productDao.getByParams(name, id_category, brand, minPrice, maxPrice));
     }
+
+
+    @Override
+    @Transactional
+    public List<ProductDto> getTopProducts(){
+        topProducts = productConverter.convertToDtoList(productDao.getTopProducts());
+        return topProducts;
+    }
+
+
+    @Override
+    public List<ProductDto> getLastTopProductsList(){
+        return topProducts;
+    }
+
 
     @Override
     @Transactional

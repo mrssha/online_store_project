@@ -9,6 +9,7 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 public class Main {
@@ -38,6 +39,22 @@ public class Main {
 
 
         try {
+
+//            Calendar c = new GregorianCalendar();
+//            c.setTimeInMillis(System.currentTimeMillis());
+//            c.add(Calendar.MONTH, -1);
+//            Date date = c.getTime();
+//            System.out.println(date);
+
+
+            Query query = session.
+                    createQuery("Select p from Product p ORDER BY p.sales desc");
+            List<Product> list= query.setMaxResults(10).getResultList();
+            for (Product product: list){
+                System.out.println(product.getSales());
+            }
+
+
 
 
             /*

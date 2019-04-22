@@ -38,6 +38,9 @@ public class OrderServiceImpl implements OrderService {
     @Autowired
     CartDao cartDao;
 
+    @Autowired
+    ProductService productService;
+
     public Map<ProductDto, Integer> getOrdersProducts(OrderDto orderDto){
         return null;
     }
@@ -113,7 +116,6 @@ public class OrderServiceImpl implements OrderService {
     }
 
 
-
     @Override
     @Transactional
     public void confirmOrder(OrderDto orderDto, List<CartDto> cartItems){
@@ -129,13 +131,13 @@ public class OrderServiceImpl implements OrderService {
 
             Product changedProduct = productDao.getById(cartItem.getProduct().getId());
             int oldQuantity = changedProduct.getQuantity();
+            int amountBought = changedProduct.getSales();
             changedProduct.setQuantity(oldQuantity - cartItem.getQuantity());
+            changedProduct.setSales(amountBought + cartItem.getQuantity());
             productDao.update(changedProduct);
-
             cartDao.deleteById(cartItem.getId());
         }
-
-
+        updateStandIfTopChanged();
     }
 
 
@@ -156,7 +158,13 @@ public class OrderServiceImpl implements OrderService {
         return order;
     }
 
-
+    private void updateStandIfTopChanged(){
+        List<ProductDto> lastTopList = productService.getLastTopProductsList();
+        List<ProductDto> newTopList= productService.getTopProducts();
+        if (!lastTopList.containsAll(newTopList)){
+            System.out.println("Update stand!");
+        }
+    }
 
 }
 

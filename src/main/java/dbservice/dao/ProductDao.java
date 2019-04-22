@@ -19,6 +19,8 @@ public interface ProductDao {
     List<Product> getByParams(String name, Long id_category, String brand,
                               Integer minPrice, Integer maxPrice);
 
+    List<Product> getTopProducts();
+
     void add(Product product);
 
     void deleteById(long id);

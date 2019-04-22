@@ -11,6 +11,8 @@ import dbservice.service.OrderService;
 import dbservice.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.jms.core.JmsMessagingTemplate;
+import org.springframework.jms.core.JmsTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
@@ -35,12 +37,20 @@ public class AdminController {
     @Autowired
     private OrderService orderService;
 
+
+//    @Autowired
+//    private JmsTemplate jmsTemplate;
+
+//    @Autowired
+//    private JmsMessagingTemplate jmsMessagingTemplate;
+
     @RequestMapping( value = "/products", method = RequestMethod.GET)
     public String manageProducts(ModelMap modelMap){
         List<ProductDto> products = productService.getAllProducts();
         List<CategoryDto> categories = categoryService.getAllCategories();
         modelMap.addAttribute("categories", categories);
         modelMap.addAttribute("products", products);
+        //jmsTemplate.send("my-queue", s -> s.createTextMessage("hello queue world"));
         return "productManager";
     }
 
@@ -49,6 +59,7 @@ public class AdminController {
                              @RequestParam(value = "categoryId", required = false) Long categoryId){
         CategoryDto categoryDto = categoryService.getById(categoryId);
         newProduct.setCategory(categoryDto);
+        newProduct.setSales(0);
         productService.add(newProduct);
         return "redirect:/admin/products";
     }
@@ -95,8 +106,6 @@ public class AdminController {
         catch (IOException e){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid value", e);
         }
-
-
     }
 
     @ResponseBody
@@ -110,5 +119,13 @@ public class AdminController {
         List<OrderDto> orders = orderService.getAllOrders();
         modelMap.addAttribute("orders", orders);
         return "orderManager";
+    }
+
+
+    @RequestMapping( value = "/statistics", method = RequestMethod.GET)
+    public String showStatistics(ModelMap modelMap){
+        List<ProductDto> products = productService.getTopProducts();
+        modelMap.addAttribute("products", products);
+        return "statistics";
     }
 }

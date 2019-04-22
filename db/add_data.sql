@@ -79,6 +79,11 @@ values ('Roxy XOXO ban 2017-18', 26500, 1, 'ROXY', 800, 'unisex', 5,'11_roxy.jpg
 -- insert into "basket"  (id_order, id_product, quantity) VALUES (1, 1, 1);
 
 
+select * from "product" order by bought desc limit 10;
+
+
+
+
 select "product".id_product, "product".price, "basket".quantity
 from "order" join "basket"
 ON "order".id_order = "basket".id_order

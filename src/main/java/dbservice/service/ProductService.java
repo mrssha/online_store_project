@@ -20,6 +20,10 @@ public interface ProductService {
     List<ProductDto> getByParams(String name, Long id_category, String brand,
                                  Integer minPrice, Integer maxPrice);
 
+    List<ProductDto> getTopProducts();
+
+    List<ProductDto> getLastTopProductsList();
+
     void add(ProductDto product);
 
     void deleteById(long id);

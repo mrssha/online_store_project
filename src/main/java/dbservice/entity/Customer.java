@@ -1,7 +1,11 @@
 package dbservice.entity;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
 import java.util.*;
+
+
 
 @Entity
 @Table(name = "customer")
@@ -24,6 +28,7 @@ public class Customer{
     @Column(name = "password")
     private String password;
 
+    //@DateTimeFormat(pattern="dd/MM/yyyy")
     @Column(name = "birth_date")
     private Date birthDate;
 

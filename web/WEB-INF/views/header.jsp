@@ -42,6 +42,7 @@
                             <a class="dropdown-item" href="${contextPath}/admin/products">Products</a>
                             <a class="dropdown-item" href="${contextPath}/admin/categories">Categories</a>
                             <a class="dropdown-item" href="${contextPath}/admin/orders">Orders</a>
+                            <a class="dropdown-item" href="${contextPath}/admin/statistics">Statistics</a>
                         </div>
                     </div>
                 </li>

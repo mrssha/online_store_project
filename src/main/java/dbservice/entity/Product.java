@@ -16,7 +16,7 @@ public class Product {
     private String name;
 
     @Column(name = "price")
-    private Double price;
+    private Integer price;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_category")
@@ -39,6 +39,9 @@ public class Product {
 
     @Column(name = "image_bg")
     private String imageBg;
+
+    @Column(name = "bought")
+    private Integer sales;
 
 
     /*
@@ -76,11 +79,11 @@ public class Product {
         this.name = name;
     }
 
-    public Double getPrice() {
+    public Integer getPrice() {
         return price;
     }
 
-    public void setPrice(Double price) {
+    public void setPrice(Integer price) {
         this.price = price;
     }
 
@@ -156,6 +159,14 @@ public class Product {
 
     public void setCart(Set<Cart> cart) {
         this.cart = cart;
+    }
+
+    public Integer getSales() {
+        return sales;
+    }
+
+    public void setSales(Integer sales) {
+        this.sales = sales;
     }
 
     @Override

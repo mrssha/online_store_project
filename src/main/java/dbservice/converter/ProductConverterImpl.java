@@ -31,11 +31,11 @@ public class ProductConverterImpl implements ProductConverter {
         productDto.setQuantity(product.getQuantity());
         productDto.setBrand(product.getBrand());
         productDto.setWeight(product.getWeight());
-        //productDto.setCategory(product.getCategory());
         productDto.setCategory(categoryConverter.convertToDto(product.getCategory()));
         productDto.setSex(product.getSex());
         productDto.setImageSm(product.getImageSm());
         productDto.setImageBg(product.getImageBg());
+        productDto.setSales(product.getSales());
         //productDto.setDescription(product.getDescription());
         return productDto;
     }
@@ -51,12 +51,12 @@ public class ProductConverterImpl implements ProductConverter {
         product.setPrice(productDto.getPrice());
         product.setQuantity(productDto.getQuantity());
         product.setBrand(productDto.getBrand());
-        //product.setCategory(productDto.getCategory());
         product.setCategory(categoryConverter.convertToEntity(productDto.getCategory()));
         product.setWeight(productDto.getWeight());
         product.setSex(productDto.getSex());
         product.setImageSm(productDto.getImageSm());
         product.setImageBg(productDto.getImageBg());
+        product.setSales(productDto.getSales());
         return product;
     }
 

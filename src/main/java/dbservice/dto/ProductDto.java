@@ -6,7 +6,7 @@ public class ProductDto {
 
     private Long id;
     private String name;
-    private Double price;
+    private Integer price;
     //private String category;
     private CategoryDto category;
     private String brand;
@@ -15,6 +15,7 @@ public class ProductDto {
     private Integer quantity;
     private String imageSm;
     private String imageBg;
+    private Integer sales;
 
     public ProductDto(){
     }
@@ -35,11 +36,11 @@ public class ProductDto {
         this.name = name;
     }
 
-    public Double getPrice() {
+    public Integer getPrice() {
         return price;
     }
 
-    public void setPrice(Double price) {
+    public void setPrice(Integer price) {
         this.price = price;
     }
 
@@ -106,6 +107,14 @@ public class ProductDto {
 
     public void setImageBg(String imageBg) {
         this.imageBg = imageBg;
+    }
+
+    public Integer getSales() {
+        return sales;
+    }
+
+    public void setSales(Integer sales) {
+        this.sales = sales;
     }
 
     @Override

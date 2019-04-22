@@ -7,6 +7,7 @@ import dbservice.entity.Product;
 import dbservice.service.CategoryService;
 import dbservice.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jms.core.JmsTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -28,11 +29,27 @@ public class ProductController {
     @Autowired
     private CategoryService categoryService;
 
+    @Autowired
+    private JmsTemplate jmsTemplate;
+
+    @ResponseBody
+    @RequestMapping(value = "product/top", method = RequestMethod.GET)
+    public List<ProductDto> getTopProducts(){
+        // временно getAllProducts()
+        return productService.getTopProducts();
+    }
+
+
     @RequestMapping( method = RequestMethod.GET)
     public String homePage(HttpServletRequest request, ModelMap modelMap){
         List<CategoryDto> categories = categoryService.getAllCategories();
+        List<ProductDto> products = productService.getTopProducts();
         HttpSession session = request.getSession();
         session.setAttribute ("categories", categories);
+        session.setAttribute ("topProducts", products);
+
+        //jmsTemplate.send("jms.queue.test", s -> s.createTextMessage("welcome"));
+        //jmsTemplate.send(s -> s.createTextMessage("hello queue world"));
         return "home";
     }
 
