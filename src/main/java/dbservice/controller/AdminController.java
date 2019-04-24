@@ -3,10 +3,13 @@ package dbservice.controller;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
 import dbservice.dto.CategoryDto;
+import dbservice.dto.CustomerDto;
 import dbservice.dto.OrderDto;
 import dbservice.dto.ProductDto;
 import dbservice.service.CategoryService;
+import dbservice.service.CustomerService;
 import dbservice.service.OrderService;
 import dbservice.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,8 +23,10 @@ import org.springframework.web.server.ResponseStatusException;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
-import java.util.List;
-import java.util.Map;
+import java.time.DayOfWeek;
+import java.time.Month;
+import java.time.YearMonth;
+import java.util.*;
 
 
 @Controller
@@ -36,6 +41,9 @@ public class AdminController {
 
     @Autowired
     private OrderService orderService;
+
+    @Autowired
+    private CustomerService customerService;
 
 
 //    @Autowired
@@ -104,7 +112,7 @@ public class AdminController {
             orderService.updateFromJson(orderJson);
         }
         catch (IOException e){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid value", e);
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Couldn't parse json", e);
         }
     }
 
@@ -125,7 +133,17 @@ public class AdminController {
     @RequestMapping( value = "/statistics", method = RequestMethod.GET)
     public String showStatistics(ModelMap modelMap){
         List<ProductDto> products = productService.getTopProducts();
+        List<CustomerDto> customersTop = customerService.getTopCustomers();
         modelMap.addAttribute("products", products);
+        modelMap.addAttribute("customersTop", customersTop);
+        modelMap.addAttribute("years", Arrays.asList(2019, 2018, 2017));
+        modelMap.addAttribute("months", Month.values());
         return "statistics";
+    }
+
+    @ResponseBody
+    @RequestMapping( value = "/statistics/calculate", method = RequestMethod.POST)
+    public String calculateRevenue(@RequestBody String periodJson){
+        return orderService.getRevenueForPeriod(periodJson);
     }
 }

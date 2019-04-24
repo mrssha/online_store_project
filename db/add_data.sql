@@ -2,6 +2,18 @@
 insert into "customer"(first_name, second_name, email, password, role)
 values ('Admin', 'Admin', 'admin@mail.ru',
         '$2a$10$aoaPysMjRLQppdJEMDCtTevDyKwKcLHiW0TtF5kT4dxU6aSNFrxdG', 'ROLE_ADMIN');
+
+insert into "customer"(first_name, second_name, email, password, role, sum_purchases)
+values ('Anton', 'Pavlov', 'pavlov@mail.ru',
+        '$2a$10$aoaPysMjRLQppdJEMDCtTevDyKwKcLHiW0TtF5kT4dxU6aSNFrxdG', 'ROLE_USER', 5000.0);
+
+insert into "customer"(first_name, second_name, email, password, role, sum_purchases)
+values ('Sony', 'R', 'sony@mail.ru',
+        '$2a$10$aoaPysMjRLQppdJEMDCtTevDyKwKcLHiW0TtF5kT4dxU6aSNFrxdG', 'ROLE_USER', 25000.55);
+
+insert into "customer"(first_name, second_name, email, password, role, sum_purchases)
+values ('Lol', 'Lol', 'lol@mail.ru',
+        '$2a$10$aoaPysMjRLQppdJEMDCtTevDyKwKcLHiW0TtF5kT4dxU6aSNFrxdG', 'ROLE_USER', 100000.1);
 -- insert into "customer" (first_name, second_name, email, password, birth_date, role)
 -- values ('Maria', 'Shalnova', 'mail_1@mail.ru', '123ddd', '1999-01-08', 'ROLE_USER');
 -- insert into "customer" (first_name, second_name, email, password, birth_date, role)
@@ -14,7 +26,6 @@ insert into "address" ( country, city, postcode, street, flat_number, house_numb
 values ('Russia', 'NN', 123456, '1 street', 1, 2, 'PICKUP');
 insert into "address" (country, city, postcode, street, flat_number, house_number, address_type)
 values ('Russia', 'SPB', 555555, '2 street', 10, 20, 'PICKUP');
-
 
 insert into "category"(category_name) values ('snowboards');
 insert into "category"(category_name) values ('snowboard boots');
@@ -81,7 +92,13 @@ values ('Roxy XOXO ban 2017-18', 26500, 1, 'ROXY', 800, 'unisex', 5,'11_roxy.jpg
 
 select * from "product" order by bought desc limit 10;
 
+select * from "customer" order by sum_purchases desc limit 10;
 
+select * from "order"
+where date_order between '2019-04-01' and '2019-04-30';
+
+select sum("order".payment_amount) from "order"
+where date_order between '2019-04-01' and '2019-04-30';
 
 
 select "product".id_product, "product".price, "basket".quantity

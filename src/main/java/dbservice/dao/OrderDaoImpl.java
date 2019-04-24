@@ -9,9 +9,14 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+import javax.persistence.TemporalType;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import java.time.LocalDate;
+import java.time.Month;
+import java.time.YearMonth;
 import java.util.Date;
 import java.util.List;
 
@@ -55,6 +60,25 @@ public class OrderDaoImpl implements OrderDao {
         criteriaQuery.where(cBuilder.equal(root.get("dateOrder"), date));
         return entityManager.createQuery(criteriaQuery).getResultList();
     }
+
+    @Override
+    public Double getRevenueForPeriod(Integer year, String month){
+        Month m = Month.valueOf(month);
+        YearMonth ym = YearMonth.of(year, m);
+        LocalDate firstDay = ym.atDay(1);
+        Date date1 =  java.sql.Date.valueOf(firstDay);
+        LocalDate lastDay = ym.atEndOfMonth();
+        Date date2 = java.sql.Date.valueOf(lastDay);
+
+        Query query2 = entityManager.
+                createQuery("Select sum(o.payment_amount) from Order o where o.orderStatus='DELIVERED'" +
+                        " and o.dateOrder between :startDate and :endDate")
+                .setParameter("startDate", date1, TemporalType.DATE)
+                .setParameter("endDate", date2, TemporalType.DATE);
+        Double result = (Double) query2.getSingleResult();
+        return result;
+    }
+
 
     @Override
     public int getProductQuantity(Order order, Product product) {

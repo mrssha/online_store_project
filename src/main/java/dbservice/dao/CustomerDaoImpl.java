@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -42,6 +43,15 @@ public class CustomerDaoImpl implements CustomerDao {
         criteriaQuery.select(root);
         return entityManager.createQuery(criteriaQuery).getResultList();
     }
+
+
+    @Override
+    public List<Customer> getTopCustomers(){
+        Query query = entityManager.
+                createQuery("Select c from Customer c ORDER BY c.sumPurchases desc");
+        return query.setMaxResults(10).getResultList();
+    }
+
 
     @Override
     public void add(Customer customer) {

@@ -20,6 +20,8 @@ public interface OrderDao {
 
     int getProductQuantity(Order order, Product product);
 
+    Double getRevenueForPeriod(Integer year, String month);
+
     void add(Order order);
 
     void deleteById(long id);

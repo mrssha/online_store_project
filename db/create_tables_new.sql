@@ -28,7 +28,7 @@ CREATE TABLE IF NOT EXISTS public."product"
     quantity integer NOT NULL,
     image_sm character varying(45),
     image_bg character varying(45),
-    bought integer default 0,
+    sales integer default 0,
     CONSTRAINT "product_pkey" PRIMARY KEY (id_product),
     CONSTRAINT fk_product_category FOREIGN KEY (id_category)
         REFERENCES public."category" (id_category)
@@ -43,6 +43,7 @@ CREATE TABLE IF NOT EXISTS public."customer"
     email character varying(45) UNIQUE NOT NULL,
     password character varying(255) NOT NULL,
     birth_date date,
+    sum_purchases double precision default 0 NOT NULL,
     role character varying(15) NOT NULL
         CHECK (role in ('ROLE_USER', 'ROLE_ADMIN', 'ROLE_ANONYMOUS')),
     CONSTRAINT "customer_pkey" PRIMARY KEY (id_customer)

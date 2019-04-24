@@ -21,6 +21,8 @@ public interface CustomerService {
 
     String changePassword(String  email, ChangePasswordDto changePass);
 
+    List<CustomerDto> getTopCustomers();
+
     void updateCustomer(CustomerDto customerDto);
 
     void deleteCustomerById(long id);

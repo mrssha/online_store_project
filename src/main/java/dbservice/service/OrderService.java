@@ -34,6 +34,8 @@ public interface OrderService {
 
     void updateFromJson (String orderJson) throws IOException;
 
-    void confirmOrder(OrderDto order, List<CartDto> cartItems);
+    String getRevenueForPeriod(String periodJson);
+
+    void confirmOrder(CustomerDto customerDto, OrderDto order, List<CartDto> cartItems);
 
 }

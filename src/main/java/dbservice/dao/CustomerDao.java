@@ -13,6 +13,8 @@ public interface CustomerDao {
 
     List<Customer> getAll();
 
+    List<Customer> getTopCustomers();
+
     //List<Order> getOrders(Customer customer);
 
     //List<Address> getAddresses(Customer customer);

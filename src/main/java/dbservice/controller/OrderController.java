@@ -72,7 +72,7 @@ public class OrderController {
         newOrder.setCustomer(customer);
         AddressDto address = addressService.getAddressById(address_id);
         newOrder.setCustomerAddress(address);
-        orderService.confirmOrder(newOrder, cartItems);
+        orderService.confirmOrder(customer, newOrder, cartItems);
         return "orderSuccess";
     }
 

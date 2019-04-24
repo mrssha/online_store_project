@@ -32,6 +32,9 @@ public class Customer{
     @Column(name = "birth_date")
     private Date birthDate;
 
+    @Column(name = "sum_purchases")
+    private Double sumPurchases;
+
     @Column(name = "role")
     private String role;
 
@@ -115,6 +118,14 @@ public class Customer{
 
     public void setOrders(Set<Order> orders) {
         this.orders = orders;
+    }
+
+    public Double getSumPurchases() {
+        return sumPurchases;
+    }
+
+    public void setSumPurchases(Double sumPurchases) {
+        this.sumPurchases = sumPurchases;
     }
 
     public String getRole() {

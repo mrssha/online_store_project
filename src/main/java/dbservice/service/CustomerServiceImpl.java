@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -57,6 +58,7 @@ public class CustomerServiceImpl implements CustomerService {
         }
         customerDto.setPassword(passwordEncoder.encode(customerDto.getPassword()));
         customerDto.setRole("ROLE_USER");
+        customerDto.setSumPurchases(0.0);
         customerDao.add(customerConverter.convertToEntity(customerDto));
         return "CUSTOMER_CREATED";
     }
@@ -83,6 +85,19 @@ public class CustomerServiceImpl implements CustomerService {
             return "PASSWORD_CHANGED";
         }
         return "INVALID_OLD_PASSWORD";
+    }
+
+
+    @Override
+    @Transactional
+    public List<CustomerDto> getTopCustomers(){
+        List<Customer> topCustomer = customerDao.getTopCustomers();
+        List<CustomerDto> topCustomerDto = new ArrayList<>();
+        for (Customer customer: topCustomer){
+            topCustomerDto.add(customerConverter.convertToDto(customer));
+        }
+        return topCustomerDto;
+        //return  customerConverter.convertToDtoList(customerDao.getTopCustomers());
     }
 
     @Override

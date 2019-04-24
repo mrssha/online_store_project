@@ -2,6 +2,10 @@ package dbservice.service;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import dbservice.converter.OrderConverter;
 import dbservice.converter.ProductConverter;
 import dbservice.dao.BasketDao;
@@ -11,10 +15,13 @@ import dbservice.dao.ProductDao;
 import dbservice.dto.*;
 import dbservice.entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jms.UncategorizedJmsException;
+import org.springframework.jms.core.JmsTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
+import java.time.Month;
 import java.util.*;
 
 @Service
@@ -40,6 +47,12 @@ public class OrderServiceImpl implements OrderService {
 
     @Autowired
     ProductService productService;
+
+    @Autowired
+    CustomerService customerService;
+
+    @Autowired
+    private JmsTemplate jmsTemplate;
 
     public Map<ProductDto, Integer> getOrdersProducts(OrderDto orderDto){
         return null;
@@ -108,6 +121,18 @@ public class OrderServiceImpl implements OrderService {
         update(orderDto);
     }
 
+    @Override
+    @Transactional
+    public String getRevenueForPeriod(String periodJson){
+        Gson gson = new Gson();
+        JsonParser parser = new JsonParser();
+        JsonObject jo = (JsonObject) parser.parse(periodJson);
+        Integer year = jo.get("year").getAsInt();
+        String month = jo.get("month").getAsString();
+        Double sum = orderDao.getRevenueForPeriod(year,month);
+        return gson.toJson(sum != null ? sum.toString(): String.valueOf(0));
+    }
+
 
     @Override
     @Transactional
@@ -118,7 +143,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     @Transactional
-    public void confirmOrder(OrderDto orderDto, List<CartDto> cartItems){
+    public void confirmOrder(CustomerDto customerDto, OrderDto orderDto, List<CartDto> cartItems){
         Order newOrder = createNewOrder(orderDto, cartItems);
         orderDao.add(newOrder);
 
@@ -137,6 +162,8 @@ public class OrderServiceImpl implements OrderService {
             productDao.update(changedProduct);
             cartDao.deleteById(cartItem.getId());
         }
+        customerDto.setSumPurchases(customerDto.getSumPurchases() + newOrder.getPayment_amount());
+        customerService.updateCustomer(customerDto);
         updateStandIfTopChanged();
     }
 
@@ -161,8 +188,13 @@ public class OrderServiceImpl implements OrderService {
     private void updateStandIfTopChanged(){
         List<ProductDto> lastTopList = productService.getLastTopProductsList();
         List<ProductDto> newTopList= productService.getTopProducts();
-        if (!lastTopList.containsAll(newTopList)){
-            System.out.println("Update stand!");
+        try {
+            if (!lastTopList.containsAll(newTopList)) {
+                jmsTemplate.send(s -> s.createTextMessage("update list"));
+            }
+        }
+        catch (UncategorizedJmsException e){
+
         }
     }
 

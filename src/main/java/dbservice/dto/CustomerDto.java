@@ -40,6 +40,8 @@ public class CustomerDto {
     @Past(message = "Date of birth should be in past")
     private Date birthDate;
 
+    private Double sumPurchases;
+
     private String role;
 
     public CustomerDto(){
@@ -97,13 +99,20 @@ public class CustomerDto {
         this.confirmedPassword = confirmedPassword;
     }
 
-
     public Date getBirthDate() {
         return birthDate;
     }
 
     public void setBirthDate(Date birthDate) {
         this.birthDate = birthDate;
+    }
+
+    public Double getSumPurchases() {
+        return sumPurchases;
+    }
+
+    public void setSumPurchases(Double sumPurchases) {
+        this.sumPurchases = sumPurchases;
     }
 
     public String getRole() {

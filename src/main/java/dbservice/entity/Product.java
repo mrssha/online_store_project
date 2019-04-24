@@ -40,7 +40,7 @@ public class Product {
     @Column(name = "image_bg")
     private String imageBg;
 
-    @Column(name = "bought")
+    @Column(name = "sales")
     private Integer sales;
 
 
