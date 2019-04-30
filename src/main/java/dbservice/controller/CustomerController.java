@@ -37,6 +37,8 @@ public class CustomerController {
     @Autowired
     private OrderService orderService;
 
+    //private static final Logger LOGGER = Logger.getLogger(RateMDB.class.toString());
+
 
     @InitBinder
     public void initBinder(WebDataBinder binder) {
@@ -79,6 +81,13 @@ public class CustomerController {
         newAddress.setAddressType(AddressType.CUSTOMER);
         addressService.addAddress(newAddress);
         return "redirect:/profile";
+    }
+
+
+    @ResponseBody
+    @RequestMapping( value = "/profile/deleteAddress", method = RequestMethod.POST)
+    public void deleteCategory(@RequestBody String id_address){
+        addressService.deleteAddressById(Long.parseLong(id_address));
     }
 
     @RequestMapping( value = "/profile/changeInfo",  method = RequestMethod.POST)

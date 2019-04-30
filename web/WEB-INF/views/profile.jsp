@@ -55,21 +55,28 @@
 
             <c:if test="${requestScope.addresses.size()!=0}">
                 <p class="my-3 text-muted">Addresses:</p>
-                <c:forEach items="${requestScope.addresses}" var="address">
-                    <ul class="list-group list-group-flush ">
-                        <li class="list-group-item">
-                            <div class="col-flex mb-0">
-                                <p class="mb-0">${address.houseNumber} ${address.street}, Apt ${address.flatNumber}</p>
-                                <p class="mb-0">${address.city}</p>
-                                <p class="mb-0">${address.postcode}</p>
-                                <p class="mb-0">${address.country}</p>
+                    <ul class="list-group">
+                    <c:forEach items="${requestScope.addresses}" var="address">
+                        <li id ="itemId${address.id}" class="list-group-item">
+                            <div class="row">
+                            <div class="col-flex " style="width: 80%">
+                                <p class="mb-0" style="margin-left: 10px">${address.houseNumber} ${address.street}, Apt ${address.flatNumber},
+                                        ${address.city}, ${address.postcode}, ${address.country} </p>
+                                <%--<p class="mb-0">${address.city}</p>--%>
+                                <%--<p class="mb-0">${address.postcode}</p>--%>
+                                <%--<p class="mb-0">${address.country}</p>--%>
                             </div>
-                            <div class="col-flex mb-0 text-center text-muted">
-
+                            <div class="col-flex " style="width: 10%">
+                                <button id="${address.id}" type="button" class="btn btn-sm"
+                                        onclick="deleteAddress('${contextPath}/profile/deleteAddress',
+                                            ${address.id}, 'itemId${address.id}')">
+                                    Delete
+                                </button>
+                            </div>
                             </div>
                         </li>
+                    </c:forEach>
                     </ul>
-                </c:forEach>
             </c:if>
         </div>
         <div class="col-md-3">
