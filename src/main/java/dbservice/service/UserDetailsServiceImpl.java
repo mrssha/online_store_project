@@ -1,7 +1,6 @@
 package dbservice.service;
 
 import dbservice.dto.CustomerDto;
-import dbservice.entity.UserRoleEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -31,6 +30,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         Set<GrantedAuthority> roles = new HashSet<>();
 
         roles.add(new SimpleGrantedAuthority(customerDto.getRole()));
+
 
         // на основании полученных данных формируем объект UserDetails
         // который позволит проверить введенный пользователем логин и пароль

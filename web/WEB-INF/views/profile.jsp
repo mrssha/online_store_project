@@ -250,6 +250,6 @@
 
 
 
-<script src="${contextPath}/resources/script/show.js"></script>
+<script src="${contextPath}/resources/script/profile.js"></script>
 </body>
 </html>

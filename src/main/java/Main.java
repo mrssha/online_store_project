@@ -4,13 +4,13 @@ import org.hibernate.*;
 import org.hibernate.cfg.Configuration;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import javax.persistence.TemporalType;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.List;
+import java.time.*;
+import java.util.*;
 
 public class Main {
 
@@ -46,13 +46,76 @@ public class Main {
 //            Date date = c.getTime();
 //            System.out.println(date);
 
+            Integer year = 2019;
+            String month = "APRIL";
+            Month m = Month.valueOf(month);
+            YearMonth ym = YearMonth.of(year, m);
+            LocalDate first = ym.atDay(1);
+            Date date1 =  java.sql.Date.valueOf(first);
+
+            LocalDate last = ym.atEndOfMonth();
+            Date date2 = java.sql.Date.valueOf(last);
+
+
+            System.out.println(date1.toString());
+            System.out.println(date2.toString());
+            System.out.println(date1.getClass());
+            System.out.println(date2.getClass());
+
+            Date d1 = new Date();
+            Date d2 = new Date();
+            System.out.println(d1.getClass());
+            System.out.println(d2.getClass());
+
+            //Date dateFromLocalDT = Date.from(first.atZone(ZoneId.systemDefault()).toInstant());
+
+            //createQuery("Select sum(o.payment_amount) from Order o where o.dateOrder between :date1 and :date2");
+
+//            Query query = session.
+//                    createQuery("Select sum(o.payment_amount) from Order o where o.dateOrder between :date1 and :date2");
 
             Query query = session.
-                    createQuery("Select p from Product p ORDER BY p.sales desc");
-            List<Product> list= query.setMaxResults(10).getResultList();
-            for (Product product: list){
-                System.out.println(product.getSales());
-            }
+                    createQuery("Select o from Order o where o.dateOrder between :startDate and :endDate")
+                    .setParameter("startDate", date1, TemporalType.DATE)
+                    .setParameter("endDate", date2, TemporalType.DATE);
+            List<Order> list= query.setMaxResults(10).getResultList();
+
+            Query query2 = session.
+                    createQuery("Select sum(o.payment_amount) from Order o where o.orderStatus='WAIT_PAYMENT'" +
+                            " and o.dateOrder between :startDate and :endDate")
+                    .setParameter("startDate", date1, TemporalType.DATE)
+                    .setParameter("endDate", date2, TemporalType.DATE);
+            Double d = (Double) query2.getSingleResult();
+            System.out.println(d);
+
+
+
+//                    .setParameter("first", date1.toString())
+//                    .setParameter("last", date2.toString());
+//            List<Order> list= query.setMaxResults(10).getResultList();
+
+//            CriteriaBuilder builder = session.getCriteriaBuilder();
+//            CriteriaQuery<Double> criteriaQuery = builder.createQuery(Double.class);
+//            Root<Order> root = criteriaQuery.from(Order.class);
+//            List<Predicate> predicates = new ArrayList<Predicate>();
+//            predicates.add(
+//                    builder.between(root.get("dateOrder"), date1, date2));
+//
+//            criteriaQuery.select(root.get("payment_amount"))
+//                    .where(predicates.toArray(new Predicate[]{}));
+//            List<Order> list1 = session.createQuery(criteriaQuery)
+
+
+
+
+
+
+//            Query query = session.
+//                    createQuery("Select p from Product p ORDER BY p.sales desc");
+//            List<Product> list= query.setMaxResults(10).getResultList();
+//            for (Product product: list){
+//                System.out.println(product.getSales());
+//            }
 
 
 
