@@ -2,6 +2,7 @@ package dbservice.config;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -9,9 +10,13 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.session.SessionRegistry;
+import org.springframework.security.core.session.SessionRegistryImpl;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
+import org.springframework.security.web.session.HttpSessionEventPublisher;
 
 
 @Configuration
@@ -24,16 +29,31 @@ public class SecurityConfig  extends WebSecurityConfigurerAdapter {
     private DaoAuthenticationProvider authenticationProvider;
 
     @Autowired
-    private UserDetailsService userDetailsService;
+    BCryptPasswordEncoder passwordEncoder;
 
     @Autowired
-    BCryptPasswordEncoder passwordEncoder;
+    private LogoutSuccessHandler logoutSuccessHandler;
+
+    @Autowired
+    private AuthenticationSuccessHandler authenticationSuccessHandler;
 
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.authenticationProvider(authenticationProvider);
     }
+
+//    @Bean
+//    public HttpSessionEventPublisher httpSessionEventPublisher(){
+//        return new HttpSessionEventPublisher();
+//    }
+//
+//    @Bean(name = "sessionRegistry")
+//    public SessionRegistry sessionRegistry() {
+//        return new SessionRegistryImpl();
+//    }
+
+
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -51,13 +71,19 @@ public class SecurityConfig  extends WebSecurityConfigurerAdapter {
                 .loginPage("/login")
                 .failureUrl("/login?error=true")
                 .successForwardUrl("/login")
+                .successHandler(authenticationSuccessHandler)
                 .permitAll();
 
         http.logout()
                 .logoutUrl("/logout")
                 .logoutSuccessUrl("/login?logout")
-                .permitAll()
-                .invalidateHttpSession(true);
-    }
+                .invalidateHttpSession(true)
+                .logoutSuccessHandler(logoutSuccessHandler)
+                .permitAll();
 
+//        http.sessionManagement()
+//                .invalidSessionUrl("/home")
+//                .maximumSessions(1)
+//                .sessionRegistry(sessionRegistry());
+    }
 }

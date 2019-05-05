@@ -1,6 +1,7 @@
 package dbservice.controller;
 
 import dbservice.dto.CustomerDto;
+import dbservice.service.CartService;
 import dbservice.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -31,6 +32,8 @@ public class LoginController {
     @Autowired
     private CustomerService customerService;
 
+    @Autowired
+    private CartService cartService;
 
 
     @Autowired
@@ -45,16 +48,12 @@ public class LoginController {
         return "signup";
     }
 
-
-
     @InitBinder
     public void initBinder(WebDataBinder binder) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
         //binder.setValidator(validator);
     }
-
-
 
     @RequestMapping( value = "/signup", method = RequestMethod.POST)
     public ModelAndView signup(@Valid @ModelAttribute("newUser") CustomerDto customerDto,
@@ -80,29 +79,30 @@ public class LoginController {
         return modelAndView;
     }
 
-
     @RequestMapping( value = "/login", method = RequestMethod.GET)
     public String login(){
         return "login";
     }
 
 
-    @RequestMapping( value = "/login", method = RequestMethod.POST)
-    public String login(HttpServletRequest request){
-        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String email = userDetails.getUsername();
-        HttpSession session = request.getSession();
-        session.setAttribute("principalUser", customerService.getCustomerByEmail(email));
-        return "redirect:/";
-    }
+//    @RequestMapping( value = "/login", method = RequestMethod.POST)
+//    public String login(HttpServletRequest request){
+//        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+//        String email = userDetails.getUsername();
+//        HttpSession session = request.getSession();
+//        session.setAttribute("principalUser", customerService.getCustomerByEmail(email));
+//        return "redirect:/";
+//    }
 
 
-    @RequestMapping( value = "/logout", method = RequestMethod.GET)
-    public String logout(HttpServletRequest request, Authentication authentication){
-        HttpSession session = request.getSession();
-        session.setAttribute("principalUser",null);
-        return "redirect:/login?logout";
-    }
+//    @RequestMapping( value = "/logout", method = RequestMethod.GET)
+//    public String logout(HttpServletRequest request, Authentication authentication){
+//        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+//        String email = userDetails.getUsername();
+//        HttpSession session = request.getSession();
+//        session.setAttribute("principalUser",null);
+//        return "redirect:/login?logout";
+//    }
 
 
 }

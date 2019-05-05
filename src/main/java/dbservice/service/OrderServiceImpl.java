@@ -6,6 +6,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import dbservice.controller.ProductController;
 import dbservice.converter.OrderConverter;
 import dbservice.converter.ProductConverter;
 import dbservice.dao.BasketDao;
@@ -14,6 +15,7 @@ import dbservice.dao.OrderDao;
 import dbservice.dao.ProductDao;
 import dbservice.dto.*;
 import dbservice.entity.*;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jms.UncategorizedJmsException;
 import org.springframework.jms.core.JmsTemplate;
@@ -52,7 +54,12 @@ public class OrderServiceImpl implements OrderService {
     CustomerService customerService;
 
     @Autowired
+    CartService cartService;
+
+    @Autowired
     private JmsTemplate jmsTemplate;
+
+    private static final Logger logger = Logger.getLogger(OrderServiceImpl.class);
 
     public Map<ProductDto, Integer> getOrdersProducts(OrderDto orderDto){
         return null;
@@ -162,9 +169,12 @@ public class OrderServiceImpl implements OrderService {
             productDao.update(changedProduct);
             cartDao.deleteById(cartItem.getId());
         }
+        logger.info(String.format("Order successfully confirmed for customer with id: %d",
+                customerDto.getId()));
         customerDto.setSumPurchases(customerDto.getSumPurchases() + newOrder.getPayment_amount());
         customerService.updateCustomer(customerDto);
         updateStandIfTopChanged();
+
     }
 
 
@@ -194,7 +204,7 @@ public class OrderServiceImpl implements OrderService {
             }
         }
         catch (UncategorizedJmsException e){
-
+            logger.error("Couldn't send message to JMS");
         }
     }
 

@@ -81,7 +81,7 @@ public class AdminController {
     }
 
     @RequestMapping( value = "/categories/addCategory", method = RequestMethod.POST)
-    public String addCategory(@ModelAttribute("newProduct") CategoryDto newCategory){
+    public String addCategory(@ModelAttribute("newCategory") CategoryDto newCategory){
         categoryService.add(newCategory);
         return "redirect:/admin/categories";
     }

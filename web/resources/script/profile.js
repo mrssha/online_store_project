@@ -1,5 +1,24 @@
 'use strict';
 
+function deleteAddress(url, id_address, id_item) {
+    fetch(url, {
+        method: 'post',
+        headers: {
+            "Content-type": "application/json"
+        },
+        body: id_address
+    })
+        .then(function (response) {
+            return response;
+        })
+        .then(function (data) {
+            document.getElementById(id_item).remove();
+        })
+        .catch(function (error) {
+            console.log('Request failed', error);
+        });
+}
+
 function showFormEdit() {
     document.getElementById("editProfile").hidden =
         !document.getElementById("editProfile").hidden;

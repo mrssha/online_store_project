@@ -1,19 +1,31 @@
 package dbservice.service;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import dbservice.converter.CartConverter;
 import dbservice.converter.ProductConverter;
 import dbservice.dao.CartDao;
 import dbservice.dao.CustomerDao;
 import dbservice.dao.ProductDao;
 import dbservice.dto.CartDto;
+import dbservice.dto.CookieCartDto;
 import dbservice.dto.ProductDto;
 import dbservice.entity.Cart;
 import dbservice.entity.Customer;
 import dbservice.entity.Product;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.util.WebUtils;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.UnsupportedEncodingException;
+import java.lang.reflect.Type;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -36,13 +48,24 @@ public class CartServiceImpl implements CartService {
     private ProductDao productDao;
 
     @Autowired
+    private ProductService productService;
+
+    @Autowired
     private CustomerDao customerDao;
 
+    private static final Logger logger = Logger.getLogger(CartServiceImpl.class);
 
     @Override
     @Transactional
     public CartDto getById(long id){
         return cartConverter.convertToDto(cartDao.getById(id));
+    }
+
+    @Override
+    @Transactional
+    public CartDto getByProductAndCustomer(long customer_id, long product_id){
+        return cartConverter.convertToDto(
+                cartDao.getByProductAndCustomer(customer_id, product_id));
     }
 
     @Override
@@ -165,7 +188,6 @@ public class CartServiceImpl implements CartService {
     @Transactional
     public List<ProductDto> checkMissingItems(List<CartDto> cartItems){
         List<ProductDto> missingProducts = new ArrayList<>();
-
         for (CartDto cartItem: cartItems){
             ProductDto productInCart = cartItem.getProduct();
             int quantityInCart = cartItem.getQuantity();
@@ -175,6 +197,175 @@ public class CartServiceImpl implements CartService {
         }
         return missingProducts;
     }
+
+    @Override
+    @Transactional
+    public List<ProductDto> checkMissingItems(Map<ProductDto, Integer> mapCookie){
+        List<ProductDto> missingProducts = new ArrayList<>();
+        for (Map.Entry<ProductDto, Integer> pair : mapCookie.entrySet()) {
+            ProductDto productInCart = pair.getKey();
+            int quantityInCart = pair.getValue();
+            if (quantityInCart > productDao.getById(productInCart.getId()).getQuantity()){
+                missingProducts.add(productInCart);
+            }
+        }
+        return missingProducts;
+    }
+
+
+    @Override
+    @Transactional
+    public CookieCartDto getCartProductsCookie(Cookie cookieCart)
+            throws UnsupportedEncodingException {
+        Gson gson = new Gson();
+        if (cookieCart == null){
+            return null;
+        }
+        Type typeToken = new TypeToken<HashMap<Long, Integer>>(){}.getType();
+        Map<Long, Integer> mapCookie =
+                gson.fromJson(URLDecoder.decode(cookieCart.getValue(),"UTF-8"), typeToken);
+        Map<ProductDto, Integer> productCartMap = new HashMap<>();
+        int amount = 0;
+        double total = 0;
+        if (mapCookie!=null) {
+            for (Map.Entry<Long, Integer> pair : mapCookie.entrySet()) {
+                ProductDto productDto = productService.getById(pair.getKey());
+                if (productDto != null) {
+                    productCartMap.put(productDto, pair.getValue());
+                    amount += pair.getValue();
+                    total += productDto.getPrice() * pair.getValue();
+                }
+            }
+        }
+        return new CookieCartDto(productCartMap, amount, total);
+    }
+
+
+    @Override
+    @Transactional
+    public Map<Long, Integer> getCookieCart(Cookie cookieCart) throws UnsupportedEncodingException {
+        Gson gson = new Gson();
+        Map<Long, Integer> emptyMap = new HashMap<>();
+        if (cookieCart == null){
+            return emptyMap;
+        }
+        Type typeToken = new TypeToken<HashMap<Long, Integer>>(){}.getType();
+        HashMap<Long, Integer> mapCookie = gson.fromJson(URLDecoder.decode(cookieCart.getValue(),"UTF-8"), typeToken);
+        if (mapCookie == null){
+            return emptyMap;
+        }
+        return mapCookie;
+    }
+
+
+    @Override
+    @Transactional
+    public void mergeCarts(HttpServletResponse response, String email, Cookie cookieCart)
+            throws UnsupportedEncodingException{
+        List<CartDto> cartDb = getCartItemsByCustomersEmail(email);
+        Map<Long, Integer> mapCookieCart = getCookieCart(cookieCart);
+        for (CartDto cartItemDb: cartDb){
+            ProductDto productDto = cartItemDb.getProduct();
+            if (!mapCookieCart.containsKey(productDto.getId())){
+                mapCookieCart.put(productDto.getId(), cartItemDb.getQuantity());
+            }
+        }
+        Customer customer = customerDao.getByEmail(email);
+        for (Map.Entry<Long, Integer> cookieCartItem: mapCookieCart.entrySet()){
+            Product product = productDao.getById(cookieCartItem.getKey());
+            int quantityProductCookie = cookieCartItem.getValue();
+            Cart dbCartItem = cartDao.getByProductAndCustomer(customer.getId(), product.getId());
+            if (dbCartItem!= null){
+                dbCartItem.setQuantity(quantityProductCookie);
+                cartDao.update(dbCartItem);
+            } else {
+                Cart newCartItem = new Cart();
+                newCartItem.setCustomer(customer);
+                newCartItem.setProduct(product);
+                newCartItem.setQuantity(quantityProductCookie);
+                cartDao.add(newCartItem);
+            }
+        }
+
+        Gson gson = new Gson();
+        cookieCart.setValue(URLEncoder.encode(gson.toJson(mapCookieCart), "UTF-8"));
+        cookieCart.setMaxAge(24 * 60 * 60 * 1000);
+        cookieCart.setPath("/");
+        response.addCookie(cookieCart);
+
+        logger.info("Base and cookie carts was added merged");
+    }
+
+
+    @Override
+    @Transactional
+    public void mergeToCookieCart(HttpServletResponse response, String email, Cookie cookieCart)
+            throws UnsupportedEncodingException{
+        List<CartDto> cartDb = getCartItemsByCustomersEmail(email);
+        Map<Long, Integer> mapCookieCart = getCookieCart(cookieCart);
+        for (CartDto cartItemDb: cartDb){
+            ProductDto productDto = cartItemDb.getProduct();
+            if (!mapCookieCart.containsKey(productDto.getId())){
+                mapCookieCart.put(productDto.getId(), cartItemDb.getQuantity());
+            }
+        }
+
+        Gson gson = new Gson();
+        cookieCart.setValue(URLEncoder.encode(gson.toJson(mapCookieCart), "UTF-8"));
+        cookieCart.setMaxAge(24 * 60 * 60 * 1000);
+        cookieCart.setPath("/");
+        response.addCookie(cookieCart);
+        logger.info("Products from base was added to cookie cart");
+    }
+
+
+    @Override
+    @Transactional
+    public void mergeToDBCart(String email, Cookie cookieCart) throws UnsupportedEncodingException{
+        List<CartDto> cartDb = getCartItemsByCustomersEmail(email);
+        Map<Long, Integer> mapCookieCart = getCookieCart(cookieCart);
+        for (CartDto cartDbItem: cartDb){
+            if (!mapCookieCart.containsKey(cartDbItem.getProduct().getId())){
+                deleteById(cartDbItem.getId());
+            }
+        }
+        Customer customer = customerDao.getByEmail(email);
+        for (Map.Entry<Long, Integer> cookieCartItem: mapCookieCart.entrySet()){
+            Product product = productDao.getById(cookieCartItem.getKey());
+            int quantityProductCookie = cookieCartItem.getValue();
+            Cart dbCartItem = cartDao.getByProductAndCustomer(customer.getId(), product.getId());
+            if (dbCartItem!= null){
+                dbCartItem.setQuantity(quantityProductCookie);
+                cartDao.update(dbCartItem);
+            } else {
+                Cart newCartItem = new Cart();
+                newCartItem.setCustomer(customer);
+                newCartItem.setProduct(product);
+                newCartItem.setQuantity(quantityProductCookie);
+                cartDao.add(newCartItem);
+            }
+        }
+
+        logger.info("Products from cookies was added to base");
+    }
+
+    @Override
+    @Transactional
+    public void clearCookieCart(HttpServletRequest request, HttpServletResponse response)
+            throws UnsupportedEncodingException{
+        Cookie cookieCart = WebUtils.getCookie(request, "productCart");
+        Gson gson = new Gson();
+        if (cookieCart!=null){
+            HashMap<Long, Integer> map = new HashMap<>();
+            cookieCart.setValue(URLEncoder.encode(gson.toJson(map), "UTF-8"));
+            cookieCart.setMaxAge(24 * 60 * 60 * 1000);
+            cookieCart.setPath("/");
+            response.addCookie(cookieCart);
+        }
+        logger.info("Cookie cart has been cleared");
+    }
+
+
 }
 
 

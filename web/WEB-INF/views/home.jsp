@@ -1,5 +1,7 @@
-<%@ page contentType="text/html;charset=UTF-8" %>
+<%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
+
 
 <!doctype html>
 <html lang="en">
@@ -9,6 +11,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <c:set var="contextPath" value="${pageContext.request.getContextPath()}"/>
+    <c:set var="user" value="${sessionScope.principalUser.id}"/>
+
+    <%--<sec:authorize access="!isAuthenticated()">--%>
+    <%--</sec:authorize>--%>
+
+    <%--<script type="text/javascript" src="${contextPath}/resources/script/async.js"> </script>--%>
+    <script type="text/javascript" src="${contextPath}/resources/script/tocart.js"></script>
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
@@ -49,6 +58,7 @@
                             <option>ROXY</option>
                             <option>K2</option>
                             <option>666</option>
+                            <option>Salomon</option>
                         </select>
                     </div>
 
@@ -83,12 +93,23 @@
                                     <p class="card-text">${product.price}</p>
                                 </div>
                             </a>
-
-                            <button id="addRemoveId${product.id}" type="button" class="btn"
-                                    onclick="addRemoveProduct('${contextPath}/addRemoveProduct', '${product.id}', id)"
-                                    ${product.quantity eq 0  ? 'disabled="disabled"' : ''}>
+                            <button id="buttonId${product.id}" type="button" class="btn"
+                                    onclick="addRemoveProduct('productCart', ${product.id}, id,
+                                        ${user})"
+                                ${product.quantity eq 0  ? 'disabled="disabled"' : ''}>
                                 Add to cart
                             </button>
+
+                            <script async>
+                                correctButtonName('buttonId${product.id}', '${product.id}');
+                            </script>
+
+
+                            <%--<button id="addRemoveId${product.id}" type="button" class="btn"--%>
+                                    <%--onclick="addRemoveProductDB('${contextPath}/addRemoveProduct', '${product.id}', id)"--%>
+                                    <%--${product.quantity eq 0  ? 'disabled="disabled"' : ''}>--%>
+                                <%--Add to cart--%>
+                            <%--</button>--%>
                         </div>
                     </div>
                 </c:forEach>
@@ -107,7 +128,7 @@
 
 
 <script>var contextPath = '${contextPath}'</script>
-<script src="${contextPath}/resources/script/tocart.js"></script>
+<script src="${contextPath}/resources/script/cart.js"></script>
 </body>
 </html>
 

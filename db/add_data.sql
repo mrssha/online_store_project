@@ -72,7 +72,22 @@ values ('Jones Solution 2018-19', 52000, 1, 'Jones', 700, 'unisex',2,'10_jones.j
 insert into "product" (name, price, id_category, brand,weight, sex, quantity, image_sm, image_bg)
 values ('Roxy XOXO ban 2017-18', 26500, 1, 'ROXY', 800, 'unisex', 5,'11_roxy.jpg','11_roxy_big.jpg');
 
--- delete from "product" where id_product=11;
+
+--Ботинки с картинками
+insert into "product" (name, price, id_category, brand,weight, sex, quantity, image_sm, image_bg)
+values ('Salomon 2018-19 PEARL Bordeaux11', 13000, 2, 'Salomon', 800, 'unisex', 10,
+        '12_b_salomon_sm.jpg','12_b_salomon_big.jpg');
+
+
+
+
+UPDATE "product"
+SET  quantity= 15 WHERE "product".id_product = 5;
+
+UPDATE "customer"
+SET  sum_purchases= 0 WHERE "customer".id_customer = 2;
+
+--delete from "product" where id_product=1;
 
 -- insert into "order" (id_customer, id_customer_address, date_order) values (2, 1, '2018-02-01');
 -- insert into "order" (id_customer, id_customer_address, date_order) values (1, 3, '2018-01-21');
