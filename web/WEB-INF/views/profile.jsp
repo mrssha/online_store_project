@@ -8,6 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html>
 <head>
     <title>Customer profile</title>
@@ -32,12 +33,12 @@
         <div class="col-md-4">
             <div class="my-2 py-2">
                 <h2 class="display-5">${sessionScope.principalUser.firstName} ${sessionScope.principalUser.secondName}</h2>
-                <p class="text-muted mb-0">Email</p>
+                <p class="text-muted mb-0">Email:</p>
                 <p class="mb-0">${sessionScope.principalUser.email}</p>
             </div>
             <div class="my-2 py-2">
-                <p class="text-muted mb-0">Date of birth</p>
-                <p class="mb-0">Date: ${sessionScope.principalUser.birthDate}</p>
+                <p class="text-muted mb-0">Date of birth:</p>
+                <p class="mb-0"><fmt:formatDate value="${sessionScope.principalUser.birthDate}" pattern="yyyy-MM-dd"/></p>
             </div>
 
             <div class="btn-group my-3" role="group" aria-label="Basic example">
@@ -161,7 +162,7 @@
                     <div class="form-group">
                         <label for="inputPostcodeId">Enter new postcode</label>
                         <form:input type="number" class="form-control"  id="inputPostcodeId"
-                                    path="postcode" placeholder="Postcode" required="true"/>
+                                    path="postcode" placeholder="Postcode" required="true" max="2147483648"/>
                         <form:errors path="postcode" cssClass="error"/>
                     </div>
                     <div class="form-group">
@@ -173,14 +174,14 @@
                     <div class="form-group form-row">
                         <div class="col">
                             <label for="houseNumberId">Enter house number</label>
-                            <form:input type="number" class="form-control" id="houseNumberId"
+                            <form:input type="number" class="form-control" id="houseNumberId" max="2147483648"
                                         path="houseNumber" placeholder="House number" required ="true"/>
                             <form:errors path="houseNumber" cssClass="error"/>
                         </div>
 
                         <div class="col">
                             <label for="flatNumberId">Enter flat number</label>
-                            <form:input type="number" class="form-control" id="flatNumberId"
+                            <form:input type="number" class="form-control" id="flatNumberId" max="2147483648"
                                         path="flatNumber" placeholder="Flat number" required ="true"/>
                             <form:errors path="flatNumber" cssClass="error1"/>
                         </div>

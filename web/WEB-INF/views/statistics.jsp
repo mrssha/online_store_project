@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%--
   Created by IntelliJ IDEA.
   User: Maria
@@ -137,7 +138,8 @@
                 <td>${customer.firstName}</td>
                 <td>${customer.secondName}</td>
                 <td>${customer.email}</td>
-                <td>${customer.birthDate}</td>
+                <td><fmt:formatDate value="${customer.birthDate}" pattern="yyyy-MM-dd"/></td>
+                <%--<td>${customer.birthDate}</td>--%>
                 <td>${customer.sumPurchases}</td>
             </tr>
         </c:forEach>

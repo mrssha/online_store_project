@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%--
   Created by IntelliJ IDEA.
   User: Maria
@@ -34,8 +35,8 @@
         <tr>
             <th scope="col">Id</th>
 
-            <th scope="col">Date order</th>
-            <th scope="col" width="50">Quantity products</th>
+            <th scope="col" width="130">Date order</th>
+            <th scope="col" width="40">Quantity products</th>
 
             <th scope="col">Total</th>
             <th scope="col" width="100">Payment method</th>
@@ -57,10 +58,7 @@
 
             <tr>
                 <td>${order.id}</td>
-                    <%--<c:set var="date" value="${order.dateOrder}"/>--%>
-                    <%--<fmt:formatDate pattern="MM/dd/yyyy" value="${date}" var="parsedDate" />--%>
-                    <%--<td>${parsedDate}</td>--%>
-                <td>${order.dateOrder}</td>
+                <td><fmt:formatDate value="${order.dateOrder}" pattern="yyyy-MM-dd"/></td>
                 <td width="10">${order.quantityProducts}</td>
                 <td>${order.payment_amount} rub</td>
                 <td>${order.paymentMethod}</td>
