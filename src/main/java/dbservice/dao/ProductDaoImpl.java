@@ -6,10 +6,7 @@ import dbservice.entity.Product;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
-import javax.persistence.TypedQuery;
+import javax.persistence.*;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
@@ -27,6 +24,12 @@ public class ProductDaoImpl implements ProductDao {
     @Override
     public Product getById(long id) {
         return entityManager.find(Product.class, id);
+    }
+
+
+    @Override
+    public Product getByIdForUpdate(long id){
+        return entityManager.find(Product.class, id, LockModeType.PESSIMISTIC_WRITE);
     }
 
     @Override

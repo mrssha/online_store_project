@@ -9,6 +9,8 @@ public interface ProductDao {
 
     Product getById(long id);
 
+    Product getByIdForUpdate(long id);
+
     List<Product> getAll();
 
     Product getByName(String name);

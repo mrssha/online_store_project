@@ -13,6 +13,7 @@ import dbservice.dao.ProductDao;
 import dbservice.dto.*;
 import dbservice.entity.*;
 import dbservice.result.LogMessage;
+import dbservice.result.StatusResult;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -146,19 +147,28 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     @Transactional
-    public void confirmOrder(CustomerDto customerDto, OrderDto orderDto, BaseCartDto baseCartDto){
+    public StatusResult confirmOrder(CustomerDto customerDto, OrderDto orderDto, BaseCartDto baseCartDto){
         Order newOrder = createNewOrder(orderDto, baseCartDto);
         orderDao.add(newOrder);
-
         List<CartDto> cartItems = baseCartDto.getCartItems();
+
         for (CartDto cartItem: cartItems){
+            Product product = productDao.getByIdForUpdate(cartItem.getProduct().getId());
+            if (cartItem.getQuantity() > product.getQuantity()){
+                logger.info(StatusResult.ORDER_FIND_MISSING_PRODUCTS.getMessage());
+                return StatusResult.ORDER_FIND_MISSING_PRODUCTS;
+            }
+        }
+
+        for (CartDto cartItem: cartItems){
+            //Product changedProduct = productDao.getByIdForUpdate(cartItem.getProduct().getId());
+            Product changedProduct = productDao.getById(cartItem.getProduct().getId());
             Basket orderProduct = new Basket();
             orderProduct.setOrder(newOrder);
-            orderProduct.setProduct(productConverter.convertToEntity(cartItem.getProduct()));
+            orderProduct.setProduct(changedProduct);
             orderProduct.setQuantity(cartItem.getQuantity());
             basketDao.add(orderProduct);
 
-            Product changedProduct = productDao.getById(cartItem.getProduct().getId());
             int oldQuantity = changedProduct.getQuantity();
             int amountBought = changedProduct.getSales();
             changedProduct.setQuantity(oldQuantity - cartItem.getQuantity());
@@ -166,11 +176,11 @@ public class OrderServiceImpl implements OrderService {
             productDao.update(changedProduct);
             cartDao.deleteById(cartItem.getId());
         }
-        logger.info(String.format(LogMessage.ORDER_SUCCESS_CONFIRM, customerDto.getId()));
+        logger.info(StatusResult.ORDER_CONFIRM_SUCCESS.getMessage());
         customerDto.setSumPurchases(customerDto.getSumPurchases() + newOrder.getPayment_amount());
         customerService.updateCustomer(customerDto);
         standService.updateStandIfTopChanged();
-
+        return StatusResult.ORDER_CONFIRM_SUCCESS;
     }
 
     @Override

@@ -16,7 +16,10 @@ public enum StatusResult {
             " Please, enter another email or go to the login page."),
     CUSTOMER_CREATE_SUCCESS("Registration completed successfully. Please, enter your login details."),
     PASSWORD_CHANGED_SUCCESS("Password changed successfully"),
-    INVALID_OLD_PASSWORD("Invalid old password");
+    INVALID_OLD_PASSWORD("Invalid old password"),
+
+    ORDER_FIND_MISSING_PRODUCTS("Couldn't confirm order. Cart contains missing products"),
+    ORDER_CONFIRM_SUCCESS("Order confirm successfully");
 
 
     private final String message;

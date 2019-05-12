@@ -33,16 +33,7 @@ public class CartController {
     public String toCart(@CookieValue(value = "productCart", required = false) Cookie cookieCart,
                          HttpServletRequest request, HttpServletResponse response, ModelMap model)
             throws UnsupportedEncodingException {
-        //Principal principalUser = request.getUserPrincipal();
         CookieCartDto cartProductsCookie = cartService.getCartProductsCookie(cookieCart);
-
-//        if (principalUser != null){
-//            List<CartDto> cartItems = cartService.getCartItemsByCustomersEmail(principalUser.getName());
-//            model.addAttribute("missingProducts", cartService.checkMissingItems(cartItems));
-//        }else {
-//            model.addAttribute("missingProducts",
-//                    cartService.checkMissingItems(cartProductsCookie.getCookieCart()));
-//        }
         model.addAttribute("missingProducts", cartService.checkMissingItems(cartProductsCookie.getCookieCart()));
         model.addAttribute("cartCookie", cartProductsCookie.getCookieCart());
         model.addAttribute("amount", cartProductsCookie.getAmountProducts());

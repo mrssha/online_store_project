@@ -5,10 +5,8 @@ import dbservice.dto.*;
 import dbservice.entity.Address;
 import dbservice.entity.AddressType;
 import dbservice.entity.DeliveryMethod;
-import dbservice.service.AddressService;
-import dbservice.service.CartService;
-import dbservice.service.CustomerService;
-import dbservice.service.OrderService;
+import dbservice.result.StatusResult;
+import dbservice.service.*;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -68,18 +66,15 @@ public class OrderController {
                                @ModelAttribute("newOrder") OrderDto newOrder)
             throws UnsupportedEncodingException {
         Principal principalUser = request.getUserPrincipal();
-        //List<CartDto> cartItems = cartService.getCartItemsByCustomersEmail(principalUser.getName());
         BaseCartDto baseCartDto = cartService.getBaseCartByCustomersEmail(principalUser.getName());
-        if (cartService.checkMissingItems(baseCartDto.getCartItems()).size() != 0){
-            logger.info("Couldn't confirm order. Cart contains missing items");
-            return "redirect:/cart";
-        }
         CustomerDto customer = customerService.getCustomerByEmail(principalUser.getName());
         newOrder.setCustomer(customer);
         AddressDto address = addressService.getAddressById(address_id);
         newOrder.setCustomerAddress(address);
-
-        orderService.confirmOrder(customer, newOrder, baseCartDto);
+        StatusResult result = orderService.confirmOrder(customer, newOrder, baseCartDto);
+        if (result == StatusResult.ORDER_FIND_MISSING_PRODUCTS){
+            return "redirect:/cart";
+        }
         cartService.clearCookieCart(request, response);
         return "orderSuccess";
     }

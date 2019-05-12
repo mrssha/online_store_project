@@ -40,12 +40,7 @@ public class Main {
 
         try {
 
-//            Calendar c = new GregorianCalendar();
-//            c.setTimeInMillis(System.currentTimeMillis());
-//            c.add(Calendar.MONTH, -1);
-//            Date date = c.getTime();
-//            System.out.println(date);
-
+/*
             Integer year = 2019;
             String month = "APRIL";
             Month m = Month.valueOf(month);
@@ -67,13 +62,6 @@ public class Main {
             System.out.println(d1.getClass());
             System.out.println(d2.getClass());
 
-            //Date dateFromLocalDT = Date.from(first.atZone(ZoneId.systemDefault()).toInstant());
-
-            //createQuery("Select sum(o.payment_amount) from Order o where o.dateOrder between :date1 and :date2");
-
-//            Query query = session.
-//                    createQuery("Select sum(o.payment_amount) from Order o where o.dateOrder between :date1 and :date2");
-
             Query query = session.
                     createQuery("Select o from Order o where o.dateOrder between :startDate and :endDate")
                     .setParameter("startDate", date1, TemporalType.DATE)
@@ -87,6 +75,7 @@ public class Main {
                     .setParameter("endDate", date2, TemporalType.DATE);
             Double d = (Double) query2.getSingleResult();
             System.out.println(d);
+            */
 
 
 
@@ -104,6 +93,25 @@ public class Main {
 //            criteriaQuery.select(root.get("payment_amount"))
 //                    .where(predicates.toArray(new Predicate[]{}));
 //            List<Order> list1 = session.createQuery(criteriaQuery)
+
+
+            String search1 = "bf";
+            String search = search1.toLowerCase();
+            CriteriaBuilder builder = session.getCriteriaBuilder();
+            CriteriaQuery<Product> query = builder.createQuery(Product.class);
+            Root<Product> root = query.from(Product.class);
+            query.select(root).where(builder.or(
+                    builder.like(
+                            builder.lower(root.get("name")), '%' + search + '%'),
+                    builder.like(
+                            builder.lower(root.get("brand")), '%' + search + '%')));
+            List<Product> list1 =  session.createQuery(query).getResultList();
+            for (Product product: list1){
+                System.out.println(product.getName());
+            }
+
+
+
 
 
 

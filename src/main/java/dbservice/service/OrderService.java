@@ -4,6 +4,7 @@ import dbservice.dto.*;
 import dbservice.entity.Address;
 import dbservice.entity.Customer;
 import dbservice.entity.Order;
+import dbservice.result.StatusResult;
 import javafx.util.Pair;
 
 import java.io.IOException;
@@ -34,9 +35,7 @@ public interface OrderService {
 
     String getRevenueForPeriod(String periodJson);
 
-    void confirmOrder(CustomerDto customerDto, OrderDto order, BaseCartDto baseCartDto);
-
-    //Pair<Integer, Double> getCartParameters(List<CartDto> cartItems);
+    StatusResult confirmOrder(CustomerDto customerDto, OrderDto order, BaseCartDto baseCartDto);
 
     Order createNewOrder(OrderDto orderDto, BaseCartDto baseCartDto);
 

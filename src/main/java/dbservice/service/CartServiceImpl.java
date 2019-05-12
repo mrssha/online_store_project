@@ -207,6 +207,7 @@ public class CartServiceImpl implements CartService {
         return missingProducts;
     }
 
+
     @Override
     @Transactional
     public List<ProductDto> checkMissingItems(Map<ProductDto, Integer> mapCookie){
@@ -376,8 +377,6 @@ public class CartServiceImpl implements CartService {
         }
         logger.info("Cookie cart has been cleared");
     }
-
-
 }
 
 
