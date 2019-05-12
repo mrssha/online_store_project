@@ -33,15 +33,17 @@ public class CartController {
     public String toCart(@CookieValue(value = "productCart", required = false) Cookie cookieCart,
                          HttpServletRequest request, HttpServletResponse response, ModelMap model)
             throws UnsupportedEncodingException {
-        Principal principalUser = request.getUserPrincipal();
+        //Principal principalUser = request.getUserPrincipal();
         CookieCartDto cartProductsCookie = cartService.getCartProductsCookie(cookieCart);
-        if (principalUser != null){
-            List<CartDto> cartItems = cartService.getCartItemsByCustomersEmail(principalUser.getName());
-            model.addAttribute("missingProducts", cartService.checkMissingItems(cartItems));
-        }else {
-            model.addAttribute("missingProducts",
-                    cartService.checkMissingItems(cartProductsCookie.getCookieCart()));
-        }
+
+//        if (principalUser != null){
+//            List<CartDto> cartItems = cartService.getCartItemsByCustomersEmail(principalUser.getName());
+//            model.addAttribute("missingProducts", cartService.checkMissingItems(cartItems));
+//        }else {
+//            model.addAttribute("missingProducts",
+//                    cartService.checkMissingItems(cartProductsCookie.getCookieCart()));
+//        }
+        model.addAttribute("missingProducts", cartService.checkMissingItems(cartProductsCookie.getCookieCart()));
         model.addAttribute("cartCookie", cartProductsCookie.getCookieCart());
         model.addAttribute("amount", cartProductsCookie.getAmountProducts());
         model.addAttribute("total", cartProductsCookie.getTotalPrice());
@@ -56,7 +58,6 @@ public class CartController {
         if (principalUser != null){
              return cartService.addToCart(principalUser.getName(),
                     Long.parseLong(id_product));
-
         }
         return new HashMap<>();
     }
@@ -106,12 +107,12 @@ public class CartController {
         Principal principalUser = request.getUserPrincipal();
         if (principalUser != null){
             // проверка id на null
-            String message = cartService.addRemoveCartItem(principalUser.getName(),
+            String result = cartService.addRemoveCartItem(principalUser.getName(),
                     Long.parseLong(id_product));
-            result.put("message", message);
+            result.put("result", result);
             return result;
         }
-        result.put("message", "");
+        result.put("result", "");
         return result;
     }
     */

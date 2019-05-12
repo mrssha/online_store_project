@@ -1,5 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%--
   Created by IntelliJ IDEA.
   User: Maria
@@ -25,7 +26,7 @@
 
 <div class="container-fluid">
 
-    <form id="productForm" action="${contextPath}/admin/products/addProduct"
+    <form:form id="productForm" action="${contextPath}/admin/products/addProduct"
           method="post" modelAttribute="newProduct">
 
         <form>
@@ -35,7 +36,9 @@
             <div class="form-row my-1">
                 <div class="col">
                     <label for="selectNameId">Product name</label>
-                    <input type="text" name="name" class="form-control" id="selectNameId" required>
+                    <form:input type="text" name="name" class="form-control"
+                                path="name" id="selectNameId"/>
+                    <form:errors path="name" cssClass="error"/>
                 </div>
                 <div class="col">
                     <label for="cat">Category</label>
@@ -59,17 +62,23 @@
                 </div>
                 <div class="col">
                     <label for="weightId">Weight</label>
-                    <input id = "weightId" type="number" name="weight" class="form-control"  required>
+                    <form:input id = "weightId" type="number" name="weight"
+                           path="weight" class="form-control"/>
+                    <form:errors path="weight" cssClass="error"/>
                 </div>
             </div>
             <div class="form-row my-1">
                 <div class="col">
                     <label for="priceId">Price</label>
-                    <input id = "priceId" type="number" name="price" class="form-control"  required>
+                    <form:input id = "priceId" type="number" name="price"
+                                path="price" class="form-control" />
+                    <form:errors path="price" cssClass="error"/>
                 </div>
                 <div class="col">
                     <label for="quantityId">Quantity</label>
-                    <input id ="quantityId" type="number" name="quantity" class="form-control" required>
+                    <form:input id ="quantityId" type="number" name="quantity"
+                                path="quantity" class="form-control"/>
+                    <form:errors path="quantity" cssClass="error"/>
                 </div>
                 <div class="col">
                     <label for="smImageId">Small image path</label>
@@ -86,7 +95,16 @@
                 </button>
             </div>
         </form>
-    </form>
+    </form:form>
+
+    <%--<form method="POST" action="${contextPath}/admin/uploadFile" enctype="multipart/form-data">--%>
+        <%--File to upload: <input type="file" name="file"><br />--%>
+<%----%>
+        <%--<input type="submit" value="Upload">--%>
+        <%--Press here to upload the file!--%>
+    <%--</form>--%>
+
+    <p id = "messageId" style="color: #DC143C">${requestScope.message}</p>
 
     <table class="table">
         <thead class="thead-dark">

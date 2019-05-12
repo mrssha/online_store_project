@@ -2,10 +2,7 @@ package dbservice.dto;
 
 import dbservice.entity.AddressType;
 
-import javax.validation.constraints.Digits;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Positive;
+import javax.validation.constraints.*;
 import java.util.Objects;
 
 public class AddressDto {

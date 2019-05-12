@@ -1,5 +1,7 @@
 package dbservice.dto;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 import java.util.Objects;
 
 
@@ -7,6 +9,8 @@ public class CategoryDto {
 
     private Long id;
 
+    @NotEmpty(message = "Category shouldn't be empty")
+    @Size(min = 2, max = 45, message = "Field should contain from 2 to 45 characters")
     private String categoryName;
 
     public CategoryDto(){

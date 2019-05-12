@@ -18,8 +18,6 @@ public interface OrderDao {
 
     List<Order> getByDate(Date date);
 
-    int getProductQuantity(Order order, Product product);
-
     Double getRevenueForPeriod(Integer year, String month);
 
     void add(Order order);

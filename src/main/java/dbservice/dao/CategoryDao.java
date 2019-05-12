@@ -8,7 +8,7 @@ public interface CategoryDao {
 
     Category getById(long id);
 
-   // Category getByName(String name);
+    Category getByName(String name);
 
     List<Category> getAllCategories();
 

@@ -6,13 +6,14 @@ import dbservice.dto.ChangeInfoDto;
 import dbservice.dto.ChangePasswordDto;
 import dbservice.dto.CustomerDto;
 import dbservice.entity.Customer;
+import dbservice.result.StatusResult;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import sun.rmi.runtime.Log;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -28,7 +29,10 @@ public class CustomerServiceImpl implements CustomerService {
     private CustomerConverter customerConverter;
 
     @Autowired
-    BCryptPasswordEncoder passwordEncoder;
+    private BCryptPasswordEncoder passwordEncoder;
+
+    private static final Logger logger = Logger.getLogger(CustomerServiceImpl.class);
+
 
     @Override
     @Transactional
@@ -51,16 +55,18 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     @Transactional
-    public String  addCustomer(CustomerDto customerDto) {
+    public StatusResult  addCustomer(CustomerDto customerDto) {
         String email = customerDto.getEmail();
         if (getCustomerByEmail(email) != null) {
-            return "EMAIL_EXIST";
+            logger.info(StatusResult.EMAIL_ALREADY_EXIST.getMessage());
+            return StatusResult.EMAIL_ALREADY_EXIST;
         }
         customerDto.setPassword(passwordEncoder.encode(customerDto.getPassword()));
         customerDto.setRole("ROLE_USER");
         customerDto.setSumPurchases(0.0);
         customerDao.add(customerConverter.convertToEntity(customerDto));
-        return "CUSTOMER_CREATED";
+        logger.info(StatusResult.CUSTOMER_CREATE_SUCCESS.getMessage());
+        return StatusResult.CUSTOMER_CREATE_SUCCESS;
     }
 
     @Override
@@ -77,14 +83,15 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     @Transactional
-    public String changePassword(String  email, ChangePasswordDto changePass){
+    public StatusResult changePassword(String  email, ChangePasswordDto changePass){
         CustomerDto customerDto = getCustomerByEmail(email);
         if (passwordEncoder.matches(changePass.getOldPassword(), customerDto.getPassword())){
             customerDto.setPassword(passwordEncoder.encode(changePass.getNewPassword()));
             updateCustomer(customerDto);
-            return "PASSWORD_CHANGED";
+            logger.info(StatusResult.PASSWORD_CHANGED_SUCCESS.getMessage());
+            return StatusResult.PASSWORD_CHANGED_SUCCESS;
         }
-        return "INVALID_OLD_PASSWORD";
+        return StatusResult.INVALID_OLD_PASSWORD;
     }
 
 

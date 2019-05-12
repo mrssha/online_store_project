@@ -63,6 +63,7 @@ public class ProductController{
                                      @RequestParam(value = "maxPrice", required = false) Integer maxPrice,
                                      ModelMap model){
         List<ProductDto> products = productService.getByParams(id_category, brand, minPrice, maxPrice);
+        //products.sort((Developer o1, Developer o2)->o1.getAge()-o2.getAge());
         model.addAttribute("selectedProducts", products);
         return "home";
     }

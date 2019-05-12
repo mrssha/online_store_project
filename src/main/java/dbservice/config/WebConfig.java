@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.CacheControl;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
@@ -16,18 +17,22 @@ import org.springframework.jms.core.JmsTemplate;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
+import org.springframework.security.web.session.HttpSessionEventPublisher;
 import org.springframework.validation.Validator;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import org.springframework.validation.beanvalidation.MethodValidationPostProcessor;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
+import org.springframework.web.multipart.support.StandardServletMultipartResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
-
-
+import java.util.concurrent.TimeUnit;
 
 
 @Configuration
@@ -59,6 +64,7 @@ public class WebConfig implements WebMvcConfigurer {
     }
 
 
+
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
@@ -73,11 +79,6 @@ public class WebConfig implements WebMvcConfigurer {
     }
 
 
-    @Bean("LocalValidatorFactoryBean")
-    public Validator validatorFactory () {
-        return new LocalValidatorFactoryBean();
-    }
-
 
     @Bean
     public ActiveMQConnectionFactory connectionFactory(){
@@ -90,23 +91,25 @@ public class WebConfig implements WebMvcConfigurer {
     }
 
 
-//    @Bean
-//    public ActiveMQQueue messageDestination(){
-//        ActiveMQQueue destination = new ActiveMQQueue();
-//        destination.setPhysicalName("test");
-//        return destination;
-//    }
-
     @Bean
     public JmsTemplate jmsTemplate(){
         JmsTemplate template = new JmsTemplate();
         template.setConnectionFactory(connectionFactory());
-        //template.setDefaultDestination( messageDestination());
-        //template.setDefaultDestinationName("jms.queue.test");
         template.setDefaultDestinationName("jms.queue.productsQueue");
         return template;
     }
 
+    @Bean(name = "multipartResolver")
+    public CommonsMultipartResolver multipartResolver() {
+        CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver();
+        multipartResolver.setMaxUploadSize(300000);
+        return multipartResolver;
+    }
+
+//    @Bean
+//    public HttpSessionEventPublisher httpSessionEventPublisher() {
+//        return new HttpSessionEventPublisher();
+//    }
 
 
 

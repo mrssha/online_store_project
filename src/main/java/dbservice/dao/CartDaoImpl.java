@@ -53,7 +53,16 @@ public class CartDaoImpl implements CartDao {
         criteriaQuery.select(root);
         criteriaQuery.where(cBuilder.equal(root.get("customer"), id_customer));
         return entityManager.createQuery(criteriaQuery).getResultList();
+    }
 
+    @Override
+    public List<Cart> getCartItemsForProduct(long id_product){
+        CriteriaBuilder cBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Cart> criteriaQuery = cBuilder.createQuery(Cart.class);
+        Root<Cart> root = criteriaQuery.from(Cart.class);
+        criteriaQuery.select(root);
+        criteriaQuery.where(cBuilder.equal(root.get("product"), id_product));
+        return entityManager.createQuery(criteriaQuery).getResultList();
     }
 
     @Override

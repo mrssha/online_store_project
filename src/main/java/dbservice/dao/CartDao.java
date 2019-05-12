@@ -14,7 +14,7 @@ public interface CartDao {
 
     List<Cart> getCartItemsForCustomer(long id_customer);
 
-    //List<Customer> getCustomersForProduct(long id_product);
+    List<Cart> getCartItemsForProduct(long id_product);
 
     void add(Cart cartItem);
 

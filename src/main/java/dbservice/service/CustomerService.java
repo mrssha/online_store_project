@@ -3,6 +3,7 @@ package dbservice.service;
 import dbservice.dto.ChangeInfoDto;
 import dbservice.dto.ChangePasswordDto;
 import dbservice.dto.CustomerDto;
+import dbservice.result.StatusResult;
 
 import java.util.List;
 import java.util.Set;
@@ -15,11 +16,11 @@ public interface CustomerService {
 
     Set<CustomerDto> getAllCustomers();
 
-    String addCustomer(CustomerDto customerDto);
+    StatusResult addCustomer(CustomerDto customerDto);
 
     CustomerDto changeInfo(CustomerDto customer, ChangeInfoDto changeInfo);
 
-    String changePassword(String  email, ChangePasswordDto changePass);
+    StatusResult changePassword(String  email, ChangePasswordDto changePass);
 
     List<CustomerDto> getTopCustomers();
 

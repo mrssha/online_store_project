@@ -2,6 +2,7 @@ package dbservice.controller;
 
 import dbservice.dto.*;
 import dbservice.entity.AddressType;
+import dbservice.result.StatusResult;
 import dbservice.service.AddressService;
 import dbservice.service.CustomerService;
 import dbservice.service.OrderService;
@@ -37,8 +38,6 @@ public class CustomerController {
     @Autowired
     private OrderService orderService;
 
-    //private static final Logger LOGGER = Logger.getLogger(RateMDB.class.toString());
-
 
     @InitBinder
     public void initBinder(WebDataBinder binder) {
@@ -51,6 +50,7 @@ public class CustomerController {
             "/profile/changePassword"}, method = RequestMethod.GET)
     public String customerProfile(ModelMap modelMap, HttpServletRequest request){
         Principal principalUser = request.getUserPrincipal();
+        System.out.println(principalUser.getName());
         CustomerDto customer = customerService.getCustomerByEmail(principalUser.getName());
         List<AddressDto> addresses = addressService.getAddressByCustomerId(customer.getId());
         modelMap.addAttribute("newAddress", new AddressDto());
@@ -126,17 +126,12 @@ public class CustomerController {
             modelMap.addAttribute("hiddenPassForm", false);
             return "profile";
         }
-
         String email = principalUser.getName();
-        String message = customerService.changePassword(email, changePass);
-
-        if (message.equals("INVALID_OLD_PASSWORD")){
-            modelMap.addAttribute("passEditMessage", "Invalid old password");
-        }else{
-            modelMap.addAttribute("passEditMessage", "Password changed successfully");
-        }
+        StatusResult result = customerService.changePassword(email, changePass);
+        modelMap.addAttribute("passEditMessage", result.getMessage());
         CustomerDto changedCustomer = customerService.getCustomerByEmail(email);
         request.getSession().setAttribute("principalUser", changedCustomer);
+        modelMap.addAttribute("changePass", new ChangePasswordDto());
         return "profile";
     }
 

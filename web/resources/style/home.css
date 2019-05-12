@@ -3,6 +3,11 @@
     flex-grow: unset;
 }
 
+.sidebar{
+    border-right: 1px solid #DCDCDC;
+    height: fit-content;
+}
+
 
 .card {
     width: 180px;

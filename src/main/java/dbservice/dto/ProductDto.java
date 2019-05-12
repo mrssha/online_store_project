@@ -1,18 +1,38 @@
 package dbservice.dto;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
+import javax.validation.constraints.Size;
 import java.util.Objects;
 
 public class ProductDto {
 
     private Long id;
+
+    @NotEmpty(message = "Category shouldn't be empty")
+    @Size(min = 2, max = 45, message = "Field should contain from 2 to 45 characters")
     private String name;
+
+    @NotNull(message = "Price shouldn't be empty")
+    @Positive(message = "Price should be greater than 0")
     private Integer price;
-    //private String category;
+
     private CategoryDto category;
+
+//    @NotEmpty(message = "Product name shouldn't be empty")
+//    @Size(min = 2, max = 45, message = "Field should contain from 2 to 45 characters")
     private String brand;
+
+    @Positive(message = "Weight should be greater than 0")
     private Double weight;
+
     private String sex;
+
+    @NotNull(message = "Quantity shouldn't be empty")
+    @Positive(message = "Quantity should be greater than 0")
     private Integer quantity;
+
     private String imageSm;
     private String imageBg;
     private Integer sales;
@@ -43,15 +63,6 @@ public class ProductDto {
     public void setPrice(Integer price) {
         this.price = price;
     }
-
-    /*
-    public String getCategory() {
-        return category;
-    }
-
-    public void setCategory(String category) {
-        this.category = category;
-    }*/
 
     public CategoryDto getCategory() {
         return category;

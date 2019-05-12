@@ -5,7 +5,7 @@ import javax.validation.constraints.Size;
 
 public class ChangePasswordDto {
 
-    //@Size(min = 6, max = 45, message = "Field should contain from 6 to 45 characters")
+    //@Size(min = 6, max = 45, result = "Field should contain from 6 to 45 characters")
     @NotEmpty(message = "Old password shouldn't be empty")
     private String oldPassword;
 

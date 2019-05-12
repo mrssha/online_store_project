@@ -75,14 +75,7 @@ public class OrderDaoImpl implements OrderDao {
                         " and o.dateOrder between :startDate and :endDate")
                 .setParameter("startDate", date1, TemporalType.DATE)
                 .setParameter("endDate", date2, TemporalType.DATE);
-        Double result = (Double) query2.getSingleResult();
-        return result;
-    }
-
-
-    @Override
-    public int getProductQuantity(Order order, Product product) {
-        return 0;
+        return (Double) query2.getSingleResult();
     }
 
     @Override

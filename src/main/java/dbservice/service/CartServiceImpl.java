@@ -7,6 +7,7 @@ import dbservice.converter.ProductConverter;
 import dbservice.dao.CartDao;
 import dbservice.dao.CustomerDao;
 import dbservice.dao.ProductDao;
+import dbservice.dto.BaseCartDto;
 import dbservice.dto.CartDto;
 import dbservice.dto.CookieCartDto;
 import dbservice.dto.ProductDto;
@@ -160,14 +161,22 @@ public class CartServiceImpl implements CartService {
 
     @Override
     @Transactional
-    public List<CartDto> getCartItemsByCustomersEmail(String email){
+    public BaseCartDto getBaseCartByCustomersEmail(String email){
         Customer customer = customerDao.getByEmail(email);
         List<Cart> cartItems = cartDao.getCartItemsForCustomer(customer.getId());
         List<CartDto> cartDtoItems = new ArrayList<>();
+        int amount = 0;
+        int totalSum = 0;
         for (Cart cartItem: cartItems){
+            amount += cartItem.getQuantity();
+            totalSum += cartItem.getProduct().getPrice() * cartItem.getQuantity();
             cartDtoItems.add(cartConverter.convertToDto(cartItem));
         }
-        return cartDtoItems;
+        BaseCartDto baseCartDto = new BaseCartDto();
+        baseCartDto.setCartItems(cartDtoItems);
+        baseCartDto.setAmountProducts(amount);
+        baseCartDto.setTotalSum(totalSum);
+        return baseCartDto;
     }
 
 
@@ -262,9 +271,10 @@ public class CartServiceImpl implements CartService {
     @Transactional
     public void mergeCarts(HttpServletResponse response, String email, Cookie cookieCart)
             throws UnsupportedEncodingException{
-        List<CartDto> cartDb = getCartItemsByCustomersEmail(email);
+        BaseCartDto baseCartDto = getBaseCartByCustomersEmail(email);
+        List<CartDto> cartDbItems = baseCartDto.getCartItems();
         Map<Long, Integer> mapCookieCart = getCookieCart(cookieCart);
-        for (CartDto cartItemDb: cartDb){
+        for (CartDto cartItemDb: cartDbItems){
             ProductDto productDto = cartItemDb.getProduct();
             if (!mapCookieCart.containsKey(productDto.getId())){
                 mapCookieCart.put(productDto.getId(), cartItemDb.getQuantity());
@@ -297,6 +307,7 @@ public class CartServiceImpl implements CartService {
     }
 
 
+    /*
     @Override
     @Transactional
     public void mergeToCookieCart(HttpServletResponse response, String email, Cookie cookieCart)
@@ -348,6 +359,7 @@ public class CartServiceImpl implements CartService {
 
         logger.info("Products from cookies was added to base");
     }
+    */
 
     @Override
     @Transactional

@@ -44,27 +44,22 @@ public class OrderController {
 
 
     @RequestMapping( value = "/order", method = RequestMethod.GET)
-    public String createOrder(ModelMap modelMap, HttpServletRequest request) throws UnsupportedEncodingException {
+    public String createOrder(ModelMap modelMap, HttpServletRequest request){
         Principal principalUser = request.getUserPrincipal();
-        Cookie cookieCart = WebUtils.getCookie(request, "productCart");
-        cartService.mergeToDBCart(principalUser.getName(), cookieCart);
-
+        //Cookie cookieCart = WebUtils.getCookie(request, "productCart");
+        //cartService.mergeToDBCart(principalUser.getName(), cookieCart);
         CustomerDto customer = customerService.getCustomerByEmail(principalUser.getName());
-        List<CartDto> cartItems = cartService.getCartItemsByCustomersEmail(principalUser.getName());
+        //List<CartDto> cartItems = cartService.getCartItemsByCustomersEmail(principalUser.getName());
+        BaseCartDto baseCartDto = cartService.getBaseCartByCustomersEmail(principalUser.getName());
         List<AddressDto> addresses = addressService.getAddressByCustomerId(customer.getId());
         List<AddressDto> pickupPoints = addressService.getByAddressType(AddressType.PICKUP);
-        int amount = 0;
-        double total = 0;
-        for(CartDto cart: cartItems){
-            amount += cart.getQuantity();
-            total += cart.getProduct().getPrice() * cart.getQuantity();
-        }
         modelMap.addAttribute("addresses", addresses);
         modelMap.addAttribute("pickupPoints", pickupPoints);
-        modelMap.addAttribute("amount", amount);
-        modelMap.addAttribute("total", total);
+        modelMap.addAttribute("amount", baseCartDto.getAmountProducts());
+        modelMap.addAttribute("total", baseCartDto.getTotalSum());
         return "order";
     }
+
 
 
     @RequestMapping( value = "/order/confirmOrder", method = RequestMethod.POST)
@@ -73,8 +68,9 @@ public class OrderController {
                                @ModelAttribute("newOrder") OrderDto newOrder)
             throws UnsupportedEncodingException {
         Principal principalUser = request.getUserPrincipal();
-        List<CartDto> cartItems = cartService.getCartItemsByCustomersEmail(principalUser.getName());
-        if (cartService.checkMissingItems(cartItems).size() != 0){
+        //List<CartDto> cartItems = cartService.getCartItemsByCustomersEmail(principalUser.getName());
+        BaseCartDto baseCartDto = cartService.getBaseCartByCustomersEmail(principalUser.getName());
+        if (cartService.checkMissingItems(baseCartDto.getCartItems()).size() != 0){
             logger.info("Couldn't confirm order. Cart contains missing items");
             return "redirect:/cart";
         }
@@ -82,13 +78,15 @@ public class OrderController {
         newOrder.setCustomer(customer);
         AddressDto address = addressService.getAddressById(address_id);
         newOrder.setCustomerAddress(address);
-        orderService.confirmOrder(customer, newOrder, cartItems);
+
+        orderService.confirmOrder(customer, newOrder, baseCartDto);
         cartService.clearCookieCart(request, response);
         return "orderSuccess";
     }
 
 
     //???
+    /*
     @RequestMapping( value = "/confirm", method = RequestMethod.GET)
     public String confirm(Model model, HttpServletRequest request){
         Principal principalUser = request.getUserPrincipal();
@@ -103,5 +101,6 @@ public class OrderController {
         model.addAttribute("total", total);
         return "order";
     }
+    */
 
 }

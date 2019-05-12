@@ -1,6 +1,7 @@
 package dbservice.controller;
 
 import dbservice.dto.CustomerDto;
+import dbservice.result.StatusResult;
 import dbservice.service.CartService;
 import dbservice.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,16 +33,6 @@ public class LoginController {
     @Autowired
     private CustomerService customerService;
 
-    @Autowired
-    private CartService cartService;
-
-
-    @Autowired
-    @Qualifier("LocalValidatorFactoryBean")
-    private Validator validator;
-
-
-
     @RequestMapping( value = "/signup", method = RequestMethod.GET)
     public String signup(ModelMap modelMap){
         modelMap.addAttribute("newUser", new CustomerDto());
@@ -52,32 +43,26 @@ public class LoginController {
     public void initBinder(WebDataBinder binder) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
-        //binder.setValidator(validator);
     }
 
     @RequestMapping( value = "/signup", method = RequestMethod.POST)
     public ModelAndView signup(@Valid @ModelAttribute("newUser") CustomerDto customerDto,
                                BindingResult bindResult){
-
         ModelAndView modelAndView = new ModelAndView();
         if (bindResult.hasErrors()) {
             modelAndView.setViewName("signup");
             return modelAndView;
         }
-
-        String result = customerService.addCustomer(customerDto);
-        if (result.equals("EMAIL_EXIST")){
-            String message = "User with such email already exists. " +
-                    "Please, enter another email or go to the login page.";
-            modelAndView.addObject("message", message);
+        StatusResult result = customerService.addCustomer(customerDto);
+        if (result == StatusResult.EMAIL_ALREADY_EXIST){
+            modelAndView.addObject("message",result.getMessage());
             modelAndView.setViewName("signup");
             return modelAndView;
         }
-        String message = "Registration completed successfully. Please, enter your login details.";
-        modelAndView.addObject("message_user_created", message);
         modelAndView.setViewName("login");
         return modelAndView;
     }
+
 
     @RequestMapping( value = "/login", method = RequestMethod.GET)
     public String login(){

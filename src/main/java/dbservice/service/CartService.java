@@ -1,5 +1,6 @@
 package dbservice.service;
 
+import dbservice.dto.BaseCartDto;
 import dbservice.dto.CartDto;
 import dbservice.dto.CookieCartDto;
 import dbservice.dto.ProductDto;
@@ -20,7 +21,9 @@ public interface CartService {
 
     List<ProductDto> getProductsInCart(long id_customer);
 
-    List<CartDto> getCartItemsByCustomersEmail(String email);
+    //List<CartDto> getCartItemsByCustomersEmail(String email);
+
+    public BaseCartDto getBaseCartByCustomersEmail(String email);
 
     void add(CartDto cartDtoItem);
 
@@ -45,10 +48,12 @@ public interface CartService {
     void mergeCarts(HttpServletResponse response, String email, Cookie cookieCart)
             throws UnsupportedEncodingException;
 
+    /*
     void mergeToCookieCart(HttpServletResponse response, String email, Cookie cookieCart)
             throws UnsupportedEncodingException;
 
     void mergeToDBCart(String email, Cookie cookieCart) throws UnsupportedEncodingException;
+    */
 
     void clearCookieCart(HttpServletRequest request, HttpServletResponse response)
             throws UnsupportedEncodingException;

@@ -1,22 +1,24 @@
 package dbservice.service;
 
 import dbservice.dto.CategoryDto;
+import dbservice.result.StatusResult;
 
-import java.io.IOException;
 import java.util.List;
 
 public interface CategoryService {
 
     CategoryDto getById(long id);
 
+    CategoryDto getByName(String name);
+
     List<CategoryDto> getAllCategories();
 
-    void add(CategoryDto category);
+    StatusResult add(CategoryDto category);
 
-    void deleteById(long id);
+    String deleteById(long id);
 
     void update(CategoryDto category);
 
-    void updateFromJson(String categoryJson) throws IOException;
+    String updateCategory(String categoryJson);
 }
 

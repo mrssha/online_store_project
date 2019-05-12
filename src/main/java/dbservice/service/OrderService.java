@@ -1,12 +1,10 @@
 package dbservice.service;
 
-import dbservice.dto.CartDto;
-import dbservice.dto.CustomerDto;
-import dbservice.dto.OrderDto;
-import dbservice.dto.ProductDto;
+import dbservice.dto.*;
 import dbservice.entity.Address;
 import dbservice.entity.Customer;
 import dbservice.entity.Order;
+import javafx.util.Pair;
 
 import java.io.IOException;
 import java.util.Date;
@@ -32,10 +30,14 @@ public interface OrderService {
 
     void update(OrderDto order);
 
-    void updateFromJson (String orderJson) throws IOException;
+    void updateStatus(String orderJson);
 
     String getRevenueForPeriod(String periodJson);
 
-    void confirmOrder(CustomerDto customerDto, OrderDto order, List<CartDto> cartItems);
+    void confirmOrder(CustomerDto customerDto, OrderDto order, BaseCartDto baseCartDto);
+
+    //Pair<Integer, Double> getCartParameters(List<CartDto> cartItems);
+
+    Order createNewOrder(OrderDto orderDto, BaseCartDto baseCartDto);
 
 }

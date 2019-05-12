@@ -5,6 +5,8 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -19,6 +21,14 @@ public class CategoryDaoImpl implements CategoryDao {
     @Override
     public Category getById(long id){
         return entityManager.find(Category.class, id);
+    }
+
+    @Override
+    public Category getByName(String name){
+        TypedQuery<Category> query = entityManager.
+                createQuery("Select c from Category c where c.categoryName=:name", Category.class)
+                .setParameter("name", name);
+        return query.getResultList().stream().findFirst().orElse(null);
     }
 
     @Override

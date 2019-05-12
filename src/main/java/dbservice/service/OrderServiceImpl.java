@@ -1,12 +1,9 @@
 package dbservice.service;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import dbservice.controller.ProductController;
 import dbservice.converter.OrderConverter;
 import dbservice.converter.ProductConverter;
 import dbservice.dao.BasketDao;
@@ -15,15 +12,11 @@ import dbservice.dao.OrderDao;
 import dbservice.dao.ProductDao;
 import dbservice.dto.*;
 import dbservice.entity.*;
+import dbservice.result.LogMessage;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jms.UncategorizedJmsException;
-import org.springframework.jms.core.JmsTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.io.IOException;
-import java.time.Month;
 import java.util.*;
 
 @Service
@@ -48,7 +41,10 @@ public class OrderServiceImpl implements OrderService {
     CartDao cartDao;
 
     @Autowired
-    ProductService productService;
+    StandService standService;
+
+//    @Autowired
+//    ProductService productService;
 
     @Autowired
     CustomerService customerService;
@@ -56,8 +52,8 @@ public class OrderServiceImpl implements OrderService {
     @Autowired
     CartService cartService;
 
-    @Autowired
-    private JmsTemplate jmsTemplate;
+//    @Autowired
+//    private JmsTemplate jmsTemplate;
 
     private static final Logger logger = Logger.getLogger(OrderServiceImpl.class);
 
@@ -117,15 +113,15 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     @Transactional
-    public void updateFromJson (String orderJson) throws IOException {
-        ObjectMapper mapper = new ObjectMapper();
-        JsonNode rootNode = mapper.readTree(orderJson);
-        System.out.println(rootNode);
-        Long id = rootNode.get("id").asLong();
-        String orderStatus = rootNode.get("orderStatus").asText();
+    public void updateStatus(String orderJson){
+        JsonElement jElement = new JsonParser().parse(orderJson);
+        JsonObject jObject = jElement.getAsJsonObject();
+        Long id = jObject.get("id").getAsLong();
+        String orderStatus = jObject.get("orderStatus").getAsString();
         OrderDto orderDto = getById(id);
         orderDto.setOrderStatus(OrderStatus.valueOf(orderStatus));
         update(orderDto);
+        logger.info(LogMessage.ORDER_SUCCESS_UPDATE);
     }
 
     @Override
@@ -150,10 +146,11 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     @Transactional
-    public void confirmOrder(CustomerDto customerDto, OrderDto orderDto, List<CartDto> cartItems){
-        Order newOrder = createNewOrder(orderDto, cartItems);
+    public void confirmOrder(CustomerDto customerDto, OrderDto orderDto, BaseCartDto baseCartDto){
+        Order newOrder = createNewOrder(orderDto, baseCartDto);
         orderDao.add(newOrder);
 
+        List<CartDto> cartItems = baseCartDto.getCartItems();
         for (CartDto cartItem: cartItems){
             Basket orderProduct = new Basket();
             orderProduct.setOrder(newOrder);
@@ -169,43 +166,23 @@ public class OrderServiceImpl implements OrderService {
             productDao.update(changedProduct);
             cartDao.deleteById(cartItem.getId());
         }
-        logger.info(String.format("Order successfully confirmed for customer with id: %d",
-                customerDto.getId()));
+        logger.info(String.format(LogMessage.ORDER_SUCCESS_CONFIRM, customerDto.getId()));
         customerDto.setSumPurchases(customerDto.getSumPurchases() + newOrder.getPayment_amount());
         customerService.updateCustomer(customerDto);
-        updateStandIfTopChanged();
+        standService.updateStandIfTopChanged();
 
     }
 
-
-    private Order createNewOrder(OrderDto orderDto, List<CartDto> cartItems){
+    @Override
+    public Order createNewOrder(OrderDto orderDto, BaseCartDto baseCartDto){
         Order order = orderConverter.convertToEntity(orderDto);
         Date date = new Date();
         order.setDateOrder(date);
         order.setPaymentStatus(PaymentStatus.WAITING);
         order.setOrderStatus(OrderStatus.WAIT_PAYMENT);
-        int amount = 0;
-        double totalPrice = 0;
-        for(CartDto cart: cartItems){
-            amount += cart.getQuantity();
-            totalPrice += cart.getProduct().getPrice() * cart.getQuantity();
-        }
-        order.setQuantityProducts(amount);
-        order.setPayment_amount(totalPrice);
+        order.setQuantityProducts(baseCartDto.getAmountProducts());
+        order.setPayment_amount(baseCartDto.getTotalSum());
         return order;
-    }
-
-    private void updateStandIfTopChanged(){
-        List<ProductDto> lastTopList = productService.getLastTopProductsList();
-        List<ProductDto> newTopList= productService.getTopProducts();
-        try {
-            if (!lastTopList.containsAll(newTopList)) {
-                jmsTemplate.send(s -> s.createTextMessage("update list"));
-            }
-        }
-        catch (UncategorizedJmsException e){
-            logger.error("Couldn't send message to JMS");
-        }
     }
 
 }

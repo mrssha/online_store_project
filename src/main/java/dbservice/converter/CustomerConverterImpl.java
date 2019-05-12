@@ -26,7 +26,6 @@ public class CustomerConverterImpl implements CustomerConverter {
         customerDto.setBirthDate(customer.getBirthDate());
         customerDto.setSumPurchases(customer.getSumPurchases());
         customerDto.setRole(customer.getRole());
-        //customerDto.setAddresses(addressConverter.convertToDtoList(customer.getAddresses()));
         return customerDto;
     }
 
