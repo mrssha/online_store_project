@@ -1,7 +1,8 @@
 package dbservice.service;
 
+import dbservice.dto.CategoryDto;
 import dbservice.dto.ProductDto;
-import dbservice.entity.Product;
+import dbservice.result.StatusResult;
 
 import java.util.List;
 
@@ -11,22 +12,24 @@ public interface ProductService {
 
     List<ProductDto> getAllProducts();
 
-    List<ProductDto> getByName(String name);
+    ProductDto getByName(String name);
 
-    List<ProductDto> getByCategory(String category);
+    List<ProductDto> getByCategory(CategoryDto categoryDto);
 
     List<ProductDto> getByBrand(String brand);
 
-    List<ProductDto> getByParams(String name, Long id_category, String brand,
+    List<ProductDto> getByParams(Long id_category, String brand,
                                  Integer minPrice, Integer maxPrice);
+
+    List<ProductDto> getBySearch(String search);
 
     List<ProductDto> getTopProducts();
 
     List<ProductDto> getLastTopProductsList();
 
-    void add(ProductDto product);
+    StatusResult add(ProductDto product, Long categoryId);
 
-    void deleteById(long id);
+    String deleteById(long id);
 
     void update(ProductDto product);
 }

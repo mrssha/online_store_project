@@ -1,35 +1,22 @@
 package dbservice.controller;
 
-
-import dbservice.dto.CartDto;
 import dbservice.dto.CategoryDto;
-import dbservice.dto.CustomerDto;
 import dbservice.dto.ProductDto;
-import dbservice.entity.Product;
-import dbservice.service.CartService;
 import dbservice.service.CategoryService;
-import dbservice.service.CustomerService;
 import dbservice.service.ProductService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.jms.UncategorizedJmsException;
-import org.springframework.jms.core.JmsTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
-import javax.jms.JMSException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.net.ConnectException;
-import java.security.Principal;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotEmpty;
 import java.util.List;
-import java.util.Set;
 
 @Controller
 @RequestMapping(value = "/")
@@ -39,13 +26,7 @@ public class ProductController{
     private ProductService productService;
 
     @Autowired
-    private CartService cartService;
-
-    @Autowired
     private CategoryService categoryService;
-
-    @Autowired
-    private CustomerService customerService;
 
     private static final Logger logger = Logger.getLogger(ProductController.class);
 
@@ -81,8 +62,18 @@ public class ProductController{
                                      @RequestParam(value = "minPrice", required = false) Integer minPrice,
                                      @RequestParam(value = "maxPrice", required = false) Integer maxPrice,
                                      ModelMap model){
-        List<ProductDto> products = productService.getByParams(name, id_category, brand, minPrice, maxPrice);
+        List<ProductDto> products = productService.getByParams(id_category, brand, minPrice, maxPrice);
         model.addAttribute("selectedProducts", products);
+        return "home";
+    }
+
+    @GetMapping("/search")
+    public String getProductBySearch(@RequestParam(value = "search", required = false) @NotEmpty String search,
+                                     ModelMap model){
+        if (!search.equals("")){
+            List<ProductDto> products = productService.getBySearch(search);
+            model.addAttribute("selectedProducts", products);
+        }
         return "home";
     }
 

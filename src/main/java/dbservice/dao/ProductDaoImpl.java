@@ -1,6 +1,7 @@
 package dbservice.dao;
 
 import dbservice.dto.ProductDto;
+import dbservice.entity.Category;
 import dbservice.entity.Product;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -8,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
@@ -38,7 +40,7 @@ public class ProductDaoImpl implements ProductDao {
 
 
     @Override
-    public List<Product> getByParams(String name, Long id_category, String brand,
+    public List<Product> getByParams(Long id_category, String brand,
                                      Integer minPrice, Integer maxPrice){
 
 
@@ -48,10 +50,6 @@ public class ProductDaoImpl implements ProductDao {
         Root<Product> root = criteriaQuery.from(Product.class);
         List<Predicate> predicates = new ArrayList<Predicate>();
 
-        if (name != null) {
-            predicates.add(
-                    builder.equal(root.get("name"), name));
-        }
         if (id_category != null) {
             predicates.add(
                     builder.equal(root.get("category"), id_category));
@@ -88,24 +86,40 @@ public class ProductDaoImpl implements ProductDao {
 
     }
 
+    @Override
+    public List<Product> getBySearch(String search) {
+        CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Product> query = builder.createQuery(Product.class);
+        Root<Product> root = query.from(Product.class);
+        query.select(root).where(builder.or(
+                builder.like(
+                        builder.lower(root.get("name")), '%' + search.toLowerCase() + '%'),
+                builder.like(
+                        builder.lower(root.get("brand")), '%' + search.toLowerCase() + '%')));
+        return entityManager.createQuery(query).getResultList();
+    }
+
 
     @Override
-    public List<Product> getByName(String name) {
+    public Product getByName(String name) {
         CriteriaBuilder cBuilder = entityManager.getCriteriaBuilder();
         CriteriaQuery<Product> criteriaQuery = cBuilder.createQuery(Product.class);
         Root<Product> root = criteriaQuery.from(Product.class);
         criteriaQuery.select(root);
         criteriaQuery.where(cBuilder.equal(root.get("name"), name));
-        return entityManager.createQuery(criteriaQuery).getResultList();
+        return (Product) entityManager.createQuery(criteriaQuery).getResultList().stream().findFirst().orElse(null);
     }
+
 
     @Override
-    public List<Product> getByCategory(String name) {
-        return null;
+    public List<Product> getByCategory(Category category) {
+        TypedQuery<Product> query = entityManager.
+                createQuery("Select p from Product p where p.category=:category", Product.class)
+                .setParameter("category", category);
+        return query.getResultList();
     }
 
 
-    //Объеденить позже с getByName()
     @Override
     public List<Product> getByBrand(String name) {
         CriteriaBuilder cBuilder = entityManager.getCriteriaBuilder();
@@ -119,8 +133,8 @@ public class ProductDaoImpl implements ProductDao {
 
     @Override
     public List<Product> getTopProducts(){
-        Query query = entityManager.
-                createQuery("Select p from Product p ORDER BY p.sales desc");
+        TypedQuery<Product> query = entityManager.
+                createQuery("Select p from Product p ORDER BY p.sales desc", Product.class);
         return query.setMaxResults(10).getResultList();
     }
 
@@ -140,6 +154,5 @@ public class ProductDaoImpl implements ProductDao {
     @Override
     public void update(Product product) {
         entityManager.merge(product);
-
     }
 }

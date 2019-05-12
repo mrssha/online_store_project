@@ -1,5 +1,6 @@
 package dbservice.dao;
 
+import dbservice.entity.Category;
 import dbservice.entity.Product;
 
 import java.util.List;
@@ -10,14 +11,16 @@ public interface ProductDao {
 
     List<Product> getAll();
 
-    List<Product> getByName(String name);
+    Product getByName(String name);
 
-    List<Product> getByCategory(String name);
+    List<Product> getByCategory(Category category);
 
     List<Product> getByBrand(String name);
 
-    List<Product> getByParams(String name, Long id_category, String brand,
+    List<Product> getByParams(Long id_category, String brand,
                               Integer minPrice, Integer maxPrice);
+
+    List<Product> getBySearch(String search);
 
     List<Product> getTopProducts();
 

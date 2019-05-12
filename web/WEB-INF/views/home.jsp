@@ -13,10 +13,6 @@
     <c:set var="contextPath" value="${pageContext.request.getContextPath()}"/>
     <c:set var="user" value="${sessionScope.principalUser.id}"/>
 
-    <%--<sec:authorize access="!isAuthenticated()">--%>
-    <%--</sec:authorize>--%>
-
-    <%--<script type="text/javascript" src="${contextPath}/resources/script/async.js"> </script>--%>
     <script type="text/javascript" src="${contextPath}/resources/script/tocart.js"></script>
 
     <!-- Bootstrap CSS -->
@@ -32,10 +28,10 @@
 
 <div class="container-fluid">
     <div class="row">
-        <nav class="col-md-2 d-none d-md-block bg-light sidebar">
+        <nav class="col-md-2 d-none d-md-block my-3 sidebar" style="border-right: 1px solid #DCDCDC; height: fit-content">
 
             <div class="sidebar-sticky">
-                <form id="filterId" action="filter" method="get">
+                <form id="filterId" action="${contextPath}/filter" method="get">
                     <div class="form-group">
                         <label for="selectCategory">Category</label>
                         <select class="form-control" id="selectCategory"
@@ -65,7 +61,7 @@
                     <div class="form-group">
                         <label for="minPriceId">Minimum price</label>
                         <input type="number" min=0 class="form-control" name="minPrice"
-                               value="${minPrice}" id="minPriceId" placeholder= 0>
+                               value="${minPrice}" id="minPriceId">
                     </div>
 
                     <div class="form-group">
