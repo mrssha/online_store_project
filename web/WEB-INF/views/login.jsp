@@ -17,53 +17,51 @@
     <c:set var="contextPath" value="${pageContext.request.getContextPath()}"/>
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
     <link href="${contextPath}/resources/style/login.css" rel="stylesheet">
+    <link rel="stylesheet" href="${contextPath}/resources/style/general.css">
 
 </head>
 <body>
-<jsp:include page="header.jsp"/>
+<div class="wrapper">
+    <jsp:include page="header.jsp"/>
 
-<div class="container">
+    <div class="container content">
+        <c:url value="/login_processing" var="loginUrl" />
+        <form class="form-login" action="${loginUrl}" method="post">
+            <c:if test="${param.error != null}">
+                <p>
+                    Invalid username and password.
+                </p>
+            </c:if>
+            <c:if test="${param.logout != null}">
+                <p>
+                    You have been logged out.
+                </p>
+            </c:if>
 
-    <c:url value="/login_processing" var="loginUrl" />
-    <form class="form-login" action="${loginUrl}" method="post">
-        <c:if test="${param.error != null}">
-            <p>
-                Invalid username and password.
-            </p>
-        </c:if>
-        <c:if test="${param.logout != null}">
-            <p>
-                You have been logged out.
-            </p>
-        </c:if>
+            <h2 class="h3 mb-3 font-weight-normal">Enter data for log in</h2>
+            <label for="inputEmail" class="sr-only">Email address</label>
 
-        <h2 class="h3 mb-3 font-weight-normal">Enter data for log in</h2>
-        <label for="inputEmail" class="sr-only">Email address</label>
+            <input type="email" id="inputEmail" class="form-control" name="username"
+                   placeholder="Email address" required autofocus>
 
-        <input type="email" id="inputEmail" class="form-control" name="username"
-               placeholder="Email address" required autofocus>
+            <label for="password" class="sr-only">Password</label>
+            <input type="password" id="password" class="form-control" name="password"
+                   placeholder="Password" required>
 
-        <label for="password" class="sr-only">Password</label>
-        <input type="password" id="password" class="form-control" name="password"
-               placeholder="Password" required>
+            <input type="hidden"
+                   name="${_csrf.parameterName}"
+                   value="${_csrf.token}"/>
 
-        <%--<div class="checkbox mb-3">--%>
-            <%--<label>--%>
-                <%--<input type="checkbox" value="remember-me"> Remember me--%>
-            <%--</label>--%>
-        <%--</div>--%>
+            <button class="btn btn-lg btn-primary btn-block my-3" type="submit">Sign in</button>
 
-        <input type="hidden"
-               name="${_csrf.parameterName}"
-               value="${_csrf.token}"/>
-
-        <button class="btn btn-lg btn-primary btn-block my-3" type="submit">Sign in</button>
-
-        <p align="center"><a href="signup">Sign up</a></p>
-    </form>
+            <p align="center"><a href="signup">Sign up</a></p>
+        </form>
+    </div>
+    <jsp:include page="footer.jsp"/>
 </div>
 
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

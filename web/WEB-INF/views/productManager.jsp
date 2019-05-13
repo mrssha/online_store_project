@@ -17,136 +17,138 @@
     <c:set var="contextPath" value="${pageContext.request.getContextPath()}"/>
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-
-    <%--<link href="${contextPath}/resources/style/detail.css" rel="stylesheet">--%>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="${contextPath}/resources/style/general.css">
 </head>
 <body>
-<jsp:include page="header.jsp"/>
+<div class="wrapper">
+    <jsp:include page="header.jsp"/>
 
-<div class="container-fluid">
+    <div class="container-fluid content">
+        <form:form id="productForm" action="${contextPath}/admin/products/addProduct"
+              method="post" modelAttribute="newProduct">
 
-    <form:form id="productForm" action="${contextPath}/admin/products/addProduct"
-          method="post" modelAttribute="newProduct">
-
-        <form>
-            <div class="my-3 text-center">
-                <h2>Product manager</h2>
-            </div>
-            <div class="form-row my-1">
-                <div class="col">
-                    <label for="selectNameId">Product name</label>
-                    <form:input type="text" name="name" class="form-control"
-                                path="name" id="selectNameId"/>
-                    <form:errors path="name" cssClass="error"/>
+            <form>
+                <div class="my-3 text-center">
+                    <h2>Product manager</h2>
                 </div>
-                <div class="col">
-                    <label for="cat">Category</label>
-                    <select class="form-control" id="cat" name="categoryId">
-                        <c:forEach items="${requestScope.categories}" var="category">
-                        <option value=${category.id}>${category.categoryName}</option>
-                        </c:forEach>
-                    </select>
+                <div class="form-row my-1">
+                    <div class="col">
+                        <label for="selectNameId">Product name</label>
+                        <form:input type="text" name="name" class="form-control"
+                                    path="name" id="selectNameId"/>
+                        <form:errors path="name" cssClass="error"/>
+                    </div>
+                    <div class="col">
+                        <label for="cat">Category</label>
+                        <select class="form-control" id="cat" name="categoryId">
+                            <c:forEach items="${requestScope.categories}" var="category">
+                            <option value=${category.id}>${category.categoryName}</option>
+                            </c:forEach>
+                        </select>
+                    </div>
+                    <div class="col">
+                        <label for="selectBrandId">Brand</label>
+                        <select class="form-control" id="selectBrandId"
+                                name="brand" required>
+                            <%--<option selected>Choose brand</option>--%>
+                            <option>K2</option>
+                            <option>BF</option>
+                            <option>666</option>
+                            <option>BURTON</option>
+                            <option>Roxy</option>
+                        </select>
+                    </div>
+                    <div class="col">
+                        <label for="weightId">Weight</label>
+                        <form:input id = "weightId" type="number" name="weight"
+                               path="weight" class="form-control"/>
+                        <form:errors path="weight" cssClass="error"/>
+                    </div>
                 </div>
-                <div class="col">
-                    <label for="selectBrandId">Brand</label>
-                    <select class="form-control" id="selectBrandId"
-                            name="brand" required>
-                        <%--<option selected>Choose brand</option>--%>
-                        <option>K2</option>
-                        <option>BF</option>
-                        <option>666</option>
-                        <option>BURTON</option>
-                        <option>Roxy</option>
-                    </select>
+                <div class="form-row my-1">
+                    <div class="col">
+                        <label for="priceId">Price</label>
+                        <form:input id = "priceId" type="number" name="price"
+                                    path="price" class="form-control" />
+                        <form:errors path="price" cssClass="error"/>
+                    </div>
+                    <div class="col">
+                        <label for="quantityId">Quantity</label>
+                        <form:input id ="quantityId" type="number" name="quantity"
+                                    path="quantity" class="form-control"/>
+                        <form:errors path="quantity" cssClass="error"/>
+                    </div>
+                    <div class="col">
+                        <label for="smImageId">Small image path</label>
+                        <input id ="smImageId" type="text" name="imageSm" class="form-control" required>
+                    </div>
+                    <div class="col">
+                        <label for="bgImageId">Big image path</label>
+                        <input id ="bgImageId" type="text" name="imageBg" class="form-control" required>
+                    </div>
                 </div>
-                <div class="col">
-                    <label for="weightId">Weight</label>
-                    <form:input id = "weightId" type="number" name="weight"
-                           path="weight" class="form-control"/>
-                    <form:errors path="weight" cssClass="error"/>
-                </div>
-            </div>
-            <div class="form-row my-1">
-                <div class="col">
-                    <label for="priceId">Price</label>
-                    <form:input id = "priceId" type="number" name="price"
-                                path="price" class="form-control" />
-                    <form:errors path="price" cssClass="error"/>
-                </div>
-                <div class="col">
-                    <label for="quantityId">Quantity</label>
-                    <form:input id ="quantityId" type="number" name="quantity"
-                                path="quantity" class="form-control"/>
-                    <form:errors path="quantity" cssClass="error"/>
-                </div>
-                <div class="col">
-                    <label for="smImageId">Small image path</label>
-                    <input id ="smImageId" type="text" name="imageSm" class="form-control" required>
-                </div>
-                <div class="col">
-                    <label for="bgImageId">Big image path</label>
-                    <input id ="bgImageId" type="text" name="imageBg" class="form-control" required>
-                </div>
-            </div>
-            <div class="my-3" style="text-align: center">
-                <button type="submit" class="btn btn-success btn-lg" style="width: 30%">
-                    Load product
-                </button>
-            </div>
-        </form>
-    </form:form>
-
-    <%--<form method="POST" action="${contextPath}/admin/uploadFile" enctype="multipart/form-data">--%>
-        <%--File to upload: <input type="file" name="file"><br />--%>
-<%----%>
-        <%--<input type="submit" value="Upload">--%>
-        <%--Press here to upload the file!--%>
-    <%--</form>--%>
-
-    <p id = "messageId" style="color: #DC143C">${requestScope.message}</p>
-
-    <table class="table">
-        <thead class="thead-dark">
-        <tr>
-            <th scope="col">Id</th>
-            <th scope="col">Name</th>
-            <th scope="col">Category</th>
-            <th scope="col">Brand</th>
-
-            <th scope="col">Weight</th>
-            <th scope="col">Price</th>
-            <th scope="col">Quantity</th>
-            <th scope="col">Small image</th>
-            <th scope="col">Big image</th>
-            <th scope="col"></th>
-        </tr>
-        </thead>
-
-        <tbody>
-        <c:forEach items="${requestScope.products}" var="product">
-            <tr>
-                <th scope="row">${product.id}</th>
-                <td>${product.name}</td>
-                <td>${product.category.categoryName}</td>
-                <td>${product.brand}</td>
-                <td>${product.weight}</td>
-                <td>${product.price}</td>
-                <td>${product.quantity}</td>
-                <td>${product.imageSm}</td>
-                <td>${product.imageBg}</td>
-                <td width="100">
-                    <button id="${product.id}" type="button" class="btn btn-sm"
-                            onclick="deleteRow('${contextPath}/admin/products/delete',
-                                ${product.id}, id)">
-                        delete
+                <div class="my-3" style="text-align: center">
+                    <button type="submit" class="btn btn-success btn-lg" style="width: 30%">
+                        Load product
                     </button>
-                </td>
-            </tr>
-        </c:forEach>
-        </tbody>
-    </table>
+                </div>
+            </form>
+        </form:form>
 
+        <%--<form method="POST" action="${contextPath}/admin/uploadFile" enctype="multipart/form-data">--%>
+            <%--File to upload: <input type="file" name="file"><br />--%>
+    <%----%>
+            <%--<input type="submit" value="Upload">--%>
+            <%--Press here to upload the file!--%>
+        <%--</form>--%>
+
+        <p id = "messageId" style="color: #DC143C">${requestScope.message}</p>
+
+        <table class="table">
+            <thead class="thead-dark">
+            <tr>
+                <th scope="col">Id</th>
+                <th scope="col">Name</th>
+                <th scope="col">Category</th>
+                <th scope="col">Brand</th>
+
+                <th scope="col">Weight</th>
+                <th scope="col">Price</th>
+                <th scope="col">Quantity</th>
+                <th scope="col">Small image</th>
+                <th scope="col">Big image</th>
+                <th scope="col"></th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <c:forEach items="${requestScope.products}" var="product">
+                <tr>
+                    <th scope="row">${product.id}</th>
+                    <td>${product.name}</td>
+                    <td>${product.category.categoryName}</td>
+                    <td>${product.brand}</td>
+                    <td>${product.weight}</td>
+                    <td>${product.price}</td>
+                    <td>${product.quantity}</td>
+                    <td>${product.imageSm}</td>
+                    <td>${product.imageBg}</td>
+                    <td width="100">
+                        <button id="${product.id}" type="button" class="btn btn-sm"
+                                onclick="deleteRow('${contextPath}/admin/products/delete',
+                                    ${product.id}, id)">
+                            delete
+                        </button>
+                    </td>
+                </tr>
+            </c:forEach>
+            </tbody>
+        </table>
+
+    </div>
+    <jsp:include page="footer.jsp"/>
 </div>
 
 

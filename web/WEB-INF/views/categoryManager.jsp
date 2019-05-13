@@ -16,92 +16,93 @@
 
 
     <c:set var="contextPath" value="${pageContext.request.getContextPath()}"/>
-
-
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="${contextPath}/resources/style/general.css">
 
 </head>
 <body>
-
+<div class="wrapper">
 <jsp:include page="header.jsp"/>
 <script type="text/javascript"  src="${contextPath}/resources/script/category.js"></script>
 
-<div class="container-fluid">
+    <div class="container-fluid content">
 
-    <div class="row my-4" >
-        <div class="col-md-3">
-        </div>
+        <div class="row my-4" >
+            <div class="col-md-3">
+            </div>
 
-        <div class="col-md-6">
-            <form:form id="categoryForm" action="${contextPath}/admin/categories/addCategory"
-                  method="post" modelAttribute="newCategory">
+            <div class="col-md-6">
+                <form:form id="categoryForm" action="${contextPath}/admin/categories/addCategory"
+                      method="post" modelAttribute="newCategory">
 
-                <div class="my-3 text-center">
-                    <h2>Category manager</h2>
-                </div>
+                    <div class="my-3 text-center">
+                        <h2>Category manager</h2>
+                    </div>
 
-                <div class="col">
-                    <label for="categoryName">Enter category name</label>
-                    <form:input type="text" class="form-control"
-                                path="categoryName" id="categoryName" required = "true"/>
-                    <form:errors path="categoryName" cssClass="error" cssStyle="color: #DC143C;"/>
-                </div>
+                    <div class="col">
+                        <label for="categoryName">Enter category name</label>
+                        <form:input type="text" class="form-control"
+                                    path="categoryName" id="categoryName" required = "true"/>
+                        <form:errors path="categoryName" cssClass="error" cssStyle="color: #DC143C;"/>
+                    </div>
 
-                <div class="my-3" style="text-align: center">
-                    <button type="submit" class="btn btn-success btn-lg" style="width: 30%">
-                        Add category
-                    </button>
-                </div>
-            </form:form>
+                    <div class="my-3" style="text-align: center">
+                        <button type="submit" class="btn btn-success btn-lg" style="width: 30%">
+                            Add category
+                        </button>
+                    </div>
+                </form:form>
 
-            <p id = "messageId" style="color: #DC143C">${requestScope.message}</p>
+                <p id = "messageId" style="color: #DC143C">${requestScope.message}</p>
 
-            <table id ="categoryTableId" class="table">
-                <thead class="thead-dark">
-                <tr>
-                    <th scope="col">Id</th>
-                    <th scope="col">Category name</th>
-                    <th scope="col"></th>
-                    <th scope="col"></th>
-                </tr>
-                </thead>
-
-                <tbody>
-
-                <c:set var="count" value="0" scope="page" />
-                <c:forEach items="${requestScope.categories}" var="category">
-                    <c:set var="count" value="${count + 1}" scope="page"/>
-
-                    <tr id = ${count}>
-                        <th scope="row" width="100">${category.id}</th>
-                        <td contenteditable="true">${category.categoryName}</td>
-
-                        <td>
-                            <button id="${category.id}" type="button" class="btn btn-sm"
-                                    onclick="update('${contextPath}/admin/categories/save',
-                                        ${category.id}, 'categoryTableId', id)">
-                                Save
-                            </button>
-                        </td>
-
-                        <td width="100">
-                            <button id="${category.id}" type="button" class="btn btn-sm"
-                                    onclick="deleteRow('${contextPath}/admin/categories/delete',
-                                        ${category.id}, id)">
-                                Delete
-                            </button>
-                        </td>
-
+                <table id ="categoryTableId" class="table">
+                    <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">Id</th>
+                        <th scope="col">Category name</th>
+                        <th scope="col"></th>
+                        <th scope="col"></th>
                     </tr>
-                </c:forEach>
-                </tbody>
-            </table>
-        </div>
-        <div class="col-md-3">
+                    </thead>
+
+                    <tbody>
+
+                    <c:set var="count" value="0" scope="page" />
+                    <c:forEach items="${requestScope.categories}" var="category">
+                        <c:set var="count" value="${count + 1}" scope="page"/>
+
+                        <tr id = ${count}>
+                            <th scope="row" width="100">${category.id}</th>
+                            <td contenteditable="true">${category.categoryName}</td>
+
+                            <td>
+                                <button id="${category.id}" type="button" class="btn btn-sm"
+                                        onclick="update('${contextPath}/admin/categories/save',
+                                            ${category.id}, 'categoryTableId', id)">
+                                    Save
+                                </button>
+                            </td>
+
+                            <td width="100">
+                                <button id="${category.id}" type="button" class="btn btn-sm"
+                                        onclick="deleteRow('${contextPath}/admin/categories/delete',
+                                            ${category.id}, id)">
+                                    Delete
+                                </button>
+                            </td>
+
+                        </tr>
+                    </c:forEach>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-md-3">
+            </div>
         </div>
     </div>
-
+    <jsp:include page="footer.jsp"/>
 
 </div>
 
