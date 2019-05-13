@@ -37,8 +37,6 @@ public interface CartService {
 
     Map<String, String> removeFromCart(String email, Long id_product);
 
-    List<ProductDto> checkMissingItems(List<CartDto> cartItems);
-
     List<ProductDto> checkMissingItems(Map<ProductDto, Integer> cartCookie);
 
     CookieCartDto getCartProductsCookie(Cookie cookieCart) throws UnsupportedEncodingException;

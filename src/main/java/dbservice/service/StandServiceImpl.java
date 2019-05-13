@@ -8,25 +8,34 @@ import org.springframework.jms.UncategorizedJmsException;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
 import java.util.List;
 
 @Service
 public class StandServiceImpl implements StandService {
 
     @Autowired
-    ProductService productService;
+    private ProductService productService;
 
     @Autowired
     private JmsTemplate jmsTemplate;
 
     private static final Logger logger = Logger.getLogger(StandServiceImpl.class);
 
+    private List<ProductDto> oldTopProducts;
+
+    @PostConstruct
+    public void init(){
+        oldTopProducts = productService.getTopProducts();
+    }
+
+
     public void updateStandIfTopChanged(){
-        List<ProductDto> lastTopList = productService.getLastTopProductsList();
         List<ProductDto> newTopList= productService.getTopProducts();
         try {
-            if (!lastTopList.containsAll(newTopList)) {
+            if (!oldTopProducts.containsAll(newTopList)) {
                 jmsTemplate.send(s -> s.createTextMessage("update list"));
+                oldTopProducts = newTopList;
                 logger.info(LogMessage.JMS_SUCCESS);
             }
         }

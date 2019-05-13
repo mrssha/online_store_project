@@ -44,17 +44,12 @@ public class OrderServiceImpl implements OrderService {
     @Autowired
     StandService standService;
 
-//    @Autowired
-//    ProductService productService;
-
     @Autowired
     CustomerService customerService;
 
     @Autowired
     CartService cartService;
 
-//    @Autowired
-//    private JmsTemplate jmsTemplate;
 
     private static final Logger logger = Logger.getLogger(OrderServiceImpl.class);
 

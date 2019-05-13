@@ -40,8 +40,6 @@ public class ProductServiceImpl implements ProductService {
     @Autowired
     private CartDao cartDao;
 
-    private List<ProductDto> topProducts;
-
     private static final Logger logger = Logger.getLogger(ProductServiceImpl.class);
 
     @Override
@@ -93,15 +91,9 @@ public class ProductServiceImpl implements ProductService {
     @Override
     @Transactional
     public List<ProductDto> getTopProducts(){
-        topProducts = productConverter.convertToDtoList(productDao.getTopProducts());
-        return topProducts;
+        return productConverter.convertToDtoList(productDao.getTopProducts());
     }
 
-
-    @Override
-    public List<ProductDto> getLastTopProductsList(){
-        return topProducts;
-    }
 
 
     @Override

@@ -22,6 +22,7 @@ import javax.validation.Valid;
 import java.security.Principal;
 import java.text.SimpleDateFormat;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -100,12 +101,10 @@ public class CustomerController {
         CustomerDto customer = customerService.getCustomerByEmail(principalUser.getName());
         List<AddressDto> addresses = addressService.getAddressByCustomerId(customer.getId());
         modelMap.addAttribute("addresses", addresses);
-
         if (bindResult.hasErrors()) {
             modelMap.addAttribute("hiddenInfoForm", false);
             return "profile";
         }
-
         CustomerDto changedCustomer = customerService.changeInfo(customer, newInfoCustomer);
         request.getSession().setAttribute("principalUser", changedCustomer);
         return "profile";
@@ -140,6 +139,7 @@ public class CustomerController {
         Principal principalUser = request.getUserPrincipal();
         CustomerDto customer = customerService.getCustomerByEmail(principalUser.getName());
         List<OrderDto> orders = orderService.getByCustomerId(customer.getId());
+        orders.sort(Comparator.comparing(OrderDto::getDateOrder));
         modelMap.addAttribute("orders", orders);
         return "orderHistory";
     }

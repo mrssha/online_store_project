@@ -9,13 +9,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
+import java.util.Comparator;
 import java.util.List;
 
 @Controller
@@ -40,10 +38,8 @@ public class ProductController{
     @RequestMapping( method = RequestMethod.GET)
     public String homePage(HttpServletRequest request, ModelMap modelMap, Exception ex){
         List<CategoryDto> categories = categoryService.getAllCategories();
-        List<ProductDto> products = productService.getTopProducts();
         HttpSession session = request.getSession();
         session.setAttribute ("categories", categories);
-        session.setAttribute ("topProducts", products);
         return "home";
     }
 
@@ -56,14 +52,13 @@ public class ProductController{
 
 
     @GetMapping("/filter")
-    public String getProductByParams(@RequestParam(value = "name", required = false) String name,
-                                     @RequestParam(value = "category", required = false) Long id_category,
+    public String getProductByParams(@RequestParam(value = "category", required = false) Long id_category,
                                      @RequestParam(value = "brand", required = false) String brand,
                                      @RequestParam(value = "minPrice", required = false) Integer minPrice,
                                      @RequestParam(value = "maxPrice", required = false) Integer maxPrice,
                                      ModelMap model){
         List<ProductDto> products = productService.getByParams(id_category, brand, minPrice, maxPrice);
-        //products.sort((Developer o1, Developer o2)->o1.getAge()-o2.getAge());
+        products.sort(Comparator.comparing(ProductDto::getId));
         model.addAttribute("selectedProducts", products);
         return "home";
     }
@@ -73,6 +68,7 @@ public class ProductController{
                                      ModelMap model){
         if (!search.equals("")){
             List<ProductDto> products = productService.getBySearch(search);
+            products.sort(Comparator.comparing(ProductDto::getId));
             model.addAttribute("selectedProducts", products);
         }
         return "home";

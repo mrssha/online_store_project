@@ -14,6 +14,7 @@ import dbservice.dto.ProductDto;
 import dbservice.entity.Cart;
 import dbservice.entity.Customer;
 import dbservice.entity.Product;
+import dbservice.result.LogMessage;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -193,20 +194,6 @@ public class CartServiceImpl implements CartService {
     }
 
 
-    @Override
-    @Transactional
-    public List<ProductDto> checkMissingItems(List<CartDto> cartItems){
-        List<ProductDto> missingProducts = new ArrayList<>();
-        for (CartDto cartItem: cartItems){
-            ProductDto productInCart = cartItem.getProduct();
-            int quantityInCart = cartItem.getQuantity();
-            if (quantityInCart > productDao.getById(productInCart.getId()).getQuantity()){
-                missingProducts.add(productInCart);
-            }
-        }
-        return missingProducts;
-    }
-
 
     @Override
     @Transactional
@@ -251,6 +238,7 @@ public class CartServiceImpl implements CartService {
     }
 
 
+    //Убрать? заменить на getCartProductsCookie
     @Override
     @Transactional
     public Map<Long, Integer> getCookieCart(Cookie cookieCart) throws UnsupportedEncodingException {
@@ -303,8 +291,7 @@ public class CartServiceImpl implements CartService {
         cookieCart.setMaxAge(24 * 60 * 60 * 1000);
         cookieCart.setPath("/");
         response.addCookie(cookieCart);
-
-        logger.info("Base and cookie carts was added merged");
+        logger.info(LogMessage.MERGE_CARTS);
     }
 
 
@@ -375,7 +362,7 @@ public class CartServiceImpl implements CartService {
             cookieCart.setPath("/");
             response.addCookie(cookieCart);
         }
-        logger.info("Cookie cart has been cleared");
+        logger.info(LogMessage.CLEAR_COOKIE);
     }
 }
 

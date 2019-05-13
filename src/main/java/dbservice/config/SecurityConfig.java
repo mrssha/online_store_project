@@ -43,17 +43,6 @@ public class SecurityConfig  extends WebSecurityConfigurerAdapter {
         auth.authenticationProvider(authenticationProvider);
     }
 
-//    @Bean
-//    public HttpSessionEventPublisher httpSessionEventPublisher(){
-//        return new HttpSessionEventPublisher();
-//    }
-//
-//    @Bean(name = "sessionRegistry")
-//    public SessionRegistry sessionRegistry() {
-//        return new SessionRegistryImpl();
-//    }
-
-
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -81,9 +70,5 @@ public class SecurityConfig  extends WebSecurityConfigurerAdapter {
                 .logoutSuccessHandler(logoutSuccessHandler)
                 .permitAll();
 
-//        http.sessionManagement()
-//                .invalidSessionUrl("/home")
-//                .maximumSessions(1)
-//                .sessionRegistry(sessionRegistry());
     }
 }

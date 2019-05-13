@@ -69,11 +69,4 @@ public class PersistenceJPAConfig{
         return dataSource;
     }
 
-
-    @Bean
-    public MethodValidationPostProcessor methodValidationPostProcessor() {
-        return new MethodValidationPostProcessor();
-    }
-
-
 }

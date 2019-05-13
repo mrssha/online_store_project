@@ -179,7 +179,8 @@ public class AdminController {
     @RequestMapping( value = "/orders", method = RequestMethod.GET)
     public String manageOrders(ModelMap modelMap){
         List<OrderDto> orders = orderService.getAllOrders();
-        orders.sort(Comparator.comparing(OrderDto::getDateOrder));
+        orders.sort(Comparator.comparing(OrderDto::getDateOrder)
+                .thenComparing(OrderDto::getId));
         modelMap.addAttribute("orders", orders);
         return "orderManager";
     }
@@ -189,8 +190,8 @@ public class AdminController {
     public String showStatistics(ModelMap modelMap){
         List<ProductDto> products = productService.getTopProducts();
         List<CustomerDto> customersTop = customerService.getTopCustomers();
-        products.sort(Comparator.comparing(ProductDto::getId));
-        customersTop.sort(Comparator.comparing(CustomerDto::getId));
+        products.sort(Comparator.comparing(ProductDto::getSales).reversed());
+        customersTop.sort(Comparator.comparing(CustomerDto::getSumPurchases).reversed());
         modelMap.addAttribute("products", products);
         modelMap.addAttribute("customersTop", customersTop);
         modelMap.addAttribute("years", Arrays.asList(2019, 2018, 2017));

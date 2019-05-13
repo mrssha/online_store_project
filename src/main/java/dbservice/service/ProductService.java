@@ -25,8 +25,6 @@ public interface ProductService {
 
     List<ProductDto> getTopProducts();
 
-    List<ProductDto> getLastTopProductsList();
-
     StatusResult add(ProductDto product, Long categoryId);
 
     String deleteById(long id);

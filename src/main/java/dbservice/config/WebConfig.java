@@ -106,12 +106,4 @@ public class WebConfig implements WebMvcConfigurer {
         return multipartResolver;
     }
 
-//    @Bean
-//    public HttpSessionEventPublisher httpSessionEventPublisher() {
-//        return new HttpSessionEventPublisher();
-//    }
-
-
-
-
 }
