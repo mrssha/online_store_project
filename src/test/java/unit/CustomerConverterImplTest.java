@@ -1,9 +1,9 @@
 package unit;
 
-import dbservice.converter.CustomerConverter;
-import dbservice.converter.CustomerConverterImpl;
-import dbservice.dto.CustomerDto;
-import dbservice.entity.Customer;
+import store.converter.CustomerConverter;
+import store.converter.CustomerConverterImpl;
+import store.dto.CustomerDto;
+import store.entity.Customer;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;

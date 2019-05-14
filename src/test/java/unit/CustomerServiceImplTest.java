@@ -1,11 +1,11 @@
 package unit;
 
-import dbservice.converter.CustomerConverter;
-import dbservice.dao.CustomerDao;
-import dbservice.dto.CustomerDto;
-import dbservice.entity.Customer;
-import dbservice.result.StatusResult;
-import dbservice.service.CustomerServiceImpl;
+import store.converter.CustomerConverter;
+import store.dao.CustomerDao;
+import store.dto.CustomerDto;
+import store.entity.Customer;
+import store.result.StatusResult;
+import store.service.CustomerServiceImpl;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

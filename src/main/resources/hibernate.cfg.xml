@@ -15,13 +15,13 @@
         <property name="hibernate.format_sql">true</property>
         <property name="hibernate.use_sql_comments">true</property>
 
-        <mapping class="dbservice.entity.Customer"/>
-        <mapping class="dbservice.entity.Address"/>
-        <mapping class="dbservice.entity.Order"/>
-        <mapping class="dbservice.entity.Product"/>
-        <mapping class="dbservice.entity.Basket"/>
-        <mapping class="dbservice.entity.Cart"/>
-        <mapping class="dbservice.entity.Category"/>
+        <mapping class="store.entity.Customer"/>
+        <mapping class="store.entity.Address"/>
+        <mapping class="store.entity.Order"/>
+        <mapping class="store.entity.Product"/>
+        <mapping class="store.entity.Basket"/>
+        <mapping class="store.entity.Cart"/>
+        <mapping class="store.entity.Category"/>
         <!-- DB schema will be updated if needed -->
         <!-- <property name="hbm2ddl.auto">update</property> -->
     </session-factory>
