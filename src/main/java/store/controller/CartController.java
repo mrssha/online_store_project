@@ -93,17 +93,17 @@ public class CartController {
     @ResponseBody
     @RequestMapping( value = "/addRemoveProduct",  method = RequestMethod.POST)
     public Map<String, String> addRemoveProduct(@RequestBody String id_product, HttpServletRequest request){
-        Map<String, String> result = new HashMap<>();
+        Map<String, String> utils = new HashMap<>();
         Principal principalUser = request.getUserPrincipal();
         if (principalUser != null){
             // проверка id на null
-            String result = cartService.addRemoveCartItem(principalUser.getName(),
+            String utils = cartService.addRemoveCartItem(principalUser.getName(),
                     Long.parseLong(id_product));
-            result.put("result", result);
-            return result;
+            utils.put("utils", utils);
+            return utils;
         }
-        result.put("result", "");
-        return result;
+        utils.put("utils", "");
+        return utils;
     }
     */
 }

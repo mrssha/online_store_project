@@ -1,4 +1,4 @@
-package store.result;
+package store.utils;
 
 public class LogMessage {
     public static final String ORDER_SUCCESS_UPDATE = "Order successfully updated";

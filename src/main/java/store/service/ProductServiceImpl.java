@@ -3,14 +3,14 @@ package store.service;
 import com.google.gson.Gson;
 import store.converter.CategoryConverter;
 import store.converter.ProductConverter;
-import store.dao.BasketDao;
+import store.dao.OrderProductDao;
 import store.dao.CartDao;
 import store.dao.ProductDao;
 import store.dto.CategoryDto;
 import store.dto.ProductDto;
 import store.entity.Category;
-import store.result.Message;
-import store.result.StatusResult;
+import store.utils.Message;
+import store.utils.StatusResult;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -34,7 +34,7 @@ public class ProductServiceImpl implements ProductService {
     private CategoryService categoryService;
 
     @Autowired
-    private BasketDao basketDao;
+    private OrderProductDao orderProductDao;
 
     @Autowired
     private CartDao cartDao;
@@ -115,7 +115,7 @@ public class ProductServiceImpl implements ProductService {
     @Transactional
     public String deleteById(long id) {
         Gson gson = new Gson();
-        if (basketDao.getOrdersForProduct(id).size() ==0
+        if (orderProductDao.getOrdersForProduct(id).size() ==0
                 && cartDao.getCartItemsForProduct(id).size() ==0){
             productDao.deleteById(id);
             logger.info(StatusResult.PRODUCT_SUCCESS_DELETE.getMessage());

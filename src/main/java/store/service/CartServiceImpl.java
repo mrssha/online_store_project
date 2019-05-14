@@ -14,7 +14,7 @@ import store.dto.ProductDto;
 import store.entity.Cart;
 import store.entity.Customer;
 import store.entity.Product;
-import store.result.LogMessage;
+import store.utils.LogMessage;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

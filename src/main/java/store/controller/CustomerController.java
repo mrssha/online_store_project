@@ -2,7 +2,7 @@ package store.controller;
 
 import store.dto.*;
 import store.entity.AddressType;
-import store.result.StatusResult;
+import store.utils.StatusResult;
 import store.service.AddressService;
 import store.service.CustomerService;
 import store.service.OrderService;

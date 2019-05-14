@@ -50,7 +50,7 @@ public class Product {
             cascade = CascadeType.REMOVE,
             orphanRemoval = true
     )
-    private Set<Basket> basket = new HashSet<>();
+    private Set<OrderProduct> basket = new HashSet<>();
     */
 
     @OneToMany(
@@ -144,11 +144,11 @@ public class Product {
     }
 
     /*
-    public Set<Basket> getBasket() {
+    public Set<OrderProduct> getOrderProduct() {
         return basket;
     }
 
-    public void setBasket(Set<Basket> basket) {
+    public void setOrderProduct(Set<OrderProduct> basket) {
         this.basket = basket;
     }
     */

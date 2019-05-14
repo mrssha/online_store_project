@@ -2,7 +2,7 @@ package store.service;
 
 import store.dto.*;
 import store.entity.Order;
-import store.result.StatusResult;
+import store.utils.StatusResult;
 
 import java.util.Date;
 import java.util.List;

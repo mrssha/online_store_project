@@ -34,7 +34,7 @@
                         <p class="lead">You order successfully confirmed!</p>
 
                         <button  type="button" class="btn btn-success btn-lg"
-                                 onClick='location.href="../../../../../web"'>
+                                 onClick='location.href="${contextPath}/"'>
                             Continue shopping</button>
                     </div>
                 </div>

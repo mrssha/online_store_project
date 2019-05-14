@@ -2,7 +2,7 @@ package store.service;
 
 import store.dto.CategoryDto;
 import store.dto.ProductDto;
-import store.result.StatusResult;
+import store.utils.StatusResult;
 
 import java.util.List;
 

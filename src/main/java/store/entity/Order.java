@@ -52,7 +52,7 @@ public class Order {
             cascade = CascadeType.REMOVE,
             orphanRemoval = true
     )
-    private Set<Basket> basket = new HashSet<>();
+    private Set<OrderProduct> orderProduct = new HashSet<>();
 
 
     public Order(){
@@ -140,12 +140,12 @@ public class Order {
     }
 
 
-    public Set<Basket> getBasket() {
-        return basket;
+    public Set<OrderProduct> getOrderProduct() {
+        return orderProduct;
     }
 
-    public void setBasket(Set<Basket> basket) {
-        this.basket = basket;
+    public void setOrderProduct(Set<OrderProduct> orderProduct) {
+        this.orderProduct = orderProduct;
     }
 
     @Override

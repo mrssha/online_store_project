@@ -4,7 +4,7 @@ import store.dto.CategoryDto;
 import store.dto.CustomerDto;
 import store.dto.OrderDto;
 import store.dto.ProductDto;
-import store.result.StatusResult;
+import store.utils.StatusResult;
 import store.service.CategoryService;
 import store.service.CustomerService;
 import store.service.OrderService;

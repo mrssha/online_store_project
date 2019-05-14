@@ -1,7 +1,7 @@
-package store.handler;
+package store.security;
 
 
-import store.result.LogMessage;
+import store.utils.LogMessage;
 import org.apache.log4j.Logger;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;

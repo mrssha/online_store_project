@@ -1,4 +1,4 @@
-package store.result;
+package store.utils;
 
 public enum StatusResult {
     CATEGORY_SUCCESS_CREATE ("Category \"%s\" successfully added"),

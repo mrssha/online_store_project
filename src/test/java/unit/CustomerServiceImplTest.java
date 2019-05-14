@@ -4,7 +4,7 @@ import store.converter.CustomerConverter;
 import store.dao.CustomerDao;
 import store.dto.CustomerDto;
 import store.entity.Customer;
-import store.result.StatusResult;
+import store.utils.StatusResult;
 import store.service.CustomerServiceImpl;
 import org.junit.Before;
 import org.junit.Test;

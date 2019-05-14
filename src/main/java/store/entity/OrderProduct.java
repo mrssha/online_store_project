@@ -6,7 +6,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "basket")
-public class Basket implements Serializable {
+public class OrderProduct implements Serializable {
 
     @Id
     @Column(name = "id_basket")
@@ -25,7 +25,7 @@ public class Basket implements Serializable {
     @Column(name = "quantity")
     private int quantity;
 
-    public Basket(){
+    public OrderProduct(){
 
     }
 
@@ -64,12 +64,12 @@ public class Basket implements Serializable {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Basket)) return false;
-        Basket basket = (Basket) o;
-        return getQuantity() == basket.getQuantity() &&
-                Objects.equals(getId(), basket.getId()) &&
-                Objects.equals(getOrder(), basket.getOrder()) &&
-                Objects.equals(getProduct(), basket.getProduct());
+        if (!(o instanceof OrderProduct)) return false;
+        OrderProduct orderProduct = (OrderProduct) o;
+        return getQuantity() == orderProduct.getQuantity() &&
+                Objects.equals(getId(), orderProduct.getId()) &&
+                Objects.equals(getOrder(), orderProduct.getOrder()) &&
+                Objects.equals(getProduct(), orderProduct.getProduct());
     }
 
     @Override
@@ -79,7 +79,7 @@ public class Basket implements Serializable {
 
     @Override
     public String toString() {
-        return "Basket{" +
+        return "OrderProduct{" +
                 "id=" + id +
                 ", order=" + order +
                 ", product=" + product +

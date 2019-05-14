@@ -1,6 +1,6 @@
-package store.handler;
+package store.security;
 
-import store.result.LogMessage;
+import store.utils.LogMessage;
 import store.service.CartService;
 import store.service.CustomerService;
 import org.apache.log4j.Logger;

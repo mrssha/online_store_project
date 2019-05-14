@@ -99,12 +99,12 @@ SET  sum_purchases= 0 WHERE "customer".id_customer = 2;
 --insert into "order" (id_customer, date_order ) values (1,'2018-02-01');
 --insert into "order" (id_customer, date_order ) values (2,'2018-02-01' );
 
--- insert into "basket"  (id_order, id_product, quantity) VALUES (1, 2, 1);
--- insert into "basket"  (id_order, id_product, quantity) VALUES (1, 5, 1);
--- insert into "basket"  (id_order, id_product, quantity) VALUES (1, 3, 2);
--- insert into "basket"  (id_order, id_product, quantity) VALUES (2, 2, 2);
--- insert into "basket"  (id_order, id_product, quantity) VALUES (2, 5, 3);
--- insert into "basket"  (id_order, id_product, quantity) VALUES (1, 1, 1);
+-- insert into "orderProduct"  (id_order, id_product, quantity) VALUES (1, 2, 1);
+-- insert into "orderProduct"  (id_order, id_product, quantity) VALUES (1, 5, 1);
+-- insert into "orderProduct"  (id_order, id_product, quantity) VALUES (1, 3, 2);
+-- insert into "orderProduct"  (id_order, id_product, quantity) VALUES (2, 2, 2);
+-- insert into "orderProduct"  (id_order, id_product, quantity) VALUES (2, 5, 3);
+-- insert into "orderProduct"  (id_order, id_product, quantity) VALUES (1, 1, 1);
 
 
 select * from "product" order by bought desc limit 10;
@@ -118,20 +118,20 @@ select sum("order".payment_amount) from "order"
 where date_order between '2019-04-01' and '2019-04-30';
 
 
-select "product".id_product, "product".price, "basket".quantity
-from "order" join "basket"
-ON "order".id_order = "basket".id_order
+select "product".id_product, "product".price, "orderProduct".quantity
+from "order" join "orderProduct"
+ON "order".id_order = "orderProduct".id_order
 join "product"
-ON "product".id_product = "basket".id_product
+ON "product".id_product = "orderProduct".id_product
 where "order".id_order =1;
 
 
 select sum(price*quantity) as sum_purchase, sum(quantity) as quantity_purchase from
-(select "product".id_product, "product".price, "basket".quantity
-from "order" join "basket"
-ON "order".id_order = "basket".id_order
+(select "product".id_product, "product".price, "orderProduct".quantity
+from "order" join "orderProduct"
+ON "order".id_order = "orderProduct".id_order
 join "product"
-ON "product".id_product = "basket".id_product
+ON "product".id_product = "orderProduct".id_product
 where "order".id_order =1) as customers_purchase;
 
 

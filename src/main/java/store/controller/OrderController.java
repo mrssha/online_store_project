@@ -3,7 +3,7 @@ package store.controller;
 
 import store.dto.*;
 import store.entity.AddressType;
-import store.result.StatusResult;
+import store.utils.StatusResult;
 import store.service.*;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;

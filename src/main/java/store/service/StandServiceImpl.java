@@ -1,7 +1,7 @@
 package store.service;
 
 import store.dto.ProductDto;
-import store.result.LogMessage;
+import store.utils.LogMessage;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jms.UncategorizedJmsException;

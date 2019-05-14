@@ -6,7 +6,7 @@ import store.dto.ChangeInfoDto;
 import store.dto.ChangePasswordDto;
 import store.dto.CustomerDto;
 import store.entity.Customer;
-import store.result.StatusResult;
+import store.utils.StatusResult;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;

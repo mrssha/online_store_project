@@ -197,7 +197,7 @@ public class Main {
 
             criteriaQuery.select(root)
                     .where(predicates.toArray(new Predicate[]{}));
-            //execute query and do something with result
+            //execute query and do something with utils
             List<Product> products = session.createQuery(criteriaQuery).getResultList();
             for (Product product: products){
                 System.out.println(product);
@@ -258,12 +258,12 @@ public class Main {
             //EntityManager entityManager = session.getEntityManagerFactory().createEntityManager();
 
             CriteriaBuilder cBuilder = session.getCriteriaBuilder();
-            CriteriaQuery<Basket> criteriaQuery = cBuilder.createQuery(Basket.class);
-            Root<Basket> root = criteriaQuery.from(Basket.class);
+            CriteriaQuery<OrderProduct> criteriaQuery = cBuilder.createQuery(OrderProduct.class);
+            Root<OrderProduct> root = criteriaQuery.from(OrderProduct.class);
             criteriaQuery.select(root);
             criteriaQuery.where(cBuilder.equal(root.get("order"), order));
-            List<Basket> baskets = session.createQuery(criteriaQuery).getResultList();
-            for (Basket basket: baskets) {
+            List<OrderProduct> baskets = session.createQuery(criteriaQuery).getResultList();
+            for (OrderProduct basket: baskets) {
                 System.out.println(basket.getOrder().getId().toString()+" "+  basket.getProduct().getName() +
                         " " + basket.getQuantity());
             }
@@ -276,7 +276,7 @@ public class Main {
             long id_product = 11L;
             CriteriaBuilder cBuilder = session.getCriteriaBuilder();
             CriteriaQuery<Order> criteriaQuery = cBuilder.createQuery(Order.class);
-            Root<Basket> root = criteriaQuery.from(Basket.class);
+            Root<OrderProduct> root = criteriaQuery.from(OrderProduct.class);
             criteriaQuery.select(root.get("order"));
             criteriaQuery.where(cBuilder.equal(root.get("product"), id_product));
             List<Order>  products = session.createQuery(criteriaQuery).getResultList();
@@ -294,7 +294,7 @@ public class Main {
             Order ord = (Order)session.load(Order.class, 1L);
             Product prod = (Product)session.load(Product.class, 12L);
 
-            Basket bas = new Basket();
+            OrderProduct bas = new OrderProduct();
             bas.setOrder(ord);
             bas.setProduct(prod);
             bas.setQuantity(2);
@@ -312,7 +312,7 @@ public class Main {
             Transaction trx = session.beginTransaction();
             Order ord = (Order)session.load(Order.class, 2L);
             //Product prod = (Product)session.load(Product.class, 2L);
-            //Basket bas = (Basket) session.load(Basket.class, 6L);
+            //OrderProduct bas = (OrderProduct) session.load(OrderProduct.class, 6L);
             session.delete(ord);
             trx.commit();
             */
@@ -321,7 +321,7 @@ public class Main {
             Transaction trx = session.beginTransaction();
             Product prod = (Product)session.load(Product.class, 2L);
             prod.setPrice(9500.0);
-            //Basket bas = (Basket) session.load(Basket.class, 6L);
+            //OrderProduct bas = (OrderProduct) session.load(OrderProduct.class, 6L);
             session.update(prod);
             trx.commit();
             */
@@ -334,7 +334,7 @@ public class Main {
             long id = 1L;
             CriteriaBuilder cBuilder = session.getCriteriaBuilder();
             CriteriaQuery<Product> criteriaQuery = cBuilder.createQuery(Product.class);
-            Root<Basket> root = criteriaQuery.from(Basket.class);
+            Root<OrderProduct> root = criteriaQuery.from(OrderProduct.class);
             criteriaQuery.select(root.get("product"));
             criteriaQuery.where(cBuilder.equal(root.get("order"), id));
             List<Product> products =  session.createQuery(criteriaQuery).getResultList();
@@ -351,12 +351,12 @@ public class Main {
             /*
             long id = 1L;
             CriteriaBuilder cBuilder = session.getCriteriaBuilder();
-            CriteriaQuery<Basket> criteriaQuery = cBuilder.createQuery(Basket.class);
-            Root<Basket> root = criteriaQuery.from(Basket.class);
+            CriteriaQuery<OrderProduct> criteriaQuery = cBuilder.createQuery(OrderProduct.class);
+            Root<OrderProduct> root = criteriaQuery.from(OrderProduct.class);
             criteriaQuery.select(root);
             criteriaQuery.where(cBuilder.equal(root.get("order"), id));
-            List<Basket> baskets =  session.createQuery(criteriaQuery).getResultList();
-            for (Basket basket: baskets){
+            List<OrderProduct> baskets =  session.createQuery(criteriaQuery).getResultList();
+            for (OrderProduct basket: baskets){
                 System.out.println(basket);
             }
             System.out.println(baskets.size());

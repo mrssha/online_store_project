@@ -1,7 +1,7 @@
 package store.controller;
 
 import store.dto.CustomerDto;
-import store.result.StatusResult;
+import store.utils.StatusResult;
 import store.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;

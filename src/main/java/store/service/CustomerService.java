@@ -3,7 +3,7 @@ package store.service;
 import store.dto.ChangeInfoDto;
 import store.dto.ChangePasswordDto;
 import store.dto.CustomerDto;
-import store.result.StatusResult;
+import store.utils.StatusResult;
 
 import java.util.List;
 import java.util.Set;

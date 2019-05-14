@@ -19,7 +19,7 @@
         <mapping class="store.entity.Address"/>
         <mapping class="store.entity.Order"/>
         <mapping class="store.entity.Product"/>
-        <mapping class="store.entity.Basket"/>
+        <mapping class="store.entity.OrderProduct"/>
         <mapping class="store.entity.Cart"/>
         <mapping class="store.entity.Category"/>
         <!-- DB schema will be updated if needed -->

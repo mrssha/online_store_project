@@ -6,14 +6,14 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import store.converter.OrderConverter;
 import store.converter.ProductConverter;
-import store.dao.BasketDao;
+import store.dao.OrderProductDao;
 import store.dao.CartDao;
 import store.dao.OrderDao;
 import store.dao.ProductDao;
 import store.dto.*;
 import store.entity.*;
-import store.result.LogMessage;
-import store.result.StatusResult;
+import store.utils.LogMessage;
+import store.utils.StatusResult;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -36,7 +36,7 @@ public class OrderServiceImpl implements OrderService {
     ProductConverter productConverter;
 
     @Autowired
-    BasketDao basketDao;
+    OrderProductDao orderProductDao;
 
     @Autowired
     CartDao cartDao;
@@ -165,11 +165,11 @@ public class OrderServiceImpl implements OrderService {
         for (CartDto cartItem: cartItems){
             //Product changedProduct = productDao.getByIdForUpdate(cartItem.getProduct().getId());
             Product changedProduct = productDao.getById(cartItem.getProduct().getId());
-            Basket orderProduct = new Basket();
+            OrderProduct orderProduct = new OrderProduct();
             orderProduct.setOrder(newOrder);
             orderProduct.setProduct(changedProduct);
             orderProduct.setQuantity(cartItem.getQuantity());
-            basketDao.add(orderProduct);
+            orderProductDao.add(orderProduct);
 
             int oldQuantity = changedProduct.getQuantity();
             int amountBought = changedProduct.getSales();

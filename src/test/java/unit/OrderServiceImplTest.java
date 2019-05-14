@@ -3,13 +3,13 @@ package unit;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import store.converter.OrderConverter;
-import store.dao.BasketDao;
+import store.dao.OrderProductDao;
 import store.dao.CartDao;
 import store.dao.OrderDao;
 import store.dao.ProductDao;
 import store.dto.*;
 import store.entity.*;
-import store.result.StatusResult;
+import store.utils.StatusResult;
 import store.service.CustomerService;
 import store.service.OrderService;
 import store.service.OrderServiceImpl;
@@ -41,7 +41,7 @@ public class OrderServiceImplTest {
     private OrderDao orderDao;
 
     @Mock
-    private BasketDao basketDao;
+    private OrderProductDao orderProductDao;
 
     @Mock
     private ProductDao productDao;

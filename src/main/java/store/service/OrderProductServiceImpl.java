@@ -1,10 +1,10 @@
 package store.service;
 
-import store.converter.BasketConverter;
+import store.converter.OrderProductConverter;
 import store.converter.OrderConverter;
 import store.converter.ProductConverter;
-import store.dao.BasketDao;
-import store.dto.BasketDto;
+import store.dao.OrderProductDao;
+import store.dto.OrderProductDto;
 import store.dto.OrderDto;
 import store.dto.ProductDto;
 import store.entity.Order;
@@ -18,13 +18,13 @@ import java.util.List;
 
 
 @Service
-public class BasketServiceImpl implements BasketService {
+public class OrderProductServiceImpl implements OrderProductService {
 
     @Autowired
-    BasketDao basketDao;
+    OrderProductDao orderProductDao;
 
     @Autowired
-    BasketConverter basketConverter;
+    OrderProductConverter orderProductConverter;
 
     @Autowired
     ProductConverter productConverter;
@@ -34,14 +34,14 @@ public class BasketServiceImpl implements BasketService {
 
     @Override
     @Transactional
-    public BasketDto getById(long id){
-        return basketConverter.convertToDto(basketDao.getById(id));
+    public OrderProductDto getById(long id){
+        return orderProductConverter.convertToDto(orderProductDao.getById(id));
     }
 
     @Override
     @Transactional
     public List<ProductDto> getProductsInOrder(long id_order){
-        List<Product> products = basketDao.getProductsInOrder(id_order);
+        List<Product> products = orderProductDao.getProductsInOrder(id_order);
         List<ProductDto> productsDto = new ArrayList<>();
         for (Product product:  products){
             productsDto.add(productConverter.convertToDto(product));
@@ -53,7 +53,7 @@ public class BasketServiceImpl implements BasketService {
     @Override
     @Transactional
     public List<OrderDto> getOrdersForProduct(long id_product){
-        List<Order> orders = basketDao.getOrdersForProduct(id_product);
+        List<Order> orders = orderProductDao.getOrdersForProduct(id_product);
         List<OrderDto> ordersDto = new ArrayList<>();
         for (Order order: orders){
             ordersDto.add(orderConverter.convertToDto(order));
@@ -63,20 +63,20 @@ public class BasketServiceImpl implements BasketService {
 
     @Override
     @Transactional
-    public void add(BasketDto basketDto){
-        basketDao.add(basketConverter.convertToEntity(basketDto));
+    public void add(OrderProductDto orderProductDto){
+        orderProductDao.add(orderProductConverter.convertToEntity(orderProductDto));
     }
 
     @Override
     @Transactional
     public void deleteById(long id){
-        basketDao.deleteById(id);
+        orderProductDao.deleteById(id);
     }
 
     @Override
     @Transactional
-    public void update(BasketDto basketDto){
-        basketDao.update(basketConverter.convertToEntity(basketDto));
+    public void update(OrderProductDto orderProductDto){
+        orderProductDao.update(orderProductConverter.convertToEntity(orderProductDto));
     }
 
 

@@ -4,7 +4,7 @@ package store.dto;
 
 import java.util.Objects;
 
-public class BasketDto {
+public class OrderProductDto {
 
     private Long id;
 
@@ -14,7 +14,7 @@ public class BasketDto {
 
     private int quantity;
 
-    public BasketDto(){
+    public OrderProductDto(){
     }
 
     public Long getId() {
@@ -52,12 +52,12 @@ public class BasketDto {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof BasketDto)) return false;
-        BasketDto basketDto = (BasketDto) o;
-        return getQuantity() == basketDto.getQuantity() &&
-                Objects.equals(getId(), basketDto.getId()) &&
-                Objects.equals(getOrder(), basketDto.getOrder()) &&
-                Objects.equals(getProduct(), basketDto.getProduct());
+        if (!(o instanceof OrderProductDto)) return false;
+        OrderProductDto orderProductDto = (OrderProductDto) o;
+        return getQuantity() == orderProductDto.getQuantity() &&
+                Objects.equals(getId(), orderProductDto.getId()) &&
+                Objects.equals(getOrder(), orderProductDto.getOrder()) &&
+                Objects.equals(getProduct(), orderProductDto.getProduct());
     }
 
     @Override
@@ -67,7 +67,7 @@ public class BasketDto {
 
     @Override
     public String toString() {
-        return "BasketDto{" +
+        return "OrderProductDto{" +
                 "id=" + id +
                 ", order=" + order +
                 ", product=" + product +
