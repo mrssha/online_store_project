@@ -1,57 +1,39 @@
 package unit;
 
-import dbservice.config.WebConfig;
 import dbservice.converter.CustomerConverter;
-import dbservice.converter.CustomerConverterImpl;
 import dbservice.dao.CustomerDao;
-import dbservice.dao.CustomerDaoImpl;
 import dbservice.dto.CustomerDto;
 import dbservice.entity.Customer;
-import dbservice.service.CustomerService;
+import dbservice.result.StatusResult;
 import dbservice.service.CustomerServiceImpl;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.when;
 
 
 
-//@WebAppConfiguration
-//@RunWith(SpringJUnit4ClassRunner.class)
-//@ContextConfiguration(classes = {CustomerServiceImpl.class})
 @RunWith(MockitoJUnitRunner.class)
 public class CustomerServiceImplTest{
 
 
-
-
-    //@Qualifier("mockCustomerDao")
-    //@Autowired
     @Mock
     private CustomerDao customerDao;
 
     @Mock
     private CustomerConverter customerConverter;
 
+    @Mock
+    private BCryptPasswordEncoder passwordEncoder;
 
-    //@Autowired
     @InjectMocks
     private CustomerServiceImpl customerService = new CustomerServiceImpl();
 
@@ -63,34 +45,39 @@ public class CustomerServiceImplTest{
         customer.setFirstName("John");
         customer.setSecondName("Smith");
         customer.setEmail("john@gmail.com");
-
-
-
-//        when(customerDao.getById(2L)).thenReturn(customer);
-//        when(customerDao.getByEmail("john@gmail.com")).thenReturn(customer);
-
-    }
-
-
-
-    public void getCustomerById() {
     }
 
     @Test
     public void getCustomerByEmail() {
-        String email = "john@gmail.com";
-        System.out.println(customer);
         CustomerDto customerDto = new CustomerDto();
         customerDto.setId(2L);
-        //when(customerDao.getByEmail(email)).thenReturn(customer);
+
         when(customerConverter.convertToDto(any())).thenReturn(customerDto);
-
-        //Customer n = customerDao.getByEmail(email);
-        CustomerDto resultCustomer = customerService.getCustomerByEmail(email);
-
+        CustomerDto resultCustomer = customerService.getCustomerByEmail(customer.getEmail());
         assertNotNull(resultCustomer);
         assertEquals(resultCustomer.getId(),customer.getId());
     }
 
+    @Test
+    public void addCustomer1(){
+        CustomerDto customerDto = new CustomerDto();
+        customerDto.setId(2L);
+        customerDto.setEmail("john@gmail.com");
+        when(customerConverter.convertToDto(any())).thenReturn(customerDto);
+        StatusResult result = customerService.addCustomer(customerDto);
+        assertEquals(result, StatusResult.EMAIL_ALREADY_EXIST);
+    }
 
+    public void addCustomer2(){
+        CustomerDto customerDto = new CustomerDto();
+        customerDto.setId(2L);
+        customerDto.setEmail("john@gmail.com");
+        customerDto.setPassword("123456");
+        when(customerConverter.convertToDto(any())).thenReturn(null);
+        when(passwordEncoder.encode(any())).thenReturn("123456");
+        StatusResult result = customerService.addCustomer(customerDto);
+        assertEquals(customerDto.getSumPurchases(), Double.valueOf(0));
+        assertEquals(customerDto.getRole(), "ROLE_USER");
+        assertEquals(result, StatusResult.CUSTOMER_CREATE_SUCCESS);
+    }
 }

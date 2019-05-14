@@ -3,13 +3,13 @@ package unit;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import dbservice.converter.OrderConverter;
-import dbservice.converter.ProductConverter;
 import dbservice.dao.BasketDao;
 import dbservice.dao.CartDao;
 import dbservice.dao.OrderDao;
 import dbservice.dao.ProductDao;
 import dbservice.dto.*;
 import dbservice.entity.*;
+import dbservice.result.StatusResult;
 import dbservice.service.CustomerService;
 import dbservice.service.OrderService;
 import dbservice.service.OrderServiceImpl;
@@ -33,9 +33,6 @@ public class OrderServiceImplTest {
 
     @Mock
     private OrderConverter orderConverter;
-
-    @Mock
-    private ProductConverter productConverter;
 
     @Mock
     private CustomerService customerService;
@@ -65,7 +62,6 @@ public class OrderServiceImplTest {
     public void beforeTest(){
         order.setCustomer(new Customer());
         order.setCustomerAddress(new Address());
-
         baseCartDto.setAmountProducts(5);
         baseCartDto.setTotalSum(85000.0);
         List<CartDto> cartItems = new ArrayList<>();
@@ -74,6 +70,7 @@ public class OrderServiceImplTest {
         CartDto cartDto = new CartDto();
         cartDto.setProduct(product);
         cartDto.setId(1L);
+        cartDto.setQuantity(5);
         cartItems.add(cartDto);
         baseCartDto.setCartItems(cartItems);
 
@@ -91,17 +88,37 @@ public class OrderServiceImplTest {
     }
 
     @Test
-    public void confirmOrder(){
+    public void confirmOrder1(){
         when(orderConverter.convertToEntity(any())).thenReturn(order);
-        when(productConverter.convertToEntity(any())).thenReturn(new Product());
-        Product product = new Product();
-        product.setSales(1);
-        product.setQuantity(10);
-        when(productDao.getById(anyLong())).thenReturn(product);
+        Product productBase = new Product();
+        productBase.setSales(1);
+        productBase.setQuantity(3);
+        when(productDao.getByIdForUpdate(anyLong())).thenReturn(productBase);
+
         CustomerDto customerDto = new CustomerDto();
         customerDto.setSumPurchases(1000.0);
         OrderDto orderDto = new OrderDto();
-        orderService.confirmOrder(customerDto, orderDto, baseCartDto);
+
+        StatusResult result = orderService.confirmOrder(customerDto, orderDto, baseCartDto);
+        Assert.assertEquals(result, StatusResult.ORDER_FIND_MISSING_PRODUCTS);
+    }
+
+    @Test
+    public void confirmOrder2(){
+        when(orderConverter.convertToEntity(any())).thenReturn(order);
+
+        Product productBase = new Product();
+        productBase.setSales(1);
+        productBase.setQuantity(10);
+        when(productDao.getById(anyLong())).thenReturn(productBase);
+        when(productDao.getByIdForUpdate(anyLong())).thenReturn(productBase);
+
+        CustomerDto customerDto = new CustomerDto();
+        customerDto.setSumPurchases(1000.0);
+        OrderDto orderDto = new OrderDto();
+
+        StatusResult result = orderService.confirmOrder(customerDto, orderDto, baseCartDto);
+        Assert.assertEquals(result, StatusResult.ORDER_CONFIRM_SUCCESS);
         Assert.assertEquals(customerDto.getSumPurchases(), Double.valueOf(1000.0 + baseCartDto.getTotalSum()));
     }
 
@@ -112,7 +129,7 @@ public class OrderServiceImplTest {
         object.addProperty("year", 2019);
         object.addProperty("month", "MAY");
         Gson gson = new Gson();
-        String s = gson.toJson(object).toString();
+        String s = gson.toJson(object);
         String sum = orderService.getRevenueForPeriod(s);
         Assert.assertEquals(sum, gson.toJson(String.valueOf(30000.0)));
     }
