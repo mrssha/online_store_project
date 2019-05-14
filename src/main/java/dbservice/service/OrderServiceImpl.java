@@ -132,6 +132,13 @@ public class OrderServiceImpl implements OrderService {
         return gson.toJson(sum != null ? sum.toString(): String.valueOf(0));
     }
 
+    @Override
+    @Transactional
+    public String getRevenueForWeek(){
+        Double sum = orderDao.getRevenueForLastWeek();
+        return (sum != null ? sum.toString(): String.valueOf(0));
+    }
+
 
     @Override
     @Transactional

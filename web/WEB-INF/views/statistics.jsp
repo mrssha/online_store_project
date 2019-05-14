@@ -64,6 +64,15 @@
             </button>
         </div>
 
+        <div class="row mt-2">
+            <div class="col-auto my-1">
+                <h4>Revenue for last week:</h4>
+            </div>
+            <div class="col-auto my-1">
+                <h4 id="resultforWeek">${revenueWeek}</h4>
+            </div>
+        </div>
+
 
         <div class="mt-5 mb-2 text-center">
             <h2>TOP 10 products</h2>

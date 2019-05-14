@@ -35,6 +35,8 @@ public interface OrderService {
 
     String getRevenueForPeriod(String periodJson);
 
+    String getRevenueForWeek();
+
     StatusResult confirmOrder(CustomerDto customerDto, OrderDto order, BaseCartDto baseCartDto);
 
     Order createNewOrder(OrderDto orderDto, BaseCartDto baseCartDto);

@@ -1,5 +1,4 @@
 function calculate(url) {
-
     var year = document.getElementById('yearSearch').value;
     var month = document.getElementById('monthSearch').value;
     console.log(year);

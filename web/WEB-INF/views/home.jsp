@@ -102,7 +102,6 @@
 
                                 <script async>
                                     correctButtonName('buttonId${product.id}', '${product.id}');
-                                    <%--hideImg('imgMain', '${requestScope.hiddenImg}')--%>
                                 </script>
 
                             </div>

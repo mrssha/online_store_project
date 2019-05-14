@@ -13,7 +13,6 @@ public class ChangeInfoDto {
     @Size(min = 2, max = 45, message = "Field should contain from 2 to 45 characters")
     private String secondName;
 
-    //@DateTimeFormat(pattern="dd/MM/yyyy")
     @NotNull(message = "Date of birth shouldn't be empty")
     @Past(message = "Date of birth should be in past")
     private Date birthDate;

@@ -196,6 +196,7 @@ public class AdminController {
         modelMap.addAttribute("customersTop", customersTop);
         modelMap.addAttribute("years", Arrays.asList(2019, 2018, 2017));
         modelMap.addAttribute("months", Month.values());
+        modelMap.addAttribute("revenueWeek", orderService.getRevenueForWeek());
         return "statistics";
     }
 

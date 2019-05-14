@@ -24,8 +24,6 @@ public class Order {
     @JoinColumn(name = "id_customer_address")
     private Address customerAddress;
 
-    //@DateTimeFormat(iso= DateTimeFormat.ISO.DATE)
-    //@DateTimeFormat(pattern="MM/dd/yyyy")
     @Column(name = "date_order", nullable = false)
     private Date dateOrder;
 
@@ -152,22 +150,26 @@ public class Order {
         this.basket = basket;
     }
 
-
     @Override
-    public int hashCode() {
-        return Objects.hash(this.getId());
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Order)) return false;
+        Order order = (Order) o;
+        return Objects.equals(getId(), order.getId()) &&
+                Objects.equals(getCustomer(), order.getCustomer()) &&
+                Objects.equals(getDateOrder(), order.getDateOrder()) &&
+                Objects.equals(getQuantityProducts(), order.getQuantityProducts()) &&
+                Objects.equals(getPayment_amount(), order.getPayment_amount()) &&
+                getPaymentMethod() == order.getPaymentMethod() &&
+                getDeliveryMethod() == order.getDeliveryMethod() &&
+                getPaymentStatus() == order.getPaymentStatus() &&
+                getOrderStatus() == order.getOrderStatus();
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj){
-            return true;
-        }
-        if (obj == null || obj.getClass()!= Order.class){
-            return false;
-        }
-        Order order = (Order)obj;
-        return order.getId().equals(this.getId());
+    public int hashCode() {
+        return Objects.hash(getId(), getCustomer(), getDateOrder(), getQuantityProducts(),
+                getPayment_amount(), getPaymentMethod(), getDeliveryMethod(), getPaymentStatus(), getOrderStatus());
     }
 
     @Override

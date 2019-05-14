@@ -20,6 +20,8 @@ public interface OrderDao {
 
     Double getRevenueForPeriod(Integer year, String month);
 
+    Double getRevenueForLastWeek();
+
     void add(Order order);
 
     void deleteById(long id);

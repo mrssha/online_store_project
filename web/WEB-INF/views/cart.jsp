@@ -33,63 +33,6 @@
 
         <div class="row mb-2">
             <div class="col-md-6">
-                <%--<sec:authorize access="isAuthenticated()">--%>
-                    <%--<div class="my-4 text-center">--%>
-                        <%--<h3>Product cart</h3>--%>
-                        <%--<c:if test="${requestScope.cartItems.size() == 0}">--%>
-                            <%--<p>The cart is empty</p>--%>
-                        <%--</c:if>--%>
-                    <%--</div>--%>
-                    <%--<ul class="list-group list-group-flush">--%>
-                        <%--<c:forEach items="${requestScope.cartItems}" var="cartItem">--%>
-                            <%--<li id ="itemDbId${cartItem.id}" class="list-group-item">--%>
-                                <%--<div class="row align-items no-gutters  flex-md-row mb-4  h-md-250 position-relative">--%>
-                                    <%--<a href="${contextPath}/product/${cartItem.product.id}">--%>
-                                    <%--<div class="col-auto d-none d-lg-block" >--%>
-                                        <%--<img  src="${contextPath}/resources/image/sm/${cartItem.product.imageSm}"--%>
-                                              <%--class="item-photo" alt="product_photo">--%>
-                                    <%--</div>--%>
-                                    <%--</a>--%>
-                                    <%--<div class="col p-4 d-flex flex-column position-static">--%>
-                                        <%--<p class="mb-0">${cartItem.product.name}</p>--%>
-                                        <%--<div class="mb-1 text-muted">Brand: ${cartItem.product.brand}</div>--%>
-                                        <%--<div class="mb-1 text-muted">In Stock: ${cartItem.product.quantity}</div>--%>
-    <%----%>
-                                        <%--<div class="cart-amount my-3 ">--%>
-                                            <%--<button id="remove" type="button" class="btn btn-sm"--%>
-                                                    <%--onclick="minusOneProductDb('${contextPath}/removeFromCart',--%>
-                                                            <%--'${cartItem.product.id}', ${cartItem.product.price},--%>
-                                                            <%--'quantityId${cartItem.product.id}')">--%>
-                                                <%--_--%>
-                                            <%--</button>--%>
-                                            <%--<i id ="quantityId${cartItem.product.id}">${cartItem.quantity}</i>--%>
-                                            <%--<button id="add" type="button" class="btn btn-sm"--%>
-                                                    <%--onclick="plusOneProductDb('${contextPath}/addToCart',--%>
-                                                            <%--'${cartItem.product.id}', ${cartItem.product.price},--%>
-                                                            <%--'quantityId${cartItem.product.id}')">--%>
-                                                <%--+--%>
-                                            <%--</button>--%>
-                                        <%--</div>--%>
-                                    <%--</div>--%>
-                                    <%--<div class="col p-4 d-flex flex-column text-center">--%>
-                                        <%--<p class="price">${cartItem.product.price} rub</p>--%>
-                                    <%--</div>--%>
-                                    <%--<div class="col-flex " style="width: 10%">--%>
-                                        <%--<button id="${cartItem.id}" type="button" class="btn btn-sm"--%>
-                                                <%--onclick="deleteCartDbItem('${contextPath}/deleteCartItem',--%>
-                                                    <%--${cartItem.id}, ${cartItem.product.price}, ${cartItem.quantity},--%>
-                                                        <%--'itemDbId${cartItem.id}')">--%>
-                                            <%--Delete--%>
-                                        <%--</button>--%>
-                                    <%--</div>--%>
-    <%----%>
-                                <%--</div>--%>
-                            <%--</li>--%>
-                        <%--</c:forEach>--%>
-                    <%--</ul>--%>
-                <%--</sec:authorize>--%>
-
-                <%--<sec:authorize access="!isAuthenticated()">--%>
                     <div class="my-4 text-center">
                         <h3>Product cart</h3>
                         <c:if test="${requestScope.cartCookie.size() == 0}">
@@ -146,7 +89,6 @@
                             </li>
                         </c:forEach>
                     </ul>
-                <%--</sec:authorize>--%>
             </div>
 
             <div class="col-md-6">
@@ -185,26 +127,6 @@
                             </div>
                         </div>
                     </c:if>
-
-                <%--<sec:authorize access="!isAuthenticated()">--%>
-                    <%--<c:if test="${requestScope.cartGuest.size() != 0}">--%>
-                        <%--<div class="d-md-flex flex-md-equal w-100 mt-md-5 text-center overflow-hidden">--%>
-                            <%--<div class="bg-light shadow-sm mx-auto" style="width: 70%; height: 250px; border-radius: 21px 21px 21px 21px;">--%>
-                                <%--<div class="total my-3 p-3">--%>
-                                    <%--<p>Total: ${requestScope.total} rub</p>--%>
-                                    <%--<p>Products: ${requestScope.amount}</p>--%>
-    <%----%>
-                                    <%--<div class="my-3 p-3">--%>
-                                        <%--<p class="lead">Please Log in to continue</p>--%>
-                                        <%--<button  type="button" class="btn btn-success btn-lg"--%>
-                                                 <%--onClick='location.href="${contextPath}/login"'>--%>
-                                            <%--Login</button>--%>
-                                    <%--</div>--%>
-                                <%--</div>--%>
-                            <%--</div>--%>
-                        <%--</div>--%>
-                    <%--</c:if>--%>
-                <%--</sec:authorize>--%>
             </div>
         </div>
 
@@ -217,7 +139,6 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
 
-<script src="${contextPath}/resources/script/cart.js"></script>
 <script src="${contextPath}/resources/script/tocart.js"></script>
 <script>var contextPath = '${contextPath}'</script>
 

@@ -35,15 +35,15 @@ public class CategoryDto {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (!(o instanceof CategoryDto)) return false;
         CategoryDto that = (CategoryDto) o;
-        return id.equals(that.id) &&
-                categoryName.equals(that.categoryName);
+        return Objects.equals(getId(), that.getId()) &&
+                Objects.equals(getCategoryName(), that.getCategoryName());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, categoryName);
+        return Objects.hash(getId(), getCategoryName());
     }
 
     @Override

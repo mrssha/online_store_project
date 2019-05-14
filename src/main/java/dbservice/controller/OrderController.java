@@ -44,10 +44,7 @@ public class OrderController {
     @RequestMapping( value = "/order", method = RequestMethod.GET)
     public String createOrder(ModelMap modelMap, HttpServletRequest request){
         Principal principalUser = request.getUserPrincipal();
-        //Cookie cookieCart = WebUtils.getCookie(request, "productCart");
-        //cartService.mergeToDBCart(principalUser.getName(), cookieCart);
         CustomerDto customer = customerService.getCustomerByEmail(principalUser.getName());
-        //List<CartDto> cartItems = cartService.getCartItemsByCustomersEmail(principalUser.getName());
         BaseCartDto baseCartDto = cartService.getBaseCartByCustomersEmail(principalUser.getName());
         List<AddressDto> addresses = addressService.getAddressByCustomerId(customer.getId());
         List<AddressDto> pickupPoints = addressService.getByAddressType(AddressType.PICKUP);

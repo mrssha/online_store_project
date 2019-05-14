@@ -50,21 +50,19 @@ public class BasketDto {
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj) return true;
-
-        if (obj == null || getClass() != obj.getClass())
-            return false;
-
-        BasketDto basket = (BasketDto) obj;
-        return basket.getId().equals(this.getId()) &&
-                Objects.equals(this.getOrder(), basket.getOrder()) &&
-                Objects.equals(this.getProduct(), basket.getProduct());
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof BasketDto)) return false;
+        BasketDto basketDto = (BasketDto) o;
+        return getQuantity() == basketDto.getQuantity() &&
+                Objects.equals(getId(), basketDto.getId()) &&
+                Objects.equals(getOrder(), basketDto.getOrder()) &&
+                Objects.equals(getProduct(), basketDto.getProduct());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(this.getId(), this.getOrder(), this.getProduct());
+        return Objects.hash(getId(), getOrder(), getProduct(), getQuantity());
     }
 
     @Override

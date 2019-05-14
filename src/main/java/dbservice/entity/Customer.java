@@ -28,7 +28,6 @@ public class Customer{
     @Column(name = "password")
     private String password;
 
-    //@DateTimeFormat(pattern="dd/MM/yyyy")
     @Column(name = "birth_date")
     private Date birthDate;
 
@@ -136,21 +135,26 @@ public class Customer{
         this.role = role;
     }
 
+
     @Override
-    public int hashCode() {
-        return Objects.hash(this.getId());
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Customer)) return false;
+        Customer customer = (Customer) o;
+        return Objects.equals(getId(), customer.getId()) &&
+                Objects.equals(getFirstName(), customer.getFirstName()) &&
+                Objects.equals(getSecondName(), customer.getSecondName()) &&
+                Objects.equals(getEmail(), customer.getEmail()) &&
+                Objects.equals(getPassword(), customer.getPassword()) &&
+                Objects.equals(getBirthDate(), customer.getBirthDate()) &&
+                Objects.equals(getSumPurchases(), customer.getSumPurchases()) &&
+                Objects.equals(getRole(), customer.getRole());
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj){
-            return true;
-        }
-        if (obj == null || obj.getClass() != Customer.class){
-            return false;
-        }
-        Customer customer =(Customer)obj;
-        return customer.getId().equals(this.getId());
+    public int hashCode() {
+        return Objects.hash(getId(), getFirstName(), getSecondName(), getEmail(), getPassword(),
+                getBirthDate(), getSumPurchases(), getRole());
     }
 
     @Override

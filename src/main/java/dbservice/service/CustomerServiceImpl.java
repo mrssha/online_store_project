@@ -75,8 +75,6 @@ public class CustomerServiceImpl implements CustomerService {
         customer.setFirstName(changeInfo.getFirstName());
         customer.setSecondName(changeInfo.getSecondName());
         customer.setBirthDate(changeInfo.getBirthDate());
-        //customerBefore.setEmail(customerAfter.getEmail());
-        //customerBefore.setBirthDate(customerAfter.getBirthDate());
         updateCustomer(customer);
         return customer;
     }
@@ -104,7 +102,6 @@ public class CustomerServiceImpl implements CustomerService {
             topCustomerDto.add(customerConverter.convertToDto(customer));
         }
         return topCustomerDto;
-        //return  customerConverter.convertToDtoList(customerDao.getTopCustomers());
     }
 
     @Override

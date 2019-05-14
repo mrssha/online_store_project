@@ -48,17 +48,17 @@ public class CartDto {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (!(o instanceof CartDto)) return false;
         CartDto cartDto = (CartDto) o;
-        return quantity == cartDto.quantity &&
-                id.equals(cartDto.id) &&
-                customer.equals(cartDto.customer) &&
-                product.equals(cartDto.product);
+        return getQuantity() == cartDto.getQuantity() &&
+                Objects.equals(getId(), cartDto.getId()) &&
+                Objects.equals(getCustomer(), cartDto.getCustomer()) &&
+                Objects.equals(getProduct(), cartDto.getProduct());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, customer, product, quantity);
+        return Objects.hash(getId(), getCustomer(), getProduct(), getQuantity());
     }
 
     @Override

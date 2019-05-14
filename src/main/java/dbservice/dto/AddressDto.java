@@ -110,20 +110,24 @@ public class AddressDto {
     }
 
     @Override
-    public int hashCode() {
-        return Objects.hash(this.getId());
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof AddressDto)) return false;
+        AddressDto that = (AddressDto) o;
+        return Objects.equals(getId(), that.getId()) &&
+                Objects.equals(getCountry(), that.getCountry()) &&
+                Objects.equals(getCity(), that.getCity()) &&
+                Objects.equals(getPostcode(), that.getPostcode()) &&
+                Objects.equals(getStreet(), that.getStreet()) &&
+                Objects.equals(getFlatNumber(), that.getFlatNumber()) &&
+                Objects.equals(getHouseNumber(), that.getHouseNumber()) &&
+                Objects.equals(getCustomer(), that.getCustomer()) &&
+                getAddressType() == that.getAddressType();
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj){
-            return true;
-        }
-        if (obj == null || obj.getClass()!= AddressDto.class){
-            return false;
-        }
-        AddressDto address = (AddressDto) obj;
-        return address.getId().equals(this.getId());
+    public int hashCode() {
+        return Objects.hash(getId(), getCountry(), getCity(), getPostcode(), getStreet(), getFlatNumber(), getHouseNumber(), getCustomer(), getAddressType());
     }
 
     @Override

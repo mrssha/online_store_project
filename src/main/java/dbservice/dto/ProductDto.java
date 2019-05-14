@@ -20,8 +20,6 @@ public class ProductDto {
 
     private CategoryDto category;
 
-//    @NotEmpty(message = "Product name shouldn't be empty")
-//    @Size(min = 2, max = 45, message = "Field should contain from 2 to 45 characters")
     private String brand;
 
     @Positive(message = "Weight should be greater than 0")
@@ -129,22 +127,27 @@ public class ProductDto {
     }
 
     @Override
-    public int hashCode() {
-        return Objects.hash(this.getId());
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof ProductDto)) return false;
+        ProductDto that = (ProductDto) o;
+        return Objects.equals(getId(), that.getId()) &&
+                Objects.equals(getName(), that.getName()) &&
+                Objects.equals(getPrice(), that.getPrice()) &&
+                Objects.equals(getCategory(), that.getCategory()) &&
+                Objects.equals(getBrand(), that.getBrand()) &&
+                Objects.equals(getWeight(), that.getWeight()) &&
+                Objects.equals(getSex(), that.getSex()) &&
+                Objects.equals(getQuantity(), that.getQuantity()) &&
+                Objects.equals(getImageSm(), that.getImageSm()) &&
+                Objects.equals(getImageBg(), that.getImageBg()) &&
+                Objects.equals(getSales(), that.getSales());
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj){
-            return true;
-        }
-        if (obj == null || obj.getClass()!= ProductDto.class){
-            return false;
-        }
-        ProductDto product = (ProductDto) obj;
-        return product.getId().equals(this.getId());
+    public int hashCode() {
+        return Objects.hash(getId(), getName(), getPrice(), getCategory(), getBrand(), getWeight(), getSex(), getQuantity(), getImageSm(), getImageBg(), getSales());
     }
-
 
     @Override
     public String toString() {

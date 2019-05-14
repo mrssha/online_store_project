@@ -116,22 +116,26 @@ public class Address {
     }
 
     @Override
-    public int hashCode() {
-        return Objects.hash(this.getId());
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Address)) return false;
+        Address address = (Address) o;
+        return Objects.equals(getId(), address.getId()) &&
+                Objects.equals(getCustomer(), address.getCustomer()) &&
+                Objects.equals(getCountry(), address.getCountry()) &&
+                Objects.equals(getCity(), address.getCity()) &&
+                Objects.equals(getPostcode(), address.getPostcode()) &&
+                Objects.equals(getStreet(), address.getStreet()) &&
+                Objects.equals(getFlatNumber(), address.getFlatNumber()) &&
+                Objects.equals(getHouseNumber(), address.getHouseNumber()) &&
+                getAddressType() == address.getAddressType();
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj){
-            return true;
-        }
-        if (obj == null || obj.getClass()!= Address.class){
-            return false;
-        }
-        Address address = (Address) obj;
-        return address.getId().equals(this.getId());
+    public int hashCode() {
+        return Objects.hash(getId(), getCustomer(), getCountry(), getCity(), getPostcode(),
+                getStreet(), getFlatNumber(), getHouseNumber(), getAddressType());
     }
-
 
     @Override
     public String toString() {

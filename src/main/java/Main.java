@@ -40,42 +40,47 @@ public class Main {
 
         try {
 
-/*
-            Integer year = 2019;
-            String month = "APRIL";
-            Month m = Month.valueOf(month);
-            YearMonth ym = YearMonth.of(year, m);
-            LocalDate first = ym.atDay(1);
-            Date date1 =  java.sql.Date.valueOf(first);
 
-            LocalDate last = ym.atEndOfMonth();
-            Date date2 = java.sql.Date.valueOf(last);
+//            Integer year = 2019;
+//            String month = "APRIL";
+//            Month m = Month.valueOf(month);
+//            YearMonth ym = YearMonth.of(year, m);
+//            LocalDate first = ym.atDay(1);
+//            Date date1 =  java.sql.Date.valueOf(first);
+//
+//            LocalDate last = ym.atEndOfMonth();
+//            Date date2 = java.sql.Date.valueOf(last);
+
+//            Date now = new Date();
+//            Calendar cal = new GregorianCalendar();
+//            cal.add(Calendar.DAY_OF_MONTH, -7);
+//            Date weekAgo = cal.getTime();
 
 
-            System.out.println(date1.toString());
-            System.out.println(date2.toString());
-            System.out.println(date1.getClass());
-            System.out.println(date2.getClass());
 
-            Date d1 = new Date();
-            Date d2 = new Date();
-            System.out.println(d1.getClass());
-            System.out.println(d2.getClass());
+//            System.out.println(date1.toString());
+//            System.out.println(date2.toString());
+//            System.out.println(date1.getClass());
+//            System.out.println(date2.getClass());
+//            Date d1 = new Date();
+//            Date d2 = new Date();
+//            System.out.println(d1.getClass());
+//            System.out.println(d2.getClass());
 
-            Query query = session.
-                    createQuery("Select o from Order o where o.dateOrder between :startDate and :endDate")
-                    .setParameter("startDate", date1, TemporalType.DATE)
-                    .setParameter("endDate", date2, TemporalType.DATE);
-            List<Order> list= query.setMaxResults(10).getResultList();
+//            Query query = session.
+//                    createQuery("Select o from Order o where o.dateOrder between :startDate and :endDate")
+//                    .setParameter("startDate", weekAgo, TemporalType.DATE)
+//                    .setParameter("endDate", now, TemporalType.DATE);
+//            List<Order> list= query.setMaxResults(10).getResultList();
 
-            Query query2 = session.
-                    createQuery("Select sum(o.payment_amount) from Order o where o.orderStatus='WAIT_PAYMENT'" +
-                            " and o.dateOrder between :startDate and :endDate")
-                    .setParameter("startDate", date1, TemporalType.DATE)
-                    .setParameter("endDate", date2, TemporalType.DATE);
-            Double d = (Double) query2.getSingleResult();
-            System.out.println(d);
-            */
+//            Query query2 = session.
+//                    createQuery("Select sum(o.payment_amount) from Order o where o.orderStatus='WAIT_PAYMENT'" +
+//                            " and o.dateOrder between :startDate and :endDate")
+//                    .setParameter("startDate", date1, TemporalType.DATE)
+//                    .setParameter("endDate", date2, TemporalType.DATE);
+//            Double d = (Double) query2.getSingleResult();
+//            System.out.println(list);
+
 
 
 
@@ -95,6 +100,7 @@ public class Main {
 //            List<Order> list1 = session.createQuery(criteriaQuery)
 
 
+            /*
             String search1 = "bf";
             String search = search1.toLowerCase();
             CriteriaBuilder builder = session.getCriteriaBuilder();
@@ -109,6 +115,7 @@ public class Main {
             for (Product product: list1){
                 System.out.println(product.getName());
             }
+            */
 
 
 

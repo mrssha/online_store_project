@@ -82,7 +82,7 @@ values ('Salomon 2018-19 PEARL Bordeaux11', 13000, 2, 'Salomon', 800, 'unisex', 
 
 
 UPDATE "product"
-SET  quantity= 1 WHERE "product".id_product = 2;
+SET  quantity= 20 WHERE "product".id_product = 6;
 UPDATE "product"
 SET  quantity= 3 WHERE "product".id_product = 2;
 

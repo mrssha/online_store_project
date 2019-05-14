@@ -42,28 +42,18 @@ public class Category {
         this.categoryName = categoryName;
     }
 
-    /*
-    public Set<Product> getProducts() {
-        return products;
-    }
-
-    public void setProducts(Set<Product> products) {
-        this.products = products;
-    }
-    */
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (!(o instanceof Category)) return false;
         Category category = (Category) o;
-        return id.equals(category.id) &&
-                categoryName.equals(category.categoryName);
+        return Objects.equals(getId(), category.getId()) &&
+                Objects.equals(getCategoryName(), category.getCategoryName());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, categoryName);
+        return Objects.hash(getId(), getCategoryName());
     }
 
     @Override

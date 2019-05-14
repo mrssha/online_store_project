@@ -174,6 +174,7 @@ public class Product {
         return Objects.hash(this.getId());
     }
 
+    /*
     @Override
     public boolean equals(Object obj) {
         if (this == obj){
@@ -184,6 +185,25 @@ public class Product {
         }
         Product product = (Product) obj;
         return product.getId().equals(this.getId());
+    }
+    */
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Product)) return false;
+        Product product = (Product) o;
+        return Objects.equals(getId(), product.getId()) &&
+                Objects.equals(getName(), product.getName()) &&
+                Objects.equals(getPrice(), product.getPrice()) &&
+                Objects.equals(getCategory(), product.getCategory()) &&
+                Objects.equals(getBrand(), product.getBrand()) &&
+                Objects.equals(getWeight(), product.getWeight()) &&
+                Objects.equals(getSex(), product.getSex()) &&
+                Objects.equals(getQuantity(), product.getQuantity()) &&
+                Objects.equals(getImageSm(), product.getImageSm()) &&
+                Objects.equals(getImageBg(), product.getImageBg()) &&
+                Objects.equals(getSales(), product.getSales());
     }
 
     @Override

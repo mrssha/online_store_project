@@ -112,24 +112,26 @@ public class OrderDto {
         this.orderStatus = orderStatus;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof OrderDto)) return false;
+        OrderDto orderDto = (OrderDto) o;
+        return Objects.equals(getId(), orderDto.getId()) &&
+                Objects.equals(getCustomer(), orderDto.getCustomer()) &&
+                Objects.equals(getDateOrder(), orderDto.getDateOrder()) &&
+                Objects.equals(getQuantityProducts(), orderDto.getQuantityProducts()) &&
+                Objects.equals(getPayment_amount(), orderDto.getPayment_amount()) &&
+                getPaymentMethod() == orderDto.getPaymentMethod() &&
+                getDeliveryMethod() == orderDto.getDeliveryMethod() &&
+                getPaymentStatus() == orderDto.getPaymentStatus() &&
+                getOrderStatus() == orderDto.getOrderStatus();
+    }
 
     @Override
     public int hashCode() {
-        return Objects.hash(this.getId());
+        return Objects.hash(getId(), getCustomer(), getDateOrder(), getQuantityProducts(), getPayment_amount(), getPaymentMethod(), getDeliveryMethod(), getPaymentStatus(), getOrderStatus());
     }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj){
-            return true;
-        }
-        if (obj == null || obj.getClass()!= OrderDto.class){
-            return false;
-        }
-        OrderDto order = (OrderDto)obj;
-        return order.getId().equals(this.getId());
-    }
-
 
     @Override
     public String toString() {

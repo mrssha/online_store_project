@@ -13,9 +13,9 @@
 //         })
 //         .then(function (data) {
 //             console.log('Request succeeded with response', data);
-//             console.log('Request succeeded with response', data.message);
+//             console.log('Request succeeded with response', data.result);
 //             console.log('Request succeeded with response', data.quantity);
-            // if (data.message == "ADDED_TO_CART"){
+            // if (data.result == "ADDED_TO_CART"){
             //     document.getElementById(button_id).textContent = data.quantity;
             // }
         // })
@@ -38,9 +38,9 @@
 //         })
 //         .then(function (data) {
 //             console.log('Request succeeded with response', data);
-//             console.log('Request succeeded with response', data.message);
+//             console.log('Request succeeded with response', data.result);
 //
-//             if (data.message == "REMOVED_FROM_CART"){
+//             if (data.result == "REMOVED_FROM_CART"){
 //                 document.getElementById(button_id).textContent = data.quantity;
 //             }
 //
@@ -91,12 +91,12 @@ function addRemoveProductDB(url, id, button_id) {
         })
         .then(function (data) {
             console.log('Request succeeded with response', data);
-            console.log('Request succeeded with response', data.message);
-            if (data.message == "REMOVED_FROM_CART"){
+            console.log('Request succeeded with response', data.result);
+            if (data.result == "REMOVED_FROM_CART"){
                 console.log('Add to cart!');
                 document.getElementById(button_id).textContent = "Add to cart"
             }
-            if (data.message == "ADDED_TO_CART"){
+            if (data.result == "ADDED_TO_CART"){
                 console.log('Remove from cart!');
                 document.getElementById(button_id).textContent = "Remove from cart"
             }

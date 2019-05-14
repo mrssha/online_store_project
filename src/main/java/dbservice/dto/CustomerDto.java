@@ -35,7 +35,6 @@ public class CustomerDto {
 
     private boolean valid;
 
-    //@DateTimeFormat(pattern="dd/MM/yyyy")
     @NotNull(message = "Date of birth shouldn't be empty")
     @Past(message = "Date of birth should be in past")
     private Date birthDate;
@@ -123,22 +122,26 @@ public class CustomerDto {
         this.role = role;
     }
 
-
     @Override
-    public int hashCode() {
-        return Objects.hash(this.getId());
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof CustomerDto)) return false;
+        CustomerDto that = (CustomerDto) o;
+        return isValid() == that.isValid() &&
+                Objects.equals(getId(), that.getId()) &&
+                Objects.equals(getFirstName(), that.getFirstName()) &&
+                Objects.equals(getSecondName(), that.getSecondName()) &&
+                Objects.equals(getEmail(), that.getEmail()) &&
+                Objects.equals(getPassword(), that.getPassword()) &&
+                Objects.equals(getConfirmedPassword(), that.getConfirmedPassword()) &&
+                Objects.equals(getBirthDate(), that.getBirthDate()) &&
+                Objects.equals(getSumPurchases(), that.getSumPurchases()) &&
+                Objects.equals(getRole(), that.getRole());
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj){
-            return true;
-        }
-        if (obj == null || obj.getClass() != CustomerDto.class){
-            return false;
-        }
-        CustomerDto customer =(CustomerDto)obj;
-        return customer.getId().equals(this.getId());
+    public int hashCode() {
+        return Objects.hash(getId(), getFirstName(), getSecondName(), getEmail(), getPassword(), getConfirmedPassword(), isValid(), getBirthDate(), getSumPurchases(), getRole());
     }
 
     @Override

@@ -28,19 +28,20 @@
 
     <div class="container-fluid content">
 
-            <h4 class="mb-3">Checkout</h4>
-
             <form id="orderForm" action="${contextPath}/order/confirmOrder" method="post" modelAttribute="newOrder">
+                <div class="mt-3 mb-2 text-center">
+                    <h3>Checkout</h3>
+                </div>
                 <div class="row mb-2">
-                    <div class="col-md-8 md-1">
+                    <div class="col-md-4 md-1" style="margin-left: 100px">
                         <div class="my-3">
                             <h4>Customer data</h4>
-                            <label for="customerInfo">First and second names</label>
-                            <input type="text" class="form-control" id="customerInfo"
+                            <label for="customerInfo">First and second names:</label>
+                            <input type="text" class="form-control" id="customerInfo" style="width: 70%"
                                    placeholder="${sessionScope.principalUser.firstName} ${sessionScope.principalUser.secondName}"
                                    value="" readonly>
-                            <label for="customerEmail">Email</label>
-                            <input type="text" class="form-control" id="customerEmail"
+                            <label for="customerEmail">Email:</label>
+                            <input type="text" class="form-control" id="customerEmail" style="width: 70%"
                                    placeholder="${sessionScope.principalUser.email}"
                                    value="" readonly>
                         </div>
@@ -50,12 +51,12 @@
                             <div class="custom-control custom-radio">
                                 <input id="deliveryMethod1" name="deliveryMethod" type="radio" class="custom-control-input"
                                        value="COURIER"  onclick="checkCourier()" checked required>
-                                <label class="custom-control-label" for="deliveryMethod1">Курьером и почтой</label>
+                                <label class="custom-control-label" for="deliveryMethod1">By courier</label>
                             </div>
                             <div class="custom-control custom-radio">
                                 <input id="deliveryMethod2" name="deliveryMethod" type="radio" class="custom-control-input"
                                        value="POSTAMPT" onclick="checkPostampt()" required>
-                                <label class="custom-control-label" for="deliveryMethod2">Пункт выдачи</label>
+                                <label class="custom-control-label" for="deliveryMethod2">Postampt</label>
                             </div>
                         </div>
 
@@ -88,10 +89,11 @@
                                 </div>
                             </c:forEach>
                         </div>
+                    </div>
 
-                        <hr class="mb-4">
-                        <h4 class="mb-3">Payment</h4>
-                        <div class="d-block my-3">
+                    <div class="col-md-2">
+                        <h4 class="my-3">Payment</h4>
+                        <div class=" my-3">
                             <div class="custom-control custom-radio">
                                 <input id="paymentMethod1" name="paymentMethod" type="radio" class="custom-control-input"
                                        value="CARD"  checked required>
@@ -105,9 +107,7 @@
                         </div>
                     </div>
 
-
-                    <%--<button type="submit" class="btn btn-primary mt-2">Submit</button>--%>
-                    <div class="col-md-4">
+                    <div class="col-md-5">
                         <div class="d-md-flex flex-md-equal w-100 mt-md-5 text-center overflow-hidden">
                             <div class="bg-light shadow-sm mx-auto" style="width: 70%; height: 250px; border-radius: 21px 21px 21px 21px;">
                                 <div class="my-3 p-3">

@@ -17,7 +17,9 @@ import javax.persistence.criteria.Root;
 import java.time.LocalDate;
 import java.time.Month;
 import java.time.YearMonth;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 @Repository
@@ -75,6 +77,20 @@ public class OrderDaoImpl implements OrderDao {
                         " and o.dateOrder between :startDate and :endDate")
                 .setParameter("startDate", date1, TemporalType.DATE)
                 .setParameter("endDate", date2, TemporalType.DATE);
+        return (Double) query2.getSingleResult();
+    }
+
+    @Override
+    public Double getRevenueForLastWeek(){
+        Date now = new Date();
+        Calendar cal = new GregorianCalendar();
+        cal.add(Calendar.DAY_OF_MONTH, -7);
+        Date weekAgo = cal.getTime();
+        Query query2 = entityManager.
+                createQuery("Select sum(o.payment_amount) from Order o where o.orderStatus='DELIVERED'" +
+                        " and o.dateOrder between :startDate and :endDate")
+                .setParameter("startDate", weekAgo, TemporalType.DATE)
+                .setParameter("endDate", now, TemporalType.DATE);
         return (Double) query2.getSingleResult();
     }
 
