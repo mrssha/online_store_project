@@ -7,6 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 <html>
 <head>
@@ -20,6 +21,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
     <link rel="stylesheet" href="${contextPath}/resources/style/general.css">
+    <link rel="stylesheet" href="${contextPath}/resources/style/profile.css">
 </head>
 <body>
 
@@ -123,7 +125,61 @@
                     </div>
                 </div>
             </form>
-    </div>
+            <div class="row mb-2">
+                <div class="first-coll col-md-3 md-1" style="margin-left: 90px">
+                    <c:if test="${requestScope.addresses.size()==0}">
+
+                        <h5 class="my-3">Add an address for delivery </h5>
+                        <div class="my-3">
+                            <form:form id="addAddressForm" class="needs-validation"
+                                       action="${contextPath}/order" method="post" modelAttribute="newAddress">
+
+                                <div class="form-group">
+                                    <label for="inputCountryId">Enter country</label>
+                                    <form:input type="text" class="form-control" id="inputCountryId"
+                                                placeholder="Country" path="country" required ="true"/>
+                                    <form:errors path="country" cssClass="error"/>
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputCityId">Enter city</label>
+                                    <form:input type="text" class="form-control" id="inputCityId"
+                                                path="city" placeholder="City" required ="true"/>
+                                    <form:errors path="city" cssClass="error"/>
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputPostcodeId">Enter new postcode</label>
+                                    <form:input type="number" class="form-control"  id="inputPostcodeId"
+                                                path="postcode" placeholder="Postcode" required="true" max="2147483648"/>
+                                    <form:errors path="postcode" cssClass="error"/>
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputStreetId">Enter new street</label>
+                                    <form:input type="text" class="form-control" id="inputStreetId"
+                                                path="street" placeholder="Street" required="true"/>
+                                    <form:errors path="street" cssClass="error"/>
+                                </div>
+                                <div class="form-group form-row">
+                                    <div class="col">
+                                        <label for="houseNumberId">Enter house number</label>
+                                        <form:input type="number" class="form-control" id="houseNumberId" max="2147483648"
+                                                    path="houseNumber" placeholder="House number" required ="true"/>
+                                        <form:errors path="houseNumber" cssClass="error"/>
+                                    </div>
+
+                                    <div class="col">
+                                        <label for="flatNumberId">Enter flat number</label>
+                                        <form:input type="number" class="form-control" id="flatNumberId" max="2147483648"
+                                                    path="flatNumber" placeholder="Flat number" required ="true"/>
+                                        <form:errors path="flatNumber" cssClass="error1"/>
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn btn-primary mt-2">Submit</button>
+                            </form:form>
+                        </div>
+                    </c:if>
+                </div>
+            </div>
+        </div>
     <jsp:include page="footer.jsp"/>
 </div>
 

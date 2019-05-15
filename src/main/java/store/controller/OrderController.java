@@ -1,19 +1,29 @@
 package store.controller;
 
 
-import store.dto.*;
-import store.entity.AddressType;
-import store.utils.StatusResult;
-import store.service.*;
-import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import store.dto.AddressDto;
+import store.dto.BaseCartDto;
+import store.dto.CustomerDto;
+import store.dto.OrderDto;
+import store.entity.AddressType;
+import store.service.AddressService;
+import store.service.CartService;
+import store.service.CustomerService;
+import store.service.OrderService;
+import store.utils.StatusResult;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 import java.io.UnsupportedEncodingException;
 import java.security.Principal;
 import java.util.List;
@@ -33,23 +43,45 @@ public class OrderController {
     @Autowired
     private CustomerService customerService;
 
-    private static final Logger logger = Logger.getLogger(OrderController.class);
-
 
     @RequestMapping( value = "/order", method = RequestMethod.GET)
     public String createOrder(ModelMap modelMap, HttpServletRequest request){
         Principal principalUser = request.getUserPrincipal();
         CustomerDto customer = customerService.getCustomerByEmail(principalUser.getName());
         BaseCartDto baseCartDto = cartService.getBaseCartByCustomersEmail(principalUser.getName());
+        if (baseCartDto.getTotalSum()==0){
+            return "redirect:/cart";
+        }
         List<AddressDto> addresses = addressService.getAddressByCustomerId(customer.getId());
         List<AddressDto> pickupPoints = addressService.getByAddressType(AddressType.PICKUP);
         modelMap.addAttribute("addresses", addresses);
         modelMap.addAttribute("pickupPoints", pickupPoints);
+        modelMap.addAttribute("cart", baseCartDto);
         modelMap.addAttribute("amount", baseCartDto.getAmountProducts());
         modelMap.addAttribute("total", baseCartDto.getTotalSum());
+        modelMap.addAttribute("newAddress", new AddressDto());
         return "order";
     }
 
+    @RequestMapping( value = "/order", method = RequestMethod.POST)
+    public String addAddressToOrder(@Valid @ModelAttribute("newAddress") AddressDto newAddress,
+                                    BindingResult bindResult,
+                                    ModelMap modelMap, HttpServletRequest request){
+        Principal principalUser = request.getUserPrincipal();
+        CustomerDto customer = customerService.getCustomerByEmail(principalUser.getName());
+        if (bindResult.hasErrors()) {
+            modelMap.addAttribute("addresses",
+                    addressService.getAddressByCustomerId(customer.getId()));
+            modelMap.addAttribute("pickupPoints", addressService.getByAddressType(AddressType.PICKUP));
+            BaseCartDto baseCartDto = cartService.getBaseCartByCustomersEmail(principalUser.getName());
+            modelMap.addAttribute("amount", baseCartDto.getAmountProducts());
+            modelMap.addAttribute("total", baseCartDto.getTotalSum());
+            return "order";
+        }
+        newAddress.setCustomer(customer);
+        addressService.addAddress(newAddress);
+        return "redirect:/order";
+    }
 
 
     @RequestMapping( value = "/order/confirmOrder", method = RequestMethod.POST)
@@ -70,24 +102,5 @@ public class OrderController {
         cartService.clearCookieCart(request, response);
         return "orderSuccess";
     }
-
-
-    //???
-    /*
-    @RequestMapping( value = "/confirm", method = RequestMethod.GET)
-    public String confirm(Model model, HttpServletRequest request){
-        Principal principalUser = request.getUserPrincipal();
-        List<CartDto> cartItems = cartService.getCartItemsByCustomersEmail(principalUser.getName());
-        int amount = 0;
-        double total = 0;
-        for(CartDto cart: cartItems){
-            amount += cart.getQuantity();
-            total += cart.getProduct().getPrice() * cart.getQuantity();
-        }
-        model.addAttribute("amount", amount);
-        model.addAttribute("total", total);
-        return "order";
-    }
-    */
 
 }

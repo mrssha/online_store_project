@@ -14,18 +14,12 @@ values ('Sony', 'R', 'sony@mail.ru',
 insert into "customer"(first_name, second_name, email, password, role, sum_purchases)
 values ('Lol', 'Lol', 'lol@mail.ru',
         '$2a$10$aoaPysMjRLQppdJEMDCtTevDyKwKcLHiW0TtF5kT4dxU6aSNFrxdG', 'ROLE_USER', 100000.1);
--- insert into "customer" (first_name, second_name, email, password, birth_date, role)
--- values ('Maria', 'Shalnova', 'mail_1@mail.ru', '123ddd', '1999-01-08', 'ROLE_USER');
--- insert into "customer" (first_name, second_name, email, password, birth_date, role)
--- values ('Sofia', 'Ivanova', 'mail_2@mail.ru', '123ddd', '1999-01-08', 'ROLE_USER');
--- insert into "customer" (first_name, second_name, email, password, birth_date, role)
--- values ('Ivan', 'Ivanov', 'ivan@mail.ru', '10004', '2007-01-01', 'ROLE_USER');
 
 
-insert into "address" ( country, city, postcode, street, flat_number, house_number, address_type)
-values ('Russia', 'NN', 123456, '1 street', 1, 2, 'PICKUP');
-insert into "address" (country, city, postcode, street, flat_number, house_number, address_type)
-values ('Russia', 'SPB', 555555, '2 street', 10, 20, 'PICKUP');
+insert into "address" ( country, city, postcode, street, flat_number, house_number, active, address_type)
+values ('Russia', 'NN', 123456, '1 street', 1, 2, true, 'PICKUP');
+insert into "address" (country, city, postcode, street, flat_number, house_number, active, address_type)
+values ('Russia', 'SPB', 555555, '2 street', 10, 20, true, 'PICKUP');
 
 insert into "category"(category_name) values ('snowboards');
 insert into "category"(category_name) values ('snowboard boots');
@@ -84,7 +78,7 @@ values ('Salomon 2018-19 PEARL Bordeaux11', 13000, 2, 'Salomon', 800, 'unisex', 
 UPDATE "product"
 SET  quantity= 20 WHERE "product".id_product = 6;
 UPDATE "product"
-SET  quantity= 3 WHERE "product".id_product = 2;
+SET  quantity= 20 WHERE "product".id_product = 8;
 
 UPDATE "customer"
 SET  sum_purchases= 0 WHERE "customer".id_customer = 2;
