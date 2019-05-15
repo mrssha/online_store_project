@@ -23,7 +23,7 @@ values ('Russia', 'SPB', 555555, '2 street', 10, 20, true, 'PICKUP');
 
 insert into "category"(category_name) values ('snowboards');
 insert into "category"(category_name) values ('snowboard boots');
-insert into "category"(category_name) values ('accessories');
+insert into "category"(category_name) values ('ski');
 
 -- insert into "product" (name, price, id_category, brand, weight, sex, quantity)
 -- values ('Snowboard K2', 15000, 1 , 'K2', 300, 'unisex', 10);
@@ -73,12 +73,27 @@ values ('Salomon 2018-19 PEARL Bordeaux11', 13000, 2, 'Salomon', 800, 'unisex', 
         '12_b_salomon_sm.jpg','12_b_salomon_big.jpg');
 
 
+--Ski-
+insert into "product" (name, price, id_category, brand,weight, sex, quantity, image_sm, image_bg)
+values ('BURTON 2018-19', 26500, 3, 'BURTON', 800, 'unisex', 15,'13_ski_sal_sm.jpg','13_ski_sal_big.jpg');
+
+insert into "product" (name, price, id_category, brand,weight, sex, quantity, image_sm, image_bg)
+values ('Jones 2018-19 PROGRESSOR', 26500, 3, 'Jones', 800, 'unisex', 15,'14_ski_jones_sm.jpg','14_ski_jones_big.jpg');
+
+insert into "product" (name, price, id_category, brand,weight, sex, quantity, image_sm, image_bg)
+values ('NIDECKER 2018-19 STARR', 26500, 3, 'NIDECKER', 800, 'unisex', 15,'15_ski_nid_sm.jpg','15_ski_nid_bg.jpg');
+
+
+
+
+
 
 
 UPDATE "product"
 SET  quantity= 20 WHERE "product".id_product = 6;
+
 UPDATE "product"
-SET  quantity= 20 WHERE "product".id_product = 8;
+SET  name='Product!' WHERE "product".id_product = 20;
 
 UPDATE "customer"
 SET  sum_purchases= 0 WHERE "customer".id_customer = 2;
