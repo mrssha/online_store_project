@@ -44,7 +44,7 @@
                     <div class="col">
                         <label for="categoryName">Enter category name</label>
                         <form:input type="text" class="form-control"
-                                    path="categoryName" id="categoryName" required = "true"/>
+                                    path="categoryName" id="categoryName" maxlength="45" required = "true"/>
                         <form:errors path="categoryName" cssClass="error" cssStyle="color: #DC143C;"/>
                     </div>
 

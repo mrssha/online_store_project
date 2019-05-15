@@ -52,9 +52,9 @@
             <input type="password" id="password" class="form-control" name="password"
                    placeholder="Password" required>
 
-            <input type="hidden"
-                   name="${_csrf.parameterName}"
-                   value="${_csrf.token}"/>
+            <%--<input type="hidden"--%>
+                   <%--name="${_csrf.parameterName}"--%>
+                   <%--value="${_csrf.token}"/>--%>
 
             <button class="btn btn-lg btn-primary btn-block my-3" type="submit">Sign in</button>
 

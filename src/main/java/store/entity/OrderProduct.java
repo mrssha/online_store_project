@@ -5,7 +5,7 @@ import java.io.Serializable;
 import java.util.Objects;
 
 @Entity
-@Table(name = "orderProduct")
+@Table(name = "order_product")
 public class OrderProduct implements Serializable {
 
     @Id

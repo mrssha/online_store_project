@@ -1,4 +1,4 @@
-package unit;
+package store.service;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;

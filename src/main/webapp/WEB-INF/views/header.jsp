@@ -24,7 +24,7 @@
             </li>
             <li class="nav-item" >
                 <form class="form-inline my-0" action="${contextPath}/search" method="get">
-                    <input class="form-control mr-sm-2" type="search" name="search" placeholder="Search" aria-label="Search">
+                    <input class="form-control mr-sm-2" type="search" name="search" placeholder="Search" required aria-label="Search">
                     <button class="btn btn-outline-light my-2 my-sm-0" type="submit">Search</button>
                 </form>
             </li>

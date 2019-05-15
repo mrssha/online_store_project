@@ -34,9 +34,10 @@
             <thead class="thead-dark">
             <tr>
                 <th scope="col">Id</th>
+                <th scope="col">Customer</th>
 
                 <th scope="col" width="130">Date order</th>
-                <th scope="col" width="40">Quantity products</th>
+                <th scope="col" width="20">Quantity products</th>
 
                 <th scope="col">Total</th>
                 <th scope="col" width="100">Payment method</th>
@@ -44,7 +45,7 @@
                 <th scope="col">Delivery method</th>
                 <th scope="col">Address delivery</th>
 
-                <th scope="col">Payment status</th>
+                <th scope="col" width="50">Payment status</th>
                 <th scope="col">Order status</th>
                 <th scope="col">Save changes</th>
             </tr>
@@ -58,6 +59,7 @@
 
                 <tr>
                     <td>${order.id}</td>
+                    <td>${order.customer.firstName} ${order.customer.secondName} </td>
                     <td><fmt:formatDate value="${order.dateOrder}" pattern="yyyy-MM-dd"/></td>
                     <td width="10">${order.quantityProducts}</td>
                     <td>${order.payment_amount} rub</td>

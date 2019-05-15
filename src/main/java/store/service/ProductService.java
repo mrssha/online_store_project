@@ -1,5 +1,6 @@
 package store.service;
 
+import org.springframework.web.multipart.MultipartFile;
 import store.dto.CategoryDto;
 import store.dto.ProductDto;
 import store.utils.StatusResult;
@@ -25,7 +26,7 @@ public interface ProductService {
 
     List<ProductDto> getTopProducts();
 
-    StatusResult add(ProductDto product, Long categoryId);
+    StatusResult add(ProductDto product, Long categoryId,  MultipartFile imageSm,  MultipartFile imageBg);
 
     String deleteById(long id);
 

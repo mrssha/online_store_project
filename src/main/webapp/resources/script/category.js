@@ -30,11 +30,14 @@ function deleteRow(url, id_category, id_button) {
 
 
 function update(url, id_category, id_table, id_button) {
-
     var name_category = document.getElementById(id_button).closest("tr").cells[1].innerText;
     console.log(name_category);
-    saveRow(url, id_category, name_category, id_button)
-
+    if (name_category!='') {
+        saveRow(url, id_category, name_category, id_button);
+    }else {
+        document.getElementById('messageId').hidden = false;
+        document.getElementById('messageId').textContent = "Couldn't save empty category";
+    }
 }
 
 function saveRow(url, id_category, name_category, id_button) {

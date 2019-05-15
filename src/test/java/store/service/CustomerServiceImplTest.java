@@ -1,4 +1,4 @@
-package unit;
+package store.service;
 
 import store.converter.CustomerConverter;
 import store.dao.CustomerDao;

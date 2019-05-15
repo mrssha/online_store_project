@@ -1,4 +1,4 @@
-package unit;
+package store.converter;
 
 import store.converter.CustomerConverter;
 import store.converter.CustomerConverterImpl;

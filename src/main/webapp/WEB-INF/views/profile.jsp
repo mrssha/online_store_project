@@ -39,8 +39,10 @@
                     <p class="mb-0">${sessionScope.principalUser.email}</p>
                 </div>
                 <div class="my-2 py-2">
-                    <p class="text-muted mb-0">Date of birth:</p>
-                    <p class="mb-0"><fmt:formatDate value="${sessionScope.principalUser.birthDate}" pattern="yyyy-MM-dd"/></p>
+                    <c:if test="${sessionScope.principalUser.birthDate!=null}">
+                        <p class="text-muted mb-0">Date of birth:</p>
+                        <p class="mb-0"><fmt:formatDate value="${sessionScope.principalUser.birthDate}" pattern="yyyy-MM-dd"/></p>
+                    </c:if>
                 </div>
 
                 <div class="btn-group my-3" role="group" aria-label="Basic example">
@@ -152,13 +154,13 @@
                             <form:errors path="city" cssClass="error"/>
                         </div>
                         <div class="form-group">
-                            <label for="inputPostcodeId">Enter new postcode</label>
-                            <form:input type="number" class="form-control"  id="inputPostcodeId"
-                                        path="postcode" placeholder="Postcode" required="true" max="2147483648"/>
+                            <label for="inputPostcodeId">Enter postcode</label>
+                            <form:input type="number" class="form-control" maxlength="6" id="inputPostcodeId" min="0"
+                                        path="postcode" placeholder="Postcode" required="true" max="999999999"/>
                             <form:errors path="postcode" cssClass="error"/>
                         </div>
                         <div class="form-group">
-                            <label for="inputStreetId">Enter new street</label>
+                            <label for="inputStreetId">Enter street</label>
                             <form:input type="text" class="form-control" id="inputStreetId"
                                         path="street" placeholder="Street" required="true"/>
                             <form:errors path="street" cssClass="error"/>
@@ -166,14 +168,14 @@
                         <div class="form-group form-row">
                             <div class="col">
                                 <label for="houseNumberId">Enter house number</label>
-                                <form:input type="number" class="form-control" id="houseNumberId" max="2147483648"
+                                <form:input type="number" class="form-control" id="houseNumberId" min="0" max="999999999"
                                             path="houseNumber" placeholder="House number" required ="true"/>
                                 <form:errors path="houseNumber" cssClass="error"/>
                             </div>
 
                             <div class="col">
                                 <label for="flatNumberId">Enter flat number</label>
-                                <form:input type="number" class="form-control" id="flatNumberId" max="2147483648"
+                                <form:input type="number" class="form-control" id="flatNumberId" min="0" max="999999999"
                                             path="flatNumber" placeholder="Flat number" required ="true"/>
                                 <form:errors path="flatNumber" cssClass="error1"/>
                             </div>

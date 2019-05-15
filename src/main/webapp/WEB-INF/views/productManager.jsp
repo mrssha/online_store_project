@@ -1,6 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<html lang="en" xml:lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <%--
   Created by IntelliJ IDEA.
   User: Maria
@@ -27,7 +28,7 @@
 
     <div class="container-fluid content">
         <form:form id="productForm" action="${contextPath}/admin/products"
-              method="post" modelAttribute="newProduct">
+              method="post" modelAttribute="newProduct" enctype="multipart/form-data">
 
             <form>
                 <div class="my-3 text-center">
@@ -36,8 +37,8 @@
                 <div class="form-row my-1">
                     <div class="col">
                         <label for="selectNameId">Product name</label>
-                        <form:input type="text" name="name" class="form-control"
-                                    path="name" id="selectNameId"/>
+                        <form:input type="text" name="name" maxlength="45" class="form-control"
+                                    path="name" id="selectNameId" required="true"/>
                         <form:errors path="name" cssClass="error"/>
                     </div>
                     <div class="col">
@@ -52,18 +53,20 @@
                         <label for="selectBrandId">Brand</label>
                         <select class="form-control" id="selectBrandId"
                                 name="brand" required>
-                            <%--<option selected>Choose brand</option>--%>
-                            <option>K2</option>
-                            <option>BF</option>
-                            <option>666</option>
-                            <option>BURTON</option>
-                            <option>Roxy</option>
+                                <option>Jones</option>
+                                <option>BF</option>
+                                <option>NIDECKER</option>
+                                <option>BURTON</option>
+                                <option>ROXY</option>
+                                <option>K2</option>
+                                <option>666</option>
+                                <option>Salomon</option>
                         </select>
                     </div>
                     <div class="col">
                         <label for="weightId">Weight</label>
                         <form:input id = "weightId" type="number" name="weight"
-                               path="weight" class="form-control"/>
+                               path="weight" class="form-control" min="0" max="999999999" required="true"/>
                         <form:errors path="weight" cssClass="error"/>
                     </div>
                 </div>
@@ -71,24 +74,25 @@
                     <div class="col">
                         <label for="priceId">Price</label>
                         <form:input id = "priceId" type="number" name="price"
-                                    path="price" class="form-control" />
+                                    path="price" class="form-control" min="0" max="999999999" required="true" />
                         <form:errors path="price" cssClass="error"/>
                     </div>
                     <div class="col">
                         <label for="quantityId">Quantity</label>
                         <form:input id ="quantityId" type="number" name="quantity"
-                                    path="quantity" class="form-control"/>
+                                    path="quantity" class="form-control" min="0" max="999999999" required="true"/>
                         <form:errors path="quantity" cssClass="error"/>
                     </div>
                     <div class="col">
-                        <label for="smImageId">Small image path</label>
-                        <input id ="smImageId" type="text" name="imageSm" class="form-control" required>
+                        <label for="smImageId">Load small image</label>
+                        <input id ="smImageId" type="file" name="fileSm" required>
                     </div>
                     <div class="col">
-                        <label for="bgImageId">Big image path</label>
-                        <input id ="bgImageId" type="text" name="imageBg" class="form-control" required>
+                        <label for="bgImageId">Load big image</label>
+                        <input id ="bgImageId" type="file" name="fileBg"  required>
                     </div>
                 </div>
+
                 <div class="my-3" style="text-align: center">
                     <button type="submit" class="btn btn-success btn-lg" style="width: 30%">
                         Load product
@@ -96,13 +100,6 @@
                 </div>
             </form>
         </form:form>
-
-        <%--<form method="POST" action="${contextPath}/admin/uploadFile" enctype="multipart/form-data">--%>
-            <%--File to upload: <input type="file" name="file"><br />--%>
-    <%----%>
-            <%--<input type="submit" value="Upload">--%>
-            <%--Press here to upload the file!--%>
-        <%--</form>--%>
 
         <p id = "messageId" style="color: #DC143C">${requestScope.message}</p>
 

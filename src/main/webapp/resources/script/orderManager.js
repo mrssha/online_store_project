@@ -4,7 +4,7 @@ function changeValue(id, value){
 }
 
 function update(url, id_order, id_button) {
-    var order_status = document.getElementById(id_button).closest("tr").cells[8].innerText;
+    var order_status = document.getElementById(id_button).closest("tr").cells[9].innerText;
     console.log(order_status);
     saveRow(url, id_order, order_status, id_button)
 }

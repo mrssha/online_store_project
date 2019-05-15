@@ -98,7 +98,7 @@ public class CustomerController {
         }
         CustomerDto changedCustomer = customerService.changeInfo(customer, newInfoCustomer);
         request.getSession().setAttribute("principalUser", changedCustomer);
-        return "profile";
+        return "redirect:/profile";
     }
 
     @RequestMapping( value = "/profile/changePassword",  method = RequestMethod.POST)

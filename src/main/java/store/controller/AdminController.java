@@ -1,24 +1,25 @@
 package store.controller;
 
-import store.dto.CategoryDto;
-import store.dto.CustomerDto;
-import store.dto.OrderDto;
-import store.dto.ProductDto;
-import store.utils.StatusResult;
-import store.service.CategoryService;
-import store.service.CustomerService;
-import store.service.OrderService;
-import store.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-
-import javax.servlet.ServletContext;
+import org.springframework.web.multipart.MultipartFile;
+import store.dto.CategoryDto;
+import store.dto.CustomerDto;
+import store.dto.OrderDto;
+import store.dto.ProductDto;
+import store.service.CategoryService;
+import store.service.CustomerService;
+import store.service.OrderService;
+import store.service.ProductService;
+import store.utils.StatusResult;
 import javax.validation.Valid;
 import java.time.Month;
-import java.util.*;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.List;
 
 
 @Controller
@@ -37,9 +38,6 @@ public class AdminController {
     @Autowired
     private CustomerService customerService;
 
-    @Autowired
-    private ServletContext servletContext;
-
     @RequestMapping( value = "/products", method = RequestMethod.GET)
     public String manageProducts(ModelMap modelMap){
         List<ProductDto> products = productService.getAllProducts();
@@ -51,63 +49,19 @@ public class AdminController {
         return "productManager";
     }
 
-
-
-    /*
-    @RequestMapping(value = "/uploadFile", method = RequestMethod.POST)
-    public String submit(@RequestParam("file") MultipartFile file, ModelMap modelMap) {
-        modelMap.addAttribute("file", file);
-
-        String name = null;
-
-        if (!file.isEmpty()) {
-            try {
-                byte[] bytes = file.getBytes();
-
-                name = file.getOriginalFilename();
-
-                //String rootPath = servletContext.getContextPath();
-
-                String rootPath = "src/main/java/hello";
-                File dir = new File("web" + File.separator + "resources" + File.separator + "image");
-                //File dir = new File(rootPath + File.separator + "\\web\\resources\\image");
-
-                if (!dir.exists()) {
-                    dir.mkdirs();
-                }
-
-                File uploadedFile = new File(dir.getAbsolutePath() + File.separator + name);
-
-                BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(uploadedFile));
-                stream.write(bytes);
-                stream.flush();
-                stream.close();
-
-                //logger.info("uploaded: " + uploadedFile.getAbsolutePath());
-
-                return "You successfully uploaded file=" + name;
-
-            } catch (Exception e) {
-                return "You failed to upload " + name + " => " + e.getMessage();
-            }
-        } else {
-            return "You failed to upload " + name + " because the file was empty.";
-        }
-    }
-    */
-
-
     @RequestMapping( value = "/products", method = RequestMethod.POST)
     public String addProduct(@Valid @ModelAttribute("newProduct") ProductDto newProduct,
                              BindingResult bindResult,
                              @RequestParam(value = "categoryId", required = false) Long categoryId,
+                             @RequestParam("fileSm") MultipartFile fileSm,
+                             @RequestParam("fileBg") MultipartFile fileBg,
                              ModelMap modelMap){
         modelMap.addAttribute("categories", categoryService.getAllCategories());
         if (bindResult.hasErrors()) {
             modelMap.addAttribute("products", productService.getAllProducts());
             return "productManager";
         }
-        StatusResult result = productService.add(newProduct, categoryId);
+        StatusResult result = productService.add(newProduct, categoryId, fileSm,  fileBg);
         if (result == StatusResult.PRODUCT_ALREADY_EXIST){
             modelMap.addAttribute("message",
                     String.format(result.getMessage(), newProduct.getName()));
@@ -127,7 +81,7 @@ public class AdminController {
     @RequestMapping( value = "/categories", method = RequestMethod.GET)
     public String manageCategories(ModelMap modelMap){
         List<CategoryDto> categories = categoryService.getAllCategories();
-        categories.sort(Comparator.comparing(CategoryDto::getCategoryName));
+        categories.sort(Comparator.comparing(CategoryDto::getId));
         modelMap.addAttribute("categories", categories);
         modelMap.addAttribute("newCategory", new CategoryDto());
         return "categoryManager";
@@ -174,6 +128,7 @@ public class AdminController {
         List<OrderDto> orders = orderService.getAllOrders();
         orders.sort(Comparator.comparing(OrderDto::getDateOrder)
                 .thenComparing(OrderDto::getId));
+        modelMap.addAttribute("customer", customerService.getAllCustomers());
         modelMap.addAttribute("orders", orders);
         return "orderManager";
     }

@@ -43,7 +43,6 @@
             <div class="col-auto my-1">
                 <label class="mr-sm-2 sr-only" for="yearSearch">Preference</label>
                 <select class="custom-select mr-sm-2" id="yearSearch">
-                    <%--<option selected>Year...</option>--%>
                     <c:forEach items="${years}" var="year">
                         <option value="${year}">${year}</option>
                     </c:forEach>
@@ -52,7 +51,6 @@
             <div class="col-auto my-1">
                 <label class="mr-sm-2 sr-only" for="monthSearch">Preference</label>
                 <select class="custom-select mr-sm-2" id="monthSearch">
-                    <%--<option selected>Month...</option>--%>
                     <c:forEach items="${months}" var="month">
                         <option value="${month}">${month}</option>
                     </c:forEach>
@@ -149,7 +147,6 @@
                     <td>${customer.secondName}</td>
                     <td>${customer.email}</td>
                     <td><fmt:formatDate value="${customer.birthDate}" pattern="yyyy-MM-dd"/></td>
-                    <%--<td>${customer.birthDate}</td>--%>
                     <td>${customer.sumPurchases}</td>
                 </tr>
             </c:forEach>

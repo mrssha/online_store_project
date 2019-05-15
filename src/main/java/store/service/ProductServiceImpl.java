@@ -1,6 +1,7 @@
 package store.service;
 
 import com.google.gson.Gson;
+import org.springframework.web.multipart.MultipartFile;
 import store.converter.CategoryConverter;
 import store.converter.ProductConverter;
 import store.dao.OrderProductDao;
@@ -9,6 +10,7 @@ import store.dao.ProductDao;
 import store.dto.CategoryDto;
 import store.dto.ProductDto;
 import store.entity.Category;
+import store.utils.LogMessage;
 import store.utils.Message;
 import store.utils.StatusResult;
 import org.apache.log4j.Logger;
@@ -94,21 +96,36 @@ public class ProductServiceImpl implements ProductService {
     }
 
 
-
     @Override
     @Transactional
-    public StatusResult add(ProductDto newProduct, Long categoryId) {
-        CategoryDto categoryDto = categoryService.getById(categoryId);
-        newProduct.setCategory(categoryDto);
-        newProduct.setSales(0);
+    public StatusResult add(ProductDto newProduct, Long categoryId, MultipartFile imageSm,  MultipartFile imageBg) {
         ProductDto product = getByName(newProduct.getName());
         if (product == null) {
+            CategoryDto categoryDto = categoryService.getById(categoryId);
+            newProduct.setCategory(categoryDto);
+            newProduct.setSales(0);
+            loadImages(newProduct, imageSm, imageBg);
             productDao.add(productConverter.convertToEntity(newProduct));
             logger.info(String.format(StatusResult.PRODUCT_SUCCESS_CREATE.getMessage(), newProduct.getName()));
             return StatusResult.PRODUCT_SUCCESS_CREATE;
         }
         logger.info(String.format(StatusResult.PRODUCT_ALREADY_EXIST.getMessage(), newProduct.getName()));
         return StatusResult.PRODUCT_ALREADY_EXIST;
+    }
+
+    private void loadImages(ProductDto newProduct, MultipartFile imageSm,  MultipartFile imageBg){
+        if (!imageSm.isEmpty()) {
+            String nameSm = imageSm.getOriginalFilename();
+            newProduct.setImageSm(nameSm);
+        } else {
+            logger.warn(LogMessage.IMAGE_LOAD_FAILD);
+        }
+        if (!imageBg.isEmpty()) {
+            String nameBg = imageBg.getOriginalFilename();
+            newProduct.setImageBg(nameBg);
+        } else {
+            logger.warn(LogMessage.IMAGE_LOAD_FAILD);
+        }
     }
 
     @Override
