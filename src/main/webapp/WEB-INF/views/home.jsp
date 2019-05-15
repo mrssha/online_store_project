@@ -124,7 +124,6 @@
 
 
 <script>var contextPath = '${contextPath}'</script>
-<script src="${contextPath}/resources/script/cart.js"></script>
 
 </body>
 </html>

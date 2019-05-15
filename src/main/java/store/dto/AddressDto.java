@@ -32,6 +32,8 @@ public class AddressDto {
 
     private CustomerDto customer;
 
+    private Boolean active;
+
     private AddressType addressType;
 
     public AddressDto(){
@@ -107,6 +109,14 @@ public class AddressDto {
 
     public void setAddressType(AddressType addressType) {
         this.addressType = addressType;
+    }
+
+    public Boolean getActive() {
+        return active;
+    }
+
+    public void setActive(Boolean active) {
+        this.active = active;
     }
 
     @Override

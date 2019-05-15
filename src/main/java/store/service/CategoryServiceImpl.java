@@ -79,11 +79,6 @@ public class CategoryServiceImpl implements CategoryService {
         }
         String message = StatusResult.CATEGORY_ALREADY_EXIST.getFormatMessage(name);
         logger.info(message);
-        //JsonObject object = new JsonObject();
-        //object.addProperty("resultType", StatusResult.CATEGORY_ALREADY_EXIST.name());
-        //object.addProperty("message", message);
-        //object.addProperty("oldName", updatedCategory.getCategoryName());
-        //return gson.toJson(object);
         Message jsonMessage = new Message(StatusResult.CATEGORY_ALREADY_EXIST, message);
         jsonMessage.getDataMap().put("oldName", updatedCategory.getCategoryName());
         return gson.toJson(jsonMessage);

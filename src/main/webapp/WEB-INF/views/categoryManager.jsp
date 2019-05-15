@@ -34,7 +34,7 @@
             </div>
 
             <div class="col-md-6">
-                <form:form id="categoryForm" action="${contextPath}/admin/categories/addCategory"
+                <form:form id="categoryForm" action="${contextPath}/admin/categories"
                       method="post" modelAttribute="newCategory">
 
                     <div class="my-3 text-center">

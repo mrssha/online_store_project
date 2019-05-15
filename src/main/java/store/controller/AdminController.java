@@ -40,7 +40,7 @@ public class AdminController {
     @Autowired
     private ServletContext servletContext;
 
-    @RequestMapping( value = {"/products", "/products/addProduct"}, method = RequestMethod.GET)
+    @RequestMapping( value = "/products", method = RequestMethod.GET)
     public String manageProducts(ModelMap modelMap){
         List<ProductDto> products = productService.getAllProducts();
         List<CategoryDto> categories = categoryService.getAllCategories();
@@ -97,7 +97,7 @@ public class AdminController {
     */
 
 
-    @RequestMapping( value = "/products/addProduct", method = RequestMethod.POST)
+    @RequestMapping( value = "/products", method = RequestMethod.POST)
     public String addProduct(@Valid @ModelAttribute("newProduct") ProductDto newProduct,
                              BindingResult bindResult,
                              @RequestParam(value = "categoryId", required = false) Long categoryId,
@@ -133,7 +133,7 @@ public class AdminController {
         return "categoryManager";
     }
 
-    @RequestMapping( value = "/categories/addCategory", method = RequestMethod.POST)
+    @RequestMapping( value = "/categories", method = RequestMethod.POST)
     public String addCategory(@Valid @ModelAttribute("newCategory") CategoryDto newCategory,
                               BindingResult bindResult, ModelMap modelMap){
         if (bindResult.hasErrors()) {

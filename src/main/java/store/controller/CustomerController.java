@@ -1,11 +1,5 @@
 package store.controller;
 
-import store.dto.*;
-import store.entity.AddressType;
-import store.utils.StatusResult;
-import store.service.AddressService;
-import store.service.CustomerService;
-import store.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
@@ -13,6 +7,11 @@ import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
+import store.dto.*;
+import store.service.AddressService;
+import store.service.CustomerService;
+import store.service.OrderService;
+import store.utils.StatusResult;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -47,7 +46,6 @@ public class CustomerController {
             "/profile/changePassword"}, method = RequestMethod.GET)
     public String customerProfile(ModelMap modelMap, HttpServletRequest request){
         Principal principalUser = request.getUserPrincipal();
-        System.out.println(principalUser.getName());
         CustomerDto customer = customerService.getCustomerByEmail(principalUser.getName());
         List<AddressDto> addresses = addressService.getAddressByCustomerId(customer.getId());
         modelMap.addAttribute("newAddress", new AddressDto());
@@ -68,14 +66,11 @@ public class CustomerController {
         CustomerDto customer = customerService.getCustomerByEmail(principalUser.getName());
         List<AddressDto> addresses = addressService.getAddressByCustomerId(customer.getId());
         modelMap.addAttribute("addresses", addresses);
-
         if (bindResult.hasErrors()) {
             modelMap.addAttribute("hiddenAddressForm", false);
             return "profile";
         }
-
         newAddress.setCustomer(customer);
-        newAddress.setAddressType(AddressType.CUSTOMER);
         addressService.addAddress(newAddress);
         return "redirect:/profile";
     }
@@ -84,7 +79,7 @@ public class CustomerController {
     @ResponseBody
     @RequestMapping( value = "/profile/deleteAddress", method = RequestMethod.POST)
     public void deleteCategory(@RequestBody String id_address){
-        addressService.deleteAddressById(Long.parseLong(id_address));
+        addressService.setActiveFalse(Long.parseLong(id_address));
     }
 
     @RequestMapping( value = "/profile/changeInfo",  method = RequestMethod.POST)

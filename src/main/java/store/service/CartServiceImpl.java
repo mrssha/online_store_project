@@ -90,24 +90,6 @@ public class CartServiceImpl implements CartService {
 
     @Override
     @Transactional
-    public String addRemoveCartItem(String email, Long id_product){
-        Customer customer = customerDao.getByEmail(email);
-        Cart cartItem = cartDao.getByProductAndCustomer(customer.getId(), id_product);
-        if (cartItem!= null){
-            cartDao.deleteById(cartItem.getId());
-            return "REMOVED_FROM_CART";
-        }
-        Cart newCartItem = new Cart();
-        newCartItem.setCustomer(customer);
-        newCartItem.setProduct(productDao.getById(id_product));
-        newCartItem.setQuantity(1);
-        cartDao.add(newCartItem);
-        return "ADDED_TO_CART";
-    }
-
-
-    @Override
-    @Transactional
     public Map<String, String> addToCart(String email, Long id_product){
         Map<String, String> response = new HashMap<>();
         Product product = productDao.getById(id_product);
@@ -115,7 +97,6 @@ public class CartServiceImpl implements CartService {
             response.put("message", "NO_PRODUCT");
             return response;
         }
-
         Customer customer = customerDao.getByEmail(email);
         Cart cartItem = cartDao.getByProductAndCustomer(customer.getId(), id_product);
         if (cartItem!= null){
@@ -214,14 +195,8 @@ public class CartServiceImpl implements CartService {
     @Transactional
     public CookieCartDto getCartProductsCookie(Cookie cookieCart)
             throws UnsupportedEncodingException {
-        Gson gson = new Gson();
-        if (cookieCart == null){
-            return null;
-        }
-        Type typeToken = new TypeToken<HashMap<Long, Integer>>(){}.getType();
-        Map<Long, Integer> mapCookie =
-                gson.fromJson(URLDecoder.decode(cookieCart.getValue(),"UTF-8"), typeToken);
         Map<ProductDto, Integer> productCartMap = new HashMap<>();
+        Map<Long, Integer> mapCookie = getCookieCart(cookieCart);
         int amount = 0;
         double total = 0;
         if (mapCookie!=null) {
@@ -238,19 +213,15 @@ public class CartServiceImpl implements CartService {
     }
 
 
-    //Убрать? заменить на getCartProductsCookie
-    @Override
-    @Transactional
-    public Map<Long, Integer> getCookieCart(Cookie cookieCart) throws UnsupportedEncodingException {
+    private Map<Long, Integer> getCookieCart(Cookie cookieCart) throws UnsupportedEncodingException {
         Gson gson = new Gson();
-        Map<Long, Integer> emptyMap = new HashMap<>();
         if (cookieCart == null){
-            return emptyMap;
+            return new HashMap<>();
         }
         Type typeToken = new TypeToken<HashMap<Long, Integer>>(){}.getType();
         HashMap<Long, Integer> mapCookie = gson.fromJson(URLDecoder.decode(cookieCart.getValue(),"UTF-8"), typeToken);
         if (mapCookie == null){
-            return emptyMap;
+            return new HashMap<>();
         }
         return mapCookie;
     }
@@ -294,60 +265,6 @@ public class CartServiceImpl implements CartService {
         logger.info(LogMessage.MERGE_CARTS);
     }
 
-
-    /*
-    @Override
-    @Transactional
-    public void mergeToCookieCart(HttpServletResponse response, String email, Cookie cookieCart)
-            throws UnsupportedEncodingException{
-        List<CartDto> cartDb = getCartItemsByCustomersEmail(email);
-        Map<Long, Integer> mapCookieCart = getCookieCart(cookieCart);
-        for (CartDto cartItemDb: cartDb){
-            ProductDto productDto = cartItemDb.getProduct();
-            if (!mapCookieCart.containsKey(productDto.getId())){
-                mapCookieCart.put(productDto.getId(), cartItemDb.getQuantity());
-            }
-        }
-
-        Gson gson = new Gson();
-        cookieCart.setValue(URLEncoder.encode(gson.toJson(mapCookieCart), "UTF-8"));
-        cookieCart.setMaxAge(24 * 60 * 60 * 1000);
-        cookieCart.setPath("/");
-        response.addCookie(cookieCart);
-        logger.info("Products from base was added to cookie cart");
-    }
-
-
-    @Override
-    @Transactional
-    public void mergeToDBCart(String email, Cookie cookieCart) throws UnsupportedEncodingException{
-        List<CartDto> cartDb = getCartItemsByCustomersEmail(email);
-        Map<Long, Integer> mapCookieCart = getCookieCart(cookieCart);
-        for (CartDto cartDbItem: cartDb){
-            if (!mapCookieCart.containsKey(cartDbItem.getProduct().getId())){
-                deleteById(cartDbItem.getId());
-            }
-        }
-        Customer customer = customerDao.getByEmail(email);
-        for (Map.Entry<Long, Integer> cookieCartItem: mapCookieCart.entrySet()){
-            Product product = productDao.getById(cookieCartItem.getKey());
-            int quantityProductCookie = cookieCartItem.getValue();
-            Cart dbCartItem = cartDao.getByProductAndCustomer(customer.getId(), product.getId());
-            if (dbCartItem!= null){
-                dbCartItem.setQuantity(quantityProductCookie);
-                cartDao.update(dbCartItem);
-            } else {
-                Cart newCartItem = new Cart();
-                newCartItem.setCustomer(customer);
-                newCartItem.setProduct(product);
-                newCartItem.setQuantity(quantityProductCookie);
-                cartDao.add(newCartItem);
-            }
-        }
-
-        logger.info("Products from cookies was added to base");
-    }
-    */
 
     @Override
     @Transactional

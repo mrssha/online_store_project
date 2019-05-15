@@ -153,7 +153,6 @@ public class OrderServiceImpl implements OrderService {
         Order newOrder = createNewOrder(orderDto, baseCartDto);
         orderDao.add(newOrder);
         List<CartDto> cartItems = baseCartDto.getCartItems();
-
         for (CartDto cartItem: cartItems){
             Product product = productDao.getByIdForUpdate(cartItem.getProduct().getId());
             if (cartItem.getQuantity() > product.getQuantity()){
@@ -161,7 +160,6 @@ public class OrderServiceImpl implements OrderService {
                 return StatusResult.ORDER_FIND_MISSING_PRODUCTS;
             }
         }
-
         for (CartDto cartItem: cartItems){
             //Product changedProduct = productDao.getByIdForUpdate(cartItem.getProduct().getId());
             Product changedProduct = productDao.getById(cartItem.getProduct().getId());

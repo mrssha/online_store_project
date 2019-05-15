@@ -75,36 +75,5 @@ public class CartController {
         }
         return new HashMap<>();
     }
-
-
-
-    // старая версия
-    /*
-    @ResponseBody
-    @RequestMapping( value = "/deleteCartItem", method = RequestMethod.POST)
-    public void deleteCategory(@RequestBody String id_cartItem){
-        cartService.deleteById(Long.parseLong(id_cartItem));
-    }
-    */
-
-
-    // удалить если не нужен
-    /*
-    @ResponseBody
-    @RequestMapping( value = "/addRemoveProduct",  method = RequestMethod.POST)
-    public Map<String, String> addRemoveProduct(@RequestBody String id_product, HttpServletRequest request){
-        Map<String, String> utils = new HashMap<>();
-        Principal principalUser = request.getUserPrincipal();
-        if (principalUser != null){
-            // проверка id на null
-            String utils = cartService.addRemoveCartItem(principalUser.getName(),
-                    Long.parseLong(id_product));
-            utils.put("utils", utils);
-            return utils;
-        }
-        utils.put("utils", "");
-        return utils;
-    }
-    */
 }
 

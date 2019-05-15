@@ -5,14 +5,13 @@ import java.io.Serializable;
 import java.util.Objects;
 
 @Entity
-@Table(name = "basket")
+@Table(name = "orderProduct")
 public class OrderProduct implements Serializable {
 
     @Id
-    @Column(name = "id_basket")
+    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_order")
@@ -26,7 +25,6 @@ public class OrderProduct implements Serializable {
     private int quantity;
 
     public OrderProduct(){
-
     }
 
     public Long getId() {

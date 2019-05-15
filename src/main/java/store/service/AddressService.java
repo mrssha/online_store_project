@@ -18,5 +18,7 @@ public interface AddressService {
 
     void updateAddress(AddressDto addressDto);
 
+    void setActiveFalse(long id);
+
     void deleteAddressById(long id);
 }

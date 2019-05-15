@@ -29,6 +29,7 @@ public class AddressConverterImpl implements AddressConverter{
         addressDto.setHouseNumber(address.getHouseNumber());
         addressDto.setCustomer(customerConverter.convertToDto(address.getCustomer()));
         addressDto.setAddressType(address.getAddressType());
+        addressDto.setActive(address.getActive());
         return addressDto;
     }
 
@@ -47,6 +48,7 @@ public class AddressConverterImpl implements AddressConverter{
         address.setHouseNumber(addressDto.getHouseNumber());
         address.setCustomer(customerConverter.convertToEntity(addressDto.getCustomer()));
         address.setAddressType(addressDto.getAddressType());
+        address.setActive(addressDto.getActive());
         return address;
     }
 

@@ -26,7 +26,7 @@
     <jsp:include page="header.jsp"/>
 
     <div class="container-fluid content">
-        <form:form id="productForm" action="${contextPath}/admin/products/addProduct"
+        <form:form id="productForm" action="${contextPath}/admin/products"
               method="post" modelAttribute="newProduct">
 
             <form>

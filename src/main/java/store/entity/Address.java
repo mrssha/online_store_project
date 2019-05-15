@@ -35,6 +35,9 @@ public class Address {
     @Column(name = "house_number")
     private Integer houseNumber;
 
+    @Column(name = "active")
+    private Boolean active;
+
     @Enumerated(EnumType.STRING)
     @Column(name = "address_type")
     private AddressType addressType;
@@ -114,6 +117,15 @@ public class Address {
     public void setAddressType(AddressType addressType) {
         this.addressType = addressType;
     }
+
+    public Boolean getActive() {
+        return active;
+    }
+
+    public void setActive(Boolean active) {
+        this.active = active;
+    }
+
 
     @Override
     public boolean equals(Object o) {

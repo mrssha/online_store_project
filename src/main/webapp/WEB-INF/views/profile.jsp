@@ -100,13 +100,6 @@
                             <form:errors path="secondName" cssClass="error"/>
                         </div>
 
-                        <%--<div class="form-group">--%>
-                            <%--<label for="inputEmail">Enter email</label>--%>
-                            <%--<input type="email" id="inputEmail" class="form-control my-0" name="email"--%>
-                                   <%--value="${sessionScope.principalUser.email}"--%>
-                                   <%--placeholder="Email address" required>--%>
-                        <%--</div>--%>
-
                         <div class="form-group">
                             <label for="inputDate">Enter new date of birth</label>
                             <form:input type="date" class="form-control" id="inputDate"

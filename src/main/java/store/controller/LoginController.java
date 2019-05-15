@@ -1,16 +1,19 @@
 package store.controller;
 
-import store.dto.CustomerDto;
-import store.utils.StatusResult;
-import store.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
+import store.dto.CustomerDto;
+import store.service.CustomerService;
+import store.utils.StatusResult;
 
 import javax.validation.Valid;
 import java.text.SimpleDateFormat;
@@ -58,26 +61,5 @@ public class LoginController {
     public String login(){
         return "login";
     }
-
-
-//    @RequestMapping( value = "/login", method = RequestMethod.POST)
-//    public String login(HttpServletRequest request){
-//        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-//        String email = userDetails.getUsername();
-//        HttpSession session = request.getSession();
-//        session.setAttribute("principalUser", customerService.getCustomerByEmail(email));
-//        return "redirect:/";
-//    }
-
-
-//    @RequestMapping( value = "/logout", method = RequestMethod.GET)
-//    public String logout(HttpServletRequest request, Authentication authentication){
-//        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-//        String email = userDetails.getUsername();
-//        HttpSession session = request.getSession();
-//        session.setAttribute("principalUser",null);
-//        return "redirect:/login?logout";
-//    }
-
 
 }

@@ -1,12 +1,15 @@
 package store.service;
 
+import org.apache.log4j.Logger;
 import store.converter.AddressConverter;
 import store.dao.AddressDao;
 import store.dto.AddressDto;
+import store.entity.Address;
 import store.entity.AddressType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import store.utils.LogMessage;
 
 import java.util.List;
 
@@ -18,6 +21,8 @@ public class AddressServiceImpl implements AddressService {
 
     @Autowired
     private AddressConverter addressConverter;
+
+    private static final Logger logger = Logger.getLogger(AddressServiceImpl.class);
 
 
     @Override
@@ -41,13 +46,24 @@ public class AddressServiceImpl implements AddressService {
     @Override
     @Transactional
     public void addAddress(AddressDto addressDto) {
+        addressDto.setAddressType(AddressType.CUSTOMER);
+        addressDto.setActive(true);
         addressDao.add(addressConverter.convertToEntity(addressDto));
+        logger.info(LogMessage.ADDRESS_ADD_SUCCESS);
     }
 
     @Override
     @Transactional
     public void updateAddress(AddressDto addressDto) {
         addressDao.update(addressConverter.convertToEntity(addressDto));
+    }
+
+    @Override
+    @Transactional
+    public void setActiveFalse(long id){
+        Address address = addressDao.getById(id);
+        address.setActive(false);
+        addressDao.update(address);
     }
 
     @Override

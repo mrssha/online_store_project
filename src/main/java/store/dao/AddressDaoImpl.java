@@ -9,7 +9,9 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -25,25 +27,26 @@ public class AddressDaoImpl implements AddressDao {
     }
 
 
-    /*
-    @Override
-    public List<Address> getByCustomerEmail(String email) {
-        CriteriaBuilder cBuilder = entityManager.getCriteriaBuilder();
-        CriteriaQuery<Address> criteriaQuery = cBuilder.createQuery(Address.class);
-        Root<Address> root = criteriaQuery.from(Address.class);
-        criteriaQuery.select(root);
-        criteriaQuery.where(cBuilder.equal(root.get("email"), email));
-        return entityManager.createQuery(criteriaQuery).getResultList();
-    }
-    */
+//    @Override
+//    public List<Address> getByCustomerId(long id) {
+//        CriteriaBuilder cBuilder = entityManager.getCriteriaBuilder();
+//        CriteriaQuery<Address> criteriaQuery = cBuilder.createQuery(Address.class);
+//        Root<Address> root = criteriaQuery.from(Address.class);
+//        criteriaQuery.select(root);
+//        criteriaQuery.where(cBuilder.equal(root.get("customer"), id));
+//        return entityManager.createQuery(criteriaQuery).getResultList();
+//    }
 
     @Override
     public List<Address> getByCustomerId(long id) {
         CriteriaBuilder cBuilder = entityManager.getCriteriaBuilder();
         CriteriaQuery<Address> criteriaQuery = cBuilder.createQuery(Address.class);
         Root<Address> root = criteriaQuery.from(Address.class);
-        criteriaQuery.select(root);
-        criteriaQuery.where(cBuilder.equal(root.get("customer"), id));
+        List<Predicate> predicates = new ArrayList<Predicate>();
+        predicates.add(cBuilder.equal(root.get("customer"), id));
+        predicates.add(cBuilder.equal(root.get("active"), true));
+        criteriaQuery.select(root)
+                .where(predicates.toArray(new Predicate[]{}));
         return entityManager.createQuery(criteriaQuery).getResultList();
     }
 
