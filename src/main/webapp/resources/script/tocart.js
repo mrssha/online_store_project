@@ -1,15 +1,15 @@
 'use strict';
 
-window.onload = function() {
-    var ur = document.URL;
-    if (ur == 'http://localhost:8080/store/'){
-        var parentEl = document.getElementById("imgMain"),
-        img = document.createElement("IMG");
-        img.className = "photo-main";
-        img.src = contextPath +"/resources/image/main2.jpg";
-        parentEl.appendChild(img);
-    }
-};
+// window.onload = function() {
+//     var ur = document.URL;
+//     if (ur == 'http://localhost:8080/store/'){
+//         var parentEl = document.getElementById("imgMain"),
+//         img = document.createElement("IMG");
+//         img.className = "photo-main";
+//         img.src = contextPath +"/resources/image/main2.jpg";
+//         parentEl.appendChild(img);
+//     }
+// };
 
 function addRemoveProduct(cname, product_id, button_id, user) {
     var cook_value = decodeURIComponent(getCookie(cname));
@@ -157,12 +157,6 @@ function correctButtonName(button_id, product_id){
         console.log('remove');
     }
 }
-
-// function hideImg(elm_id, is_hidden){
-//     if (is_hidden =="true"){
-//         document.getElementById(elm_id).hidden = true;
-//     }
-// }
 
 
 
