@@ -62,13 +62,13 @@
                         <div class="form-group">
                             <label for="minPriceId">Minimum price</label>
                             <input type="number" min=0 class="form-control" max="999999999" name="minPrice"
-                                   value="${minPrice}" id="minPriceId">
+                                     id="minPriceId">
                         </div>
 
                         <div class="form-group">
                             <label for="maxPriceId">Maximum price</label>
                             <input type="number" min=0 class="form-control" max="999999999" name="maxPrice"
-                                   value="${maxPrice}" id="maxPriceId" >
+                                    id="maxPriceId" >
                         </div>
 
                         <button type="submit" class="btn btn-primary mb-2">Submit</button>

@@ -1,5 +1,6 @@
 package store.dto;
 
+import org.springframework.format.annotation.NumberFormat;
 import store.entity.AddressType;
 
 import javax.validation.constraints.*;

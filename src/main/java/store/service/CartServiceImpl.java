@@ -249,7 +249,6 @@ public class CartServiceImpl implements CartService {
 
 
     @Override
-    @Transactional
     public void clearCookieCart(HttpServletRequest request, HttpServletResponse response)
             throws UnsupportedEncodingException{
         Cookie cookieCart = WebUtils.getCookie(request, "productCart");

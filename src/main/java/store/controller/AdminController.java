@@ -1,6 +1,7 @@
 package store.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -23,6 +24,7 @@ import java.util.List;
 
 
 @Controller
+@Secured("ROLE_ADMIN")
 @RequestMapping(value = "/admin")
 public class AdminController {
 

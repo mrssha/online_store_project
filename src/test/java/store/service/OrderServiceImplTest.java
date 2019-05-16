@@ -2,18 +2,6 @@ package store.service;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import store.converter.OrderConverter;
-import store.dao.OrderProductDao;
-import store.dao.CartDao;
-import store.dao.OrderDao;
-import store.dao.ProductDao;
-import store.dto.*;
-import store.entity.*;
-import store.utils.StatusResult;
-import store.service.CustomerService;
-import store.service.OrderService;
-import store.service.OrderServiceImpl;
-import store.service.StandService;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -21,6 +9,14 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
+import store.converter.OrderConverter;
+import store.dao.CartDao;
+import store.dao.OrderDao;
+import store.dao.OrderProductDao;
+import store.dao.ProductDao;
+import store.dto.*;
+import store.entity.*;
+import store.utils.StatusResult;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -116,7 +112,6 @@ public class OrderServiceImplTest {
         CustomerDto customerDto = new CustomerDto();
         customerDto.setSumPurchases(1000.0);
         OrderDto orderDto = new OrderDto();
-
         StatusResult result = orderService.confirmOrder(customerDto, orderDto, baseCartDto);
         Assert.assertEquals(result, StatusResult.ORDER_CONFIRM_SUCCESS);
         Assert.assertEquals(customerDto.getSumPurchases(), Double.valueOf(1000.0 + baseCartDto.getTotalSum()));

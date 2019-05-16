@@ -122,16 +122,3 @@ CREATE TABLE IF NOT EXISTS public."order_product"
 );
 
 
-/*
-CREATE TABLE IF NOT EXISTS public."orderProduct"
-(
-    id_order integer NOT NULL,
-    id_product integer NOT NULL,
-    quantity integer NOT NULL,
-    CONSTRAINT "basket_pkey" PRIMARY KEY (id_order, id_product),
-    CONSTRAINT fk_basket_order FOREIGN KEY (id_order)
-        REFERENCES public."order" (id_order),
-    CONSTRAINT fk_basket_product FOREIGN KEY (id_product)
-        REFERENCES public."product" (id_product)
-);
-*/

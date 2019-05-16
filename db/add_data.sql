@@ -1,19 +1,19 @@
 
-insert into "customer"(first_name, second_name, email, password, role)
+insert into "customer"(first_name, second_name, email, password, birth_date, role)
 values ('Admin', 'Admin', 'admin@mail.ru',
-        '$2a$10$aoaPysMjRLQppdJEMDCtTevDyKwKcLHiW0TtF5kT4dxU6aSNFrxdG', 'ROLE_ADMIN');
+        '$2a$10$aoaPysMjRLQppdJEMDCtTevDyKwKcLHiW0TtF5kT4dxU6aSNFrxdG','1995-04-01', 'ROLE_ADMIN');
 
-insert into "customer"(first_name, second_name, email, password, role, sum_purchases)
+insert into "customer"(first_name, second_name, email, password, birth_date, role, sum_purchases)
 values ('Anton', 'Pavlov', 'pavlov@mail.ru',
-        '$2a$10$aoaPysMjRLQppdJEMDCtTevDyKwKcLHiW0TtF5kT4dxU6aSNFrxdG', 'ROLE_USER', 5000.0);
+        '$2a$10$aoaPysMjRLQppdJEMDCtTevDyKwKcLHiW0TtF5kT4dxU6aSNFrxdG','1990-04-01', 'ROLE_USER', 5000.0);
 
-insert into "customer"(first_name, second_name, email, password, role, sum_purchases)
+insert into "customer"(first_name, second_name, email, password, birth_date, role, sum_purchases)
 values ('Sony', 'R', 'sony@mail.ru',
-        '$2a$10$aoaPysMjRLQppdJEMDCtTevDyKwKcLHiW0TtF5kT4dxU6aSNFrxdG', 'ROLE_USER', 25000.55);
+        '$2a$10$aoaPysMjRLQppdJEMDCtTevDyKwKcLHiW0TtF5kT4dxU6aSNFrxdG','1991-04-01', 'ROLE_USER', 25000.55);
 
-insert into "customer"(first_name, second_name, email, password, role, sum_purchases)
+insert into "customer"(first_name, second_name, email, password, birth_date, role, sum_purchases)
 values ('Lol', 'Lol', 'lol@mail.ru',
-        '$2a$10$aoaPysMjRLQppdJEMDCtTevDyKwKcLHiW0TtF5kT4dxU6aSNFrxdG', 'ROLE_USER', 100000.1);
+        '$2a$10$aoaPysMjRLQppdJEMDCtTevDyKwKcLHiW0TtF5kT4dxU6aSNFrxdG','1992-04-01', 'ROLE_USER', 100000.1);
 
 
 insert into "address" ( country, city, postcode, street, flat_number, house_number, active, address_type)
@@ -30,8 +30,6 @@ insert into "category"(category_name) values ('ski');
 -- insert into "product" (name, price, id_category, brand, weight, sex, quantity)
 -- values ('Snowboard 666', 10000, 1 , '666', 400, 'unisex', 3);
 
-insert into "product" (name, price, id_category, brand, weight, sex, quantity)
-values ('Snowboard glasses', 5000, 3 , 'K2', 100, 'unisex', 5);
 
 
 --Сноуборды с картинками

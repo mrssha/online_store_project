@@ -4,20 +4,20 @@ import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import store.converter.OrderConverter;
-import store.converter.ProductConverter;
-import store.dao.OrderProductDao;
 import store.dao.CartDao;
 import store.dao.OrderDao;
+import store.dao.OrderProductDao;
 import store.dao.ProductDao;
 import store.dto.*;
 import store.entity.*;
 import store.utils.LogMessage;
 import store.utils.StatusResult;
-import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+
 import java.util.*;
 
 @Service
@@ -141,7 +141,6 @@ public class OrderServiceImpl implements OrderService {
             }
         }
         for (CartDto cartItem: cartItems){
-            //Product changedProduct = productDao.getByIdForUpdate(cartItem.getProduct().getId());
             Product changedProduct = productDao.getById(cartItem.getProduct().getId());
             OrderProduct orderProduct = new OrderProduct();
             orderProduct.setOrder(newOrder);

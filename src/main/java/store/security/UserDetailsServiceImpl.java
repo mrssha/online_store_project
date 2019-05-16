@@ -10,7 +10,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import store.service.CustomerService;
-
 import java.util.HashSet;
 import java.util.Set;
 
@@ -18,7 +17,6 @@ import java.util.Set;
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
 
-    @Autowired
     private CustomerService customerService;
 
     @Override
@@ -32,11 +30,13 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
         roles.add(new SimpleGrantedAuthority(customerDto.getRole()));
 
-
-        // на основании полученных данных формируем объект UserDetails
-        // который позволит проверить введенный пользователем логин и пароль
-        // и уже потом аутентифицировать пользователя
         return new User(customerDto.getEmail(),
                 customerDto.getPassword(), roles);
     }
+
+    @Autowired
+    public void setCustomerService(CustomerService customerService) {
+        this.customerService = customerService;
+    }
+
 }
