@@ -38,6 +38,7 @@ public class StandServiceImpl implements StandService {
                 oldTopProducts = newTopList;
                 logger.info(LogMessage.JMS_SUCCESS);
             }
+            logger.debug(LogMessage.TOP_PRODUCTS_NO_CHANGES);
         }
         catch (UncategorizedJmsException e){
             logger.warn(LogMessage.JMS_FAILED);

@@ -60,7 +60,7 @@
 
                         <div class="form-group">
                             <label for="minPriceId">Minimum price</label>
-                            <input type="number"  class="form-control" max="999999999" name="minPrice"
+                            <input type="number" min=0 class="form-control" max="999999999" name="minPrice"
                                    value="${minPrice}" id="minPriceId">
                         </div>
 
@@ -89,11 +89,11 @@
                                 <a href="${contextPath}/product/${product.id}">
                                     <img  src="${contextPath}/resources/image/bg/${product.imageBg}" class="card-img-top" alt="product_photo">
                                     <div class="card-body" >
-                                        <p class="card-title">${product.name}</p>
+                                        <p class="card-title" style="height: 40px">${product.name}</p>
                                         <p class="card-text">${product.price}</p>
                                     </div>
                                 </a>
-                                <button id="buttonId${product.id}" type="button" class="btn"
+                                <button id="buttonId${product.id}" type="button" class="btn mt-0"
                                         onclick="addRemoveProduct('productCart', ${product.id}, id,
                                             ${user})"
                                     ${product.quantity eq 0  ? 'disabled="disabled"' : ''}>

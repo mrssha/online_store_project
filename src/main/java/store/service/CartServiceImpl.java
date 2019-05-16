@@ -94,7 +94,7 @@ public class CartServiceImpl implements CartService {
         Map<String, String> response = new HashMap<>();
         Product product = productDao.getById(id_product);
         if (product.getQuantity() == 0){
-            response.put("message", "NO_PRODUCT");
+            response.put("message", LogMessage.NO_PRODUCTS);
             return response;
         }
         Customer customer = customerDao.getByEmail(email);
@@ -102,12 +102,12 @@ public class CartServiceImpl implements CartService {
         if (cartItem!= null){
             int quantityItem = cartItem.getQuantity();
             if (product.getQuantity() <= quantityItem){
-                response.put("message", "NO_PRODUCT");
+                response.put("message", LogMessage.NO_PRODUCTS);
                 return response;
             }
             cartItem.setQuantity(quantityItem + 1);
             cartDao.update(cartItem);
-            response.put("message", "ADDED_TO_CART");
+            response.put("message", LogMessage.PRODUCT_ADDED);
             response.put("quantity", String.valueOf(quantityItem + 1));
             return response;
         }
@@ -116,7 +116,7 @@ public class CartServiceImpl implements CartService {
         newCartItem.setProduct(product);
         newCartItem.setQuantity(1);
         cartDao.add(newCartItem);
-        response.put("message", "ADDED_TO_CART");
+        response.put("message", LogMessage.PRODUCT_ADDED);
         response.put("quantity", String.valueOf(1));
         return response;
     }
