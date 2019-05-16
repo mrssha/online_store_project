@@ -11,6 +11,9 @@ public enum StatusResult {
     PRODUCT_ALREADY_EXIST("Product with name \"%s\" already exist"),
     PRODUCT_SUCCESS_DELETE("Product successfully deleted"),
     PRODUCT_FAIL_DELETE("Couldn't delete product"),
+    NO_PRODUCTS ("Product is missing. Couldn't add to cart"),
+    PRODUCT_ADDED ("Product successfully added to cart"),
+    PRODUCT_REMOVED("Product removed from cart"),
 
     EMAIL_ALREADY_EXIST("User with such email already exists." +
             " Please, enter another email or go to the login page."),

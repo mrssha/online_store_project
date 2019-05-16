@@ -16,10 +16,7 @@ import java.util.List;
 @Service
 public class AddressServiceImpl implements AddressService {
 
-    @Autowired
     private AddressDao addressDao;
-
-    @Autowired
     private AddressConverter addressConverter;
 
     private static final Logger logger = Logger.getLogger(AddressServiceImpl.class);
@@ -70,5 +67,16 @@ public class AddressServiceImpl implements AddressService {
     @Transactional
     public void deleteAddressById(long id) {
         addressDao.deleteById(id);
+    }
+
+
+    @Autowired
+    public void setAddressDao(AddressDao addressDao) {
+        this.addressDao = addressDao;
+    }
+
+    @Autowired
+    public void setAddressConverter(AddressConverter addressConverter) {
+        this.addressConverter = addressConverter;
     }
 }

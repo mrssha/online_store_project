@@ -14,10 +14,7 @@ import java.util.List;
 @Service
 public class StandServiceImpl implements StandService {
 
-    @Autowired
     private ProductService productService;
-
-    @Autowired
     private JmsTemplate jmsTemplate;
 
     private static final Logger logger = Logger.getLogger(StandServiceImpl.class);
@@ -43,5 +40,15 @@ public class StandServiceImpl implements StandService {
         catch (UncategorizedJmsException e){
             logger.warn(LogMessage.JMS_FAILED);
         }
+    }
+
+    @Autowired
+    public void setProductService(ProductService productService) {
+        this.productService = productService;
+    }
+
+    @Autowired
+    public void setJmsTemplate(JmsTemplate jmsTemplate) {
+        this.jmsTemplate = jmsTemplate;
     }
 }

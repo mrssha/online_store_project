@@ -20,6 +20,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.util.WebUtils;
+import store.utils.Message;
+import store.utils.StatusResult;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -37,22 +39,11 @@ import java.util.Map;
 @Service
 public class CartServiceImpl implements CartService {
 
-    @Autowired
     private CartConverter cartConverter;
-
-    @Autowired
     private ProductConverter productConverter;
-
-    @Autowired
     private CartDao cartDao;
-
-    @Autowired
     private ProductDao productDao;
-
-    @Autowired
     private ProductService productService;
-
-    @Autowired
     private CustomerDao customerDao;
 
     private static final Logger logger = Logger.getLogger(CartServiceImpl.class);
@@ -90,54 +81,45 @@ public class CartServiceImpl implements CartService {
 
     @Override
     @Transactional
-    public Map<String, String> addToCart(String email, Long id_product){
-        Map<String, String> response = new HashMap<>();
+    public String  addToCart(String email, Long id_product){
+        Gson gson = new Gson();
         Product product = productDao.getById(id_product);
         if (product.getQuantity() == 0){
-            response.put("message", LogMessage.NO_PRODUCTS);
-            return response;
+            return gson.toJson(new Message(StatusResult.NO_PRODUCTS));
         }
         Customer customer = customerDao.getByEmail(email);
         Cart cartItem = cartDao.getByProductAndCustomer(customer.getId(), id_product);
         if (cartItem!= null){
             int quantityItem = cartItem.getQuantity();
             if (product.getQuantity() <= quantityItem){
-                response.put("message", LogMessage.NO_PRODUCTS);
-                return response;
+                return gson.toJson(new Message(StatusResult.NO_PRODUCTS));
             }
             cartItem.setQuantity(quantityItem + 1);
             cartDao.update(cartItem);
-            response.put("message", LogMessage.PRODUCT_ADDED);
-            response.put("quantity", String.valueOf(quantityItem + 1));
-            return response;
+            return gson.toJson(new Message(StatusResult.PRODUCT_ADDED));
         }
         Cart newCartItem = new Cart();
         newCartItem.setCustomer(customer);
         newCartItem.setProduct(product);
         newCartItem.setQuantity(1);
         cartDao.add(newCartItem);
-        response.put("message", LogMessage.PRODUCT_ADDED);
-        response.put("quantity", String.valueOf(1));
-        return response;
+        return gson.toJson(new Message(StatusResult.PRODUCT_ADDED));
     }
 
 
     @Override
     @Transactional
-    public Map<String, String> removeFromCart(String email, Long id_product){
-        Map<String, String> response = new HashMap<>();
+    public String removeFromCart(String email, Long id_product){
+        Gson gson = new Gson();
         Customer customer = customerDao.getByEmail(email);
         Cart cartItem = cartDao.getByProductAndCustomer(customer.getId(), id_product);
         if (cartItem == null || cartItem.getQuantity() == 1){
-            response.put("message", "DONT_REMOVED");
-            return response;
+            return gson.toJson(new Message(StatusResult.PRODUCT_FAIL_DELETE));
         }
         int oldQuantity = cartItem.getQuantity();
         cartItem.setQuantity(oldQuantity - 1);
         cartDao.update(cartItem);
-        response.put("message", "REMOVED_FROM_CART");
-        response.put("quantity", String.valueOf(oldQuantity - 1));
-        return response;
+        return gson.toJson(new Message(StatusResult.PRODUCT_REMOVED));
     }
 
 
@@ -280,6 +262,36 @@ public class CartServiceImpl implements CartService {
             response.addCookie(cookieCart);
         }
         logger.info(LogMessage.CLEAR_COOKIE);
+    }
+
+    @Autowired
+    public void setCartConverter(CartConverter cartConverter) {
+        this.cartConverter = cartConverter;
+    }
+
+    @Autowired
+    public void setProductConverter(ProductConverter productConverter) {
+        this.productConverter = productConverter;
+    }
+
+    @Autowired
+    public void setCartDao(CartDao cartDao) {
+        this.cartDao = cartDao;
+    }
+
+    @Autowired
+    public void setProductDao(ProductDao productDao) {
+        this.productDao = productDao;
+    }
+
+    @Autowired
+    public void setProductService(ProductService productService) {
+        this.productService = productService;
+    }
+
+    @Autowired
+    public void setCustomerDao(CustomerDao customerDao) {
+        this.customerDao = customerDao;
     }
 }
 

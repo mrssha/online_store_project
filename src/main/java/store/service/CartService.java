@@ -28,9 +28,9 @@ public interface CartService {
 
     void update(CartDto cartDtoItem);
 
-    Map<String, String> addToCart(String email, Long id_product);
+    String addToCart(String email, Long id_product);
 
-    Map<String, String> removeFromCart(String email, Long id_product);
+    String removeFromCart(String email, Long id_product);
 
     List<ProductDto> checkMissingItems(Map<ProductDto, Integer> cartCookie);
 

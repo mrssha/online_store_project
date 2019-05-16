@@ -21,13 +21,9 @@ import java.util.Set;
 @Service
 public class CustomerServiceImpl implements CustomerService {
 
-    @Autowired
+
     private CustomerDao customerDao;
-
-    @Autowired
     private CustomerConverter customerConverter;
-
-    @Autowired
     private BCryptPasswordEncoder passwordEncoder;
 
     private static final Logger logger = Logger.getLogger(CustomerServiceImpl.class);
@@ -113,5 +109,21 @@ public class CustomerServiceImpl implements CustomerService {
     @Transactional
     public void deleteCustomerById(long id) {
         customerDao.deleteById(id);
+    }
+
+
+    @Autowired
+    public void setCustomerDao(CustomerDao customerDao) {
+        this.customerDao = customerDao;
+    }
+
+    @Autowired
+    public void setCustomerConverter(CustomerConverter customerConverter) {
+        this.customerConverter = customerConverter;
+    }
+
+    @Autowired
+    public void setPasswordEncoder(BCryptPasswordEncoder passwordEncoder) {
+        this.passwordEncoder = passwordEncoder;
     }
 }

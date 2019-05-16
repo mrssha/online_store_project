@@ -14,12 +14,6 @@ public interface OrderProductDao {
 
     List<Order> getOrdersForProduct(long id_product);
 
-    /*
-    List<OrderProduct> getBasketsByProduct(Product product);
-
-    List<OrderProduct> getBasketsByOrder(Order order);
-    */
-
     void add(OrderProduct orderProduct);
 
     void deleteById(long id);

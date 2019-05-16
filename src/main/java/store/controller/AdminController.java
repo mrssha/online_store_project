@@ -26,16 +26,9 @@ import java.util.List;
 @RequestMapping(value = "/admin")
 public class AdminController {
 
-    @Autowired
     private ProductService productService;
-
-    @Autowired
     private CategoryService categoryService;
-
-    @Autowired
     private OrderService orderService;
-
-    @Autowired
     private CustomerService customerService;
 
     @RequestMapping( value = "/products", method = RequestMethod.GET)
@@ -152,5 +145,25 @@ public class AdminController {
     @RequestMapping( value = "/statistics/calculate", method = RequestMethod.POST)
     public String calculateRevenue(@RequestBody String periodJson){
         return orderService.getRevenueForPeriod(periodJson);
+    }
+
+    @Autowired
+    public void setProductService(ProductService productService) {
+        this.productService = productService;
+    }
+
+    @Autowired
+    public void setCategoryService(CategoryService categoryService) {
+        this.categoryService = categoryService;
+    }
+
+    @Autowired
+    public void setOrderService(OrderService orderService) {
+        this.orderService = orderService;
+    }
+
+    @Autowired
+    public void setCustomerService(CustomerService customerService) {
+        this.customerService = customerService;
     }
 }

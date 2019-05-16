@@ -20,17 +20,11 @@ import java.util.List;
 @Service
 public class OrderProductServiceImpl implements OrderProductService {
 
-    @Autowired
-    OrderProductDao orderProductDao;
 
-    @Autowired
-    OrderProductConverter orderProductConverter;
-
-    @Autowired
-    ProductConverter productConverter;
-
-    @Autowired
-    OrderConverter orderConverter;
+    private OrderProductDao orderProductDao;
+    private OrderProductConverter orderProductConverter;
+    private ProductConverter productConverter;
+    private OrderConverter orderConverter;
 
     @Override
     @Transactional
@@ -80,4 +74,23 @@ public class OrderProductServiceImpl implements OrderProductService {
     }
 
 
+    @Autowired
+    public void setOrderProductDao(OrderProductDao orderProductDao) {
+        this.orderProductDao = orderProductDao;
+    }
+
+    @Autowired
+    public void setOrderProductConverter(OrderProductConverter orderProductConverter) {
+        this.orderProductConverter = orderProductConverter;
+    }
+
+    @Autowired
+    public void setProductConverter(ProductConverter productConverter) {
+        this.productConverter = productConverter;
+    }
+
+    @Autowired
+    public void setOrderConverter(OrderConverter orderConverter) {
+        this.orderConverter = orderConverter;
+    }
 }

@@ -29,7 +29,6 @@ import java.util.List;
 @ComponentScan(basePackages = "store")
 public class WebConfig implements WebMvcConfigurer {
 
-    @Autowired
     private UserDetailsService userDetailsService;
 
     @Override
@@ -94,4 +93,8 @@ public class WebConfig implements WebMvcConfigurer {
         return multipartResolver;
     }
 
+    @Autowired
+    public void setUserDetailsService(UserDetailsService userDetailsService) {
+        this.userDetailsService = userDetailsService;
+    }
 }

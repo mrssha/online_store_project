@@ -23,33 +23,13 @@ import java.util.*;
 @Service
 public class OrderServiceImpl implements OrderService {
 
-    @Autowired
-    OrderConverter orderConverter;
-
-    @Autowired
-    OrderDao orderDao;
-
-    @Autowired
-    ProductDao productDao;
-
-    @Autowired
-    ProductConverter productConverter;
-
-    @Autowired
-    OrderProductDao orderProductDao;
-
-    @Autowired
-    CartDao cartDao;
-
-    @Autowired
-    StandService standService;
-
-    @Autowired
-    CustomerService customerService;
-
-    @Autowired
-    CartService cartService;
-
+    private OrderConverter orderConverter;
+    private OrderDao orderDao;
+    private ProductDao productDao;
+    private OrderProductDao orderProductDao;
+    private CartDao cartDao;
+    private StandService standService;
+    private CustomerService customerService;
 
     private static final Logger logger = Logger.getLogger(OrderServiceImpl.class);
 
@@ -195,6 +175,40 @@ public class OrderServiceImpl implements OrderService {
         return order;
     }
 
+    @Autowired
+    public void setOrderConverter(OrderConverter orderConverter) {
+        this.orderConverter = orderConverter;
+    }
+
+    @Autowired
+    public void setOrderDao(OrderDao orderDao) {
+        this.orderDao = orderDao;
+    }
+
+    @Autowired
+    public void setProductDao(ProductDao productDao) {
+        this.productDao = productDao;
+    }
+
+    @Autowired
+    public void setOrderProductDao(OrderProductDao orderProductDao) {
+        this.orderProductDao = orderProductDao;
+    }
+
+    @Autowired
+    public void setCartDao(CartDao cartDao) {
+        this.cartDao = cartDao;
+    }
+
+    @Autowired
+    public void setStandService(StandService standService) {
+        this.standService = standService;
+    }
+
+    @Autowired
+    public void setCustomerService(CustomerService customerService) {
+        this.customerService = customerService;
+    }
 }
 
 

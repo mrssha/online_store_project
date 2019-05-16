@@ -45,20 +45,6 @@ public class OrderProductDaoImpl implements OrderProductDao {
         return entityManager.createQuery(criteriaQuery).getResultList();
     }
 
-
-    /*
-    @Override
-    public List<OrderProduct> getBasketsByOrder(Order order){
-        CriteriaBuilder cBuilder = entityManager.getCriteriaBuilder();
-        CriteriaQuery<OrderProduct> criteriaQuery = cBuilder.createQuery(OrderProduct.class);
-        Root<OrderProduct> root = criteriaQuery.from(OrderProduct.class);
-        criteriaQuery.select(root);
-        criteriaQuery.where(cBuilder.equal(root.get("order"), order));
-        return entityManager.createQuery(criteriaQuery).getResultList();
-    }
-
-    */
-
     @Override
     public void add(OrderProduct orderProduct){
         entityManager.persist(orderProduct);

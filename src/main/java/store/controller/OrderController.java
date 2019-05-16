@@ -31,16 +31,10 @@ import java.util.List;
 @Controller
 public class OrderController {
 
-    @Autowired
+
     private CartService cartService;
-
-    @Autowired
     private OrderService orderService;
-
-    @Autowired
     private AddressService addressService;
-
-    @Autowired
     private CustomerService customerService;
 
 
@@ -103,4 +97,23 @@ public class OrderController {
         return "orderSuccess";
     }
 
+    @Autowired
+    public void setCartService(CartService cartService) {
+        this.cartService = cartService;
+    }
+
+    @Autowired
+    public void setOrderService(OrderService orderService) {
+        this.orderService = orderService;
+    }
+
+    @Autowired
+    public void setAddressService(AddressService addressService) {
+        this.addressService = addressService;
+    }
+
+    @Autowired
+    public void setCustomerService(CustomerService customerService) {
+        this.customerService = customerService;
+    }
 }

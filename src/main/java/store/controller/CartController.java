@@ -22,10 +22,7 @@ import java.util.Map;
 @Controller
 public class CartController {
 
-    @Autowired
     private CartService cartService;
-
-    @Autowired
     private CustomerService customerService;
 
     @RequestMapping( value = "/cart", method = RequestMethod.GET)
@@ -43,29 +40,29 @@ public class CartController {
 
     @ResponseBody
     @RequestMapping( value = "/addToCart",  method = RequestMethod.POST)
-    public Map<String, String> addToCart(@RequestBody String id_product, HttpServletRequest request){
+    public String addToCart(@RequestBody String id_product, HttpServletRequest request){
         Principal principalUser = request.getUserPrincipal();
         if (principalUser != null){
              return cartService.addToCart(principalUser.getName(),
                     Long.parseLong(id_product));
         }
-        return new HashMap<>();
+        return "";
     }
 
     @ResponseBody
     @RequestMapping( value = "/removeFromCart",  method = RequestMethod.POST)
-    public Map<String, String> removeFromCart(@RequestBody String id_product, HttpServletRequest request){
+    public String removeFromCart(@RequestBody String id_product, HttpServletRequest request){
         Principal principalUser = request.getUserPrincipal();
         if (principalUser != null){
             return cartService.removeFromCart(principalUser.getName(),
                     Long.parseLong(id_product));
         }
-        return new HashMap<>();
+        return "";
     }
 
     @ResponseBody
     @RequestMapping( value = "/deleteCartItem", method = RequestMethod.POST)
-    public Map<String, String> deleteCategory(@RequestBody String id_product, HttpServletRequest request){
+    public void deleteCartItem(@RequestBody String id_product, HttpServletRequest request){
         Principal principalUser = request.getUserPrincipal();
         CustomerDto customerDto = customerService.getCustomerByEmail(principalUser.getName());
         CartDto cartItem = cartService.getByProductAndCustomer(customerDto.getId(),
@@ -73,7 +70,16 @@ public class CartController {
         if (cartItem!=null) {
             cartService.deleteById(cartItem.getId());
         }
-        return new HashMap<>();
+    }
+
+    @Autowired
+    public void setCartService(CartService cartService) {
+        this.cartService = cartService;
+    }
+
+    @Autowired
+    public void setCustomerService(CustomerService customerService) {
+        this.customerService = customerService;
     }
 }
 

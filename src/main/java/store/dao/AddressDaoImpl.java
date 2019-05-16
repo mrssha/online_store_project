@@ -26,17 +26,6 @@ public class AddressDaoImpl implements AddressDao {
         return entityManager.find(Address.class, id);
     }
 
-
-//    @Override
-//    public List<Address> getByCustomerId(long id) {
-//        CriteriaBuilder cBuilder = entityManager.getCriteriaBuilder();
-//        CriteriaQuery<Address> criteriaQuery = cBuilder.createQuery(Address.class);
-//        Root<Address> root = criteriaQuery.from(Address.class);
-//        criteriaQuery.select(root);
-//        criteriaQuery.where(cBuilder.equal(root.get("customer"), id));
-//        return entityManager.createQuery(criteriaQuery).getResultList();
-//    }
-
     @Override
     public List<Address> getByCustomerId(long id) {
         CriteriaBuilder cBuilder = entityManager.getCriteriaBuilder();

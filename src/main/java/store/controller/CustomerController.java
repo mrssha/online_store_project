@@ -25,13 +25,8 @@ import java.util.List;
 @RequestMapping(value = "/")
 public class CustomerController {
 
-    @Autowired
     private CustomerService customerService;
-
-    @Autowired
     private AddressService addressService;
-
-    @Autowired
     private OrderService orderService;
 
 
@@ -135,5 +130,18 @@ public class CustomerController {
         return "orderHistory";
     }
 
+    @Autowired
+    public void setCustomerService(CustomerService customerService) {
+        this.customerService = customerService;
+    }
 
+    @Autowired
+    public void setAddressService(AddressService addressService) {
+        this.addressService = addressService;
+    }
+
+    @Autowired
+    public void setOrderService(OrderService orderService) {
+        this.orderService = orderService;
+    }
 }

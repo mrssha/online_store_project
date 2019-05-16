@@ -23,7 +23,6 @@ import java.util.Date;
 @Controller
 public class LoginController {
 
-    @Autowired
     private CustomerService customerService;
 
     @RequestMapping( value = "/signup", method = RequestMethod.GET)
@@ -62,4 +61,8 @@ public class LoginController {
         return "login";
     }
 
+    @Autowired
+    public void setCustomerService(CustomerService customerService) {
+        this.customerService = customerService;
+    }
 }

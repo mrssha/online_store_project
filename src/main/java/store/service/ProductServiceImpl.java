@@ -23,22 +23,11 @@ import java.util.List;
 @Service
 public class ProductServiceImpl implements ProductService {
 
-    @Autowired
     private ProductDao productDao;
-
-    @Autowired
     private ProductConverter productConverter;
-
-    @Autowired
     private CategoryConverter categoryConverter;
-
-    @Autowired
     private CategoryService categoryService;
-
-    @Autowired
     private OrderProductDao orderProductDao;
-
-    @Autowired
     private CartDao cartDao;
 
     private static final Logger logger = Logger.getLogger(ProductServiceImpl.class);
@@ -145,5 +134,36 @@ public class ProductServiceImpl implements ProductService {
     @Transactional
     public void update(ProductDto productDto) {
         productDao.update(productConverter.convertToEntity(productDto));
+    }
+
+
+    @Autowired
+    public void setProductDao(ProductDao productDao) {
+        this.productDao = productDao;
+    }
+
+    @Autowired
+    public void setProductConverter(ProductConverter productConverter) {
+        this.productConverter = productConverter;
+    }
+
+    @Autowired
+    public void setCategoryConverter(CategoryConverter categoryConverter) {
+        this.categoryConverter = categoryConverter;
+    }
+
+    @Autowired
+    public void setCategoryService(CategoryService categoryService) {
+        this.categoryService = categoryService;
+    }
+
+    @Autowired
+    public void setOrderProductDao(OrderProductDao orderProductDao) {
+        this.orderProductDao = orderProductDao;
+    }
+
+    @Autowired
+    public void setCartDao(CartDao cartDao) {
+        this.cartDao = cartDao;
     }
 }

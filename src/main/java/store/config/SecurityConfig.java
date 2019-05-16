@@ -20,16 +20,8 @@ import org.springframework.security.web.authentication.logout.LogoutSuccessHandl
 public class SecurityConfig  extends WebSecurityConfigurerAdapter {
 
 
-    @Autowired
     private DaoAuthenticationProvider authenticationProvider;
-
-    @Autowired
-    BCryptPasswordEncoder passwordEncoder;
-
-    @Autowired
     private LogoutSuccessHandler logoutSuccessHandler;
-
-    @Autowired
     private AuthenticationSuccessHandler authenticationSuccessHandler;
 
 
@@ -65,5 +57,20 @@ public class SecurityConfig  extends WebSecurityConfigurerAdapter {
                 .logoutSuccessHandler(logoutSuccessHandler)
                 .permitAll();
 
+    }
+
+    @Autowired
+    public void setAuthenticationProvider(DaoAuthenticationProvider authenticationProvider) {
+        this.authenticationProvider = authenticationProvider;
+    }
+
+    @Autowired
+    public void setLogoutSuccessHandler(LogoutSuccessHandler logoutSuccessHandler) {
+        this.logoutSuccessHandler = logoutSuccessHandler;
+    }
+
+    @Autowired
+    public void setAuthenticationSuccessHandler(AuthenticationSuccessHandler authenticationSuccessHandler) {
+        this.authenticationSuccessHandler = authenticationSuccessHandler;
     }
 }

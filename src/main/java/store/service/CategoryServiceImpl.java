@@ -23,13 +23,9 @@ import java.util.List;
 @Service
 public class CategoryServiceImpl implements CategoryService {
 
-    @Autowired
+
     private CategoryDao categoryDao;
-
-    @Autowired
     private CategoryConverter categoryConverter;
-
-    @Autowired
     private ProductDao productDao;
 
     private static final Logger logger = Logger.getLogger(CategoryServiceImpl.class);
@@ -119,5 +115,21 @@ public class CategoryServiceImpl implements CategoryService {
     @Transactional
     public void update(CategoryDto categoryDto){
         categoryDao.update(categoryConverter.convertToEntity(categoryDto));
+    }
+
+
+    @Autowired
+    public void setCategoryDao(CategoryDao categoryDao) {
+        this.categoryDao = categoryDao;
+    }
+
+    @Autowired
+    public void setCategoryConverter(CategoryConverter categoryConverter) {
+        this.categoryConverter = categoryConverter;
+    }
+
+    @Autowired
+    public void setProductDao(ProductDao productDao) {
+        this.productDao = productDao;
     }
 }

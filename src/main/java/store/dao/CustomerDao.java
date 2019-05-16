@@ -14,10 +14,6 @@ public interface CustomerDao {
 
     List<Customer> getTopCustomers();
 
-    //List<Order> getOrders(Customer customer);
-
-    //List<Address> getAddresses(Customer customer);
-
     void add(Customer customer);
 
     void deleteById(long id);
