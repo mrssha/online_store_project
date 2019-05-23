@@ -102,6 +102,7 @@ public class ProductServiceImpl implements ProductService {
         return StatusResult.PRODUCT_ALREADY_EXIST;
     }
 
+
     private void loadImages(ProductDto newProduct, MultipartFile imageSm,  MultipartFile imageBg){
         if (!imageSm.isEmpty()) {
             String nameSm = imageSm.getOriginalFilename();

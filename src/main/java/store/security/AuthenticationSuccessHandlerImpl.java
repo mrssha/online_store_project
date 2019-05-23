@@ -20,10 +20,8 @@ import java.io.IOException;
 @Component
 public class AuthenticationSuccessHandlerImpl implements AuthenticationSuccessHandler {
 
-    @Autowired
-    private CustomerService customerService;
 
-    @Autowired
+    private CustomerService customerService;
     private CartService cartService;
 
     private static final Logger logger = Logger.getLogger(AuthenticationSuccessHandlerImpl.class);
@@ -38,5 +36,15 @@ public class AuthenticationSuccessHandlerImpl implements AuthenticationSuccessHa
         cartService.mergeCarts(response, email, cookieCart);
         response.sendRedirect(request.getContextPath() + "/");
         logger.info(String.format(LogMessage.LOGIN_SUCCESS, email));
+    }
+
+    @Autowired
+    public void setCustomerService(CustomerService customerService) {
+        this.customerService = customerService;
+    }
+
+    @Autowired
+    public void setCartService(CartService cartService) {
+        this.cartService = cartService;
     }
 }

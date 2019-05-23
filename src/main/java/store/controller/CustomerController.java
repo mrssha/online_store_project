@@ -37,8 +37,7 @@ public class CustomerController {
     }
 
 
-    @RequestMapping( value = {"/profile", "/profile/addAddress", "/profile/changeInfo",
-            "/profile/changePassword"}, method = RequestMethod.GET)
+    @RequestMapping( value = {"/profile", "/profile/changePassword"}, method = RequestMethod.GET)
     public String customerProfile(ModelMap modelMap, HttpServletRequest request){
         Principal principalUser = request.getUserPrincipal();
         CustomerDto customer = customerService.getCustomerByEmail(principalUser.getName());

@@ -1,16 +1,5 @@
 'use strict';
 
-// window.onload = function() {
-//     var ur = document.URL;
-//     if (ur == 'http://localhost:8080/store/'){
-//         var parentEl = document.getElementById("imgMain"),
-//         img = document.createElement("IMG");
-//         img.className = "photo-main";
-//         img.src = contextPath +"/resources/image/main2.jpg";
-//         parentEl.appendChild(img);
-//     }
-// };
-
 function addRemoveProduct(cname, product_id, button_id, user) {
     var cook_value = decodeURIComponent(getCookie(cname));
     console.log(cook_value);

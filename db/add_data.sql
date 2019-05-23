@@ -88,17 +88,20 @@ values ('NIDECKER 2018-19 STARR', 26500, 3, 'NIDECKER', 800, 'unisex', 15,'15_sk
 
 
 UPDATE "product"
-SET  quantity= 20 WHERE "product".id_product = 6;
+SET  quantity= 20 WHERE "product".id_product = 9;
 
 UPDATE "product"
 SET  name='Product!' WHERE "product".id_product = 20;
 
 UPDATE "customer"
-SET  sum_purchases= 0 WHERE "customer".id_customer = 2;
+SET  sum_purchases= 0 WHERE "customer".id_customer = 9;
 
 --delete from "product" where id_product=1;
 
--- insert into "order" (id_customer, id_customer_address, date_order) values (2, 1, '2018-02-01');
+insert into "order" (id_customer, id_customer_address, date_order, quantity_products,
+                     payment_amount, payment_method, delivery_method, order_status) values (2, 1, '2019-04-02',
+                                                                              5, 55000.0, 'CASH',
+                                                                              'COURIER','DELIVERED' );
 -- insert into "order" (id_customer, id_customer_address, date_order) values (1, 3, '2018-01-21');
 -- insert into "order" (id_customer, id_customer_address, date_order) values (2, 4, '2018-02-02');
 
